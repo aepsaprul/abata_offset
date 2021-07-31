@@ -12,8 +12,14 @@
         @csrf
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ url('/biaya_finishing') }}" title="Kembali"><i class="fas fa-arrow-left"></i></a>
-                <button type="submit" class="btn btn-primary float-right" title="Perbaharui"><i class="fas fa-save"></i></button>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <a href="{{ url('/biaya_finishing') }}" title="Kembali"><i class="fas fa-arrow-left"></i></a>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary float-right" title="Perbaharui"><i class="fas fa-save"></i></button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">

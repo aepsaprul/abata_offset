@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('style')
-
+<link href="{{ asset('lib/datatables/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -20,7 +20,9 @@
         @endif
     </div>
     <div class="row mt-3">
-        <a href="{{ route('produk.create') }}" class="btn btn-info text-white"><i class="fas fa-plus"></i></a>
+        <div class="col-md-4">
+            <a href="{{ route('produk.create') }}" class="btn btn-info text-white"><i class="fas fa-plus"></i></a>
+        </div>
     </div>
     <div class="row mt-4">
         <table id="example" class="table table-bordered" style="width:100%">
@@ -54,5 +56,21 @@
         </table>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script src="{{ asset('lib/datatables/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('lib/datatables/js/dataTables.bootstrap5.min.js') }}"></script>
+<script src="{{ asset('lib/datatables/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('lib/datatables/js/jszip.min.js') }}"></script>
+<script src="{{ asset('lib/datatables/js/buttons.html5.min.js') }}"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            "ordering": false
+        });
+    } );
+</script>
 @endsection
 

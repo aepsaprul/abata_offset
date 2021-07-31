@@ -10,7 +10,7 @@
     <title>Offset Login</title>
 
     {{-- styles  --}}
-    <link href="{{ asset('lib/bootstrap5.css') }}" rel="stylesheet">
+    <link href="{{ asset('lib/bootstrap-5/css/bootstrap.min.css') }}" rel="stylesheet">
 </head>
 <body>
     <div class="container">

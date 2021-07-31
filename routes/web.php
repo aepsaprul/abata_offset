@@ -25,6 +25,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home/getProduk', [App\Http\Controllers\HomeController::class, 'getProduk'])->name('home.produk');
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('bahan', BahanController::class);

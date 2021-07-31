@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OffsetProduk;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,5 +25,15 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function getProduk()
+    {
+        $produks = OffsetProduk::get();
+
+        return response()->json([
+            'success' => 'sukses',
+            'data' => $produks
+        ]);
     }
 }

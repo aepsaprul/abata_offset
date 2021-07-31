@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('style')
-<link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<link href="{{ asset('lib/datatables/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
