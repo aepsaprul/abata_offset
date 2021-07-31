@@ -44,6 +44,13 @@
                 @enderror
             </div>
             <div class="form-group col-md-4">
+                <label for="kode_produk">Kode Produk</label>
+                <input type="text" class="form-control @error('kode_produk') is-invalid @enderror" id="kode_produk" placeholder="Kode Produk" name="kode_produk" required value="{{ $produk->kode_produk }}">
+                @error('kode_produk')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group col-md-4">
                 <label for="keterangan">Keterangan</label>
                 <input type="text" class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" placeholder="Keterangan" name="keterangan" required value="{{ $produk->keterangan }}">
                 @error('keterangan')

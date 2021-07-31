@@ -24,7 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $produks = OffsetProduk::get();
+
+        return view('home', ['produks' => $produks]);
     }
 
     public function getProduk()
@@ -35,5 +37,16 @@ class HomeController extends Controller
             'success' => 'sukses',
             'data' => $produks
         ]);
+    }
+
+    public function produk(Request $request, $kode_produk)
+    {
+        $produks = OffsetProduk::get();
+
+        if ($kode_produk == "kalenderdinding") {
+            return view('kalenderDinding', ['produks' => $produks]);
+        } else {
+            echo "data mbuh";
+        }
     }
 }

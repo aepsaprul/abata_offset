@@ -40,6 +40,7 @@ class ProdukController extends Controller
     {
         $validated = $request->validate([
             'nama_produk' => 'required',
+            'kode_produk' => 'required',
             'keterangan' => 'required',
             'harga' => 'required',
             'foto' => 'required|image|mimes:jpeg,jpg,png|max:500',
@@ -50,6 +51,7 @@ class ProdukController extends Controller
 
         $produks = new OffsetProduk;
         $produks->nama_produk = $request->nama_produk;
+        $produks->kode_produk = $request->kode_produk;
         $produks->keterangan = $request->keterangan;
         $produks->harga = $harga;
         $produks->foto = $request->file('foto')->store('foto', 'public');
@@ -94,6 +96,7 @@ class ProdukController extends Controller
     {
         $validated = $request->validate([
             'nama_produk' => 'required',
+            'kode_produk' => 'required',
             'keterangan' => 'required',
             'harga' => 'required',
             'foto' => 'image|mimes:jpeg,jpg,png|max:500',
@@ -104,6 +107,7 @@ class ProdukController extends Controller
 
         $produk = OffsetProduk::find($id);
         $produk->nama_produk = $request->nama_produk;
+        $produk->kode_produk = $request->kode_produk;
         $produk->keterangan = $request->keterangan;
         $produk->harga = $harga;
 
