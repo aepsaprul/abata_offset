@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OffsetKertasProduk extends Model
+class OffsetFinishingProduk extends Model
 {
     use HasFactory;
 
-    public function kertas() {
-        return $this->belongsTo(OffsetJenisKertas::class, 'kertas_id', 'id');
+    public function finishing() {
+        return $this->belongsTo(OffsetFinishing::class, 'finishing_id', 'id');
     }
 
     public function produk() {

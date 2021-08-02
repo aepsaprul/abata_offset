@@ -46,8 +46,10 @@
                           <li><a class="dropdown-item text-uppercase" href="{{ url('biaya_cetak') }}">Biaya Cetak</a></li>
                           <li><a class="dropdown-item text-uppercase" href="{{ url('biaya_finishing') }}">Biaya Finishing</a></li>
                           <li><a class="dropdown-item text-uppercase" href="{{ url('finishing') }}">Finishing</a></li>
+                          <li><a class="dropdown-item text-uppercase" href="{{ url('finishing_produk') }}">Finishing Produk</a></li>
                           <li><a class="dropdown-item text-uppercase" href="{{ url('jenis_kertas') }}">Jenis Kertas</a></li>
                           <li><a class="dropdown-item text-uppercase" href="{{ url('kertas') }}">Kertas</a></li>
+                          <li><a class="dropdown-item text-uppercase" href="{{ url('kertas_produk') }}">Kertas Produk</a></li>
                           <li><a class="dropdown-item text-uppercase" href="{{ url('master_mesin') }}">Mesin</a></li>
                           <li><a class="dropdown-item text-uppercase" href="{{ url('produk') }}">Produk</a></li>
                         </ul>

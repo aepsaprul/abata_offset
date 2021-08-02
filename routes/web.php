@@ -40,6 +40,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('finishing', App\Http\Controllers\FinishingController::class);
     Route::get('finishing/{id}/delete', [App\Http\Controllers\FinishingController::class, 'delete'])->name('finishing.delete');
 
+    Route::resource('finishing_produk', App\Http\Controllers\FinishingProdukController::class);
+    Route::get('finishing_produk/{id}/delete', [App\Http\Controllers\FinishingProdukController::class, 'delete'])->name('finishing_produk.delete');
+
     Route::resource('jenis_kertas', App\Http\Controllers\JenisKertasController::class);
     Route::get('jenis_kertas/{id}/delete', [App\Http\Controllers\JenisKertasController::class, 'delete'])->name('jenis_kertas.delete');
 

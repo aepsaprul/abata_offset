@@ -42,7 +42,7 @@ class JenisKertasController extends Controller
         ]);
 
         $jenis_kertas = new OffsetJenisKertas;
-        $jenis_kertas->nama_jenis_kertas = $request->nama_jenis_kertas;
+        $jenis_kertas->nama_kertas = $request->nama_kertas;
         $jenis_kertas->save();
 
         return redirect()->route('jenis_kertas.index')->with('status', 'Data berhasil disimpan');
@@ -86,7 +86,7 @@ class JenisKertasController extends Controller
         ]);
 
         $jenis_kertas = OffsetJenisKertas::find($id);
-        $jenis_kertas->nama_jenis_kertas = $request->nama_jenis_kertas;
+        $jenis_kertas->nama_kertas = $request->nama_kertas;
         $jenis_kertas->save();
 
         return redirect()->route('jenis_kertas.index')->with('status', 'Data berhasil diperbaharui');

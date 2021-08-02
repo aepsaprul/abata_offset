@@ -41,10 +41,13 @@ class HomeController extends Controller
 
     public function produk(Request $request, $kode_produk)
     {
-        $produks = OffsetProduk::get();
+        $produks = OffsetProduk::with('kertas')->get();
 
         if ($kode_produk == "kalenderdinding") {
-            return view('kalenderDinding', ['produks' => $produks]);
+
+            $produk_relasi = OffsetProduk::where('kode_produk', 'kalenderdinding')->with(['kertas', 'finishing'])->first();
+
+            return view('kalenderDinding', ['produks' => $produks, 'produk_relasi' => $produk_relasi]);
         } else {
             echo "data mbuh";
         }

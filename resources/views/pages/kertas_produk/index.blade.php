@@ -6,9 +6,10 @@
 
 @section('content')
 <div class="container">
+    {{-- <div class="row justify-content-center"> --}}
     <div class="row">
         <div class="col-md-12">
-            <h5 class="text-center text-uppercase font-weight-bold"><span style="border-bottom: 1px solid #000; padding: 5px;">Data Set Kalender</span></h5>
+            <h5 class="text-center text-uppercase font-weight-bold"><span style="border-bottom: 1px solid #000; padding: 5px;">Data Kertas Produk</span></h5>
         </div>
     </div>
     <div class="row mt-3">
@@ -20,7 +21,7 @@
     </div>
     <div class="row mt-3">
         <div class="col-md-4">
-            <a href="{{ route('kertas.create') }}" class="btn btn-info text-white" title="Tambah"><i class="fas fa-plus"></i></a>
+            <a href="{{ route('kertas_produk.create') }}" class="btn btn-info text-white" title="Tambah"><i class="fas fa-plus"></i></a>
         </div>
     </div>
     <div class="row mt-4">
@@ -28,24 +29,20 @@
             <thead>
                 <tr class="text-center bg-secondary text-white">
                     <th>No</th>
-                    <th>Ukuran</th>
-                    <th>Harga</th>
-                    <th>Biaya Susun</th>
-                    <th>Klem</th>
-                    <th>Spiral</th>
+                    <th>Nama Kertas</th>
+                    <th>Produk</th>
                     <th>#</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($kertas as $key => $kertas)
+                @foreach ($kertas_produks as $key => $kertas_produk)
                 <tr>
-                    <td>{{ $key + 1 }}</td>
-                    <td>{{ $kertas->nama_kertas }}</td>
-                    <td class="text-center">{{ $kertas->panjang }} cm</td>
-                    <td class="text-center">{{ $kertas->lebar }} cm</td>
+                    <td class="text-center">{{ $key + 1 }}</td>
+                    <td>{{ $kertas_produk->kertas->nama_kertas }}</td>
+                    <td class="text-right">{{ $kertas_produk->produk->nama_produk }}</td>
                     <td class="text-center">
-                        <a href="{{ route('kertas.edit', [$kertas->id]) }}" class="btn btn-info text-white" title="Ubah"><i class="fas fa-edit"></i></a> |
-                        <a href="{{ route('kertas.delete', [$kertas->id]) }}" class="btn btn-info text-white" title="Hapus" onclick="return confirm('Yakin akan dihapus?')"><i class="fas fa-trash"></i></a>
+                        <a href="{{ route('kertas_produk.edit', [$kertas_produk->id]) }}" class="btn btn-info text-white" title="Ubah"><i class="fas fa-edit"></i></a> |
+                        <a href="{{ route('kertas_produk.delete', [$kertas_produk->id]) }}" class="btn btn-info text-white" title="Hapus" onclick="return confirm('Yakin akan dihapus?')"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
                 @endforeach

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OffsetJenisKertas;
-use App\Models\OffsetKertasProduk;
+use App\Models\OffsetFinishing;
+use App\Models\OffsetFinishingProduk;
 use App\Models\OffsetProduk;
 use Illuminate\Http\Request;
 
-class KertasProdukController extends Controller
+class FinishingProdukController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,9 @@ class KertasProdukController extends Controller
      */
     public function index()
     {
-        $kertas_produks = OffsetKertasProduk::with(['kertas', 'produk'])->orderBy('id', 'desc')->get();
+        $finishing_produks = OffsetFinishingProduk::with(['finishing', 'produk'])->orderBy('id', 'desc')->get();
 
-        return view('pages.kertas_produk.index', ['kertas_produks' => $kertas_produks]);
+        return view('pages.finishing_produk.index', ['finishing_produks' => $finishing_produks]);
     }
 
     /**
@@ -28,10 +28,10 @@ class KertasProdukController extends Controller
      */
     public function create()
     {
-        $kertas = OffsetJenisKertas::get();
+        $finishings = OffsetFinishing::get();
         $produks = OffsetProduk::get();
 
-        return view('pages.kertas_produk.create',['kertas' => $kertas, 'produks' => $produks]);
+        return view('pages.finishing_produk.create', ['finishings' => $finishings, 'produks' => $produks]);
     }
 
     /**
@@ -43,16 +43,16 @@ class KertasProdukController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'kertas_id' => 'required',
+            'finishing_id' => 'required',
             'produk_id' => 'required'
         ]);
 
-        $kertas_produks = new OffsetKertasProduk;
-        $kertas_produks->kertas_id = $request->kertas_id;
-        $kertas_produks->produk_id = $request->produk_id;
-        $kertas_produks->save();
+        $finishing_produks = new OffsetFinishingProduk;
+        $finishing_produks->finishing_id = $request->finishing_id;
+        $finishing_produks->produk_id = $request->produk_id;
+        $finishing_produks->save();
 
-        return redirect()->route('kertas_produk.index')->with('status', 'Data berhasil disimpan');
+        return redirect()->route('finishing_produk.index')->with('status', 'Data berhasil disimpan');
     }
 
     /**
@@ -74,13 +74,13 @@ class KertasProdukController extends Controller
      */
     public function edit($id)
     {
-        $kertas_produk = OffsetKertasProduk::find($id);
-        $kertas = OffsetJenisKertas::get();
+        $finishing_produk = OffsetFinishingProduk::find($id);
+        $finishings = OffsetFinishing::get();
         $produks = OffsetProduk::get();
 
-        return view('pages.kertas_produk.edit', [
-            'kertas_produk' => $kertas_produk,
-            'kertas' => $kertas,
+        return view('pages.finishing_produk.edit', [
+            'finishing_produk' => $finishing_produk,
+            'finishings' => $finishings,
             'produks' => $produks
         ]);
     }
@@ -95,16 +95,16 @@ class KertasProdukController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'kertas_id' => 'required',
+            'finishing_id' => 'required',
             'produk_id' => 'required'
         ]);
 
-        $kertas_produks = OffsetKertasProduk::find($id);
-        $kertas_produks->kertas_id = $request->kertas_id;
-        $kertas_produks->produk_id = $request->produk_id;
-        $kertas_produks->save();
+        $finishing_produks = OffsetFinishingProduk::find($id);
+        $finishing_produks->finishing_id = $request->finishing_id;
+        $finishing_produks->produk_id = $request->produk_id;
+        $finishing_produks->save();
 
-        return redirect()->route('kertas_produk.index')->with('status', 'Data berhasil diperbaharui');
+        return redirect()->route('finishing_produk.index')->with('status', 'Data berhasil disimpan');
     }
 
     /**
@@ -120,9 +120,9 @@ class KertasProdukController extends Controller
 
     public function delete(Request $request, $id)
     {
-        $kertas_produk = OffsetKertasProduk::find($id);
-        $kertas_produk->delete();
+        $finishing_produk = OffsetFinishingProduk::find($id);
+        $finishing_produk->delete();
 
-        return redirect()->route('kertas_produk.index')->with('status', 'Data berhasil dihapus');
+        return redirect()->route('finishing_produk.index')->with('status', 'Data berhasil dihapus');
     }
 }

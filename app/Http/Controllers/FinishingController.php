@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\OffsetFinishing;
+use App\Models\OffsetProduk;
 use Illuminate\Http\Request;
 
 class FinishingController extends Controller
@@ -38,13 +39,11 @@ class FinishingController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama_finishing' => 'required',
-            'produk_id' => 'required'
+            'nama_finishing' => 'required'
         ]);
 
         $finishings = new OffsetFinishing;
         $finishings->nama_finishing = $request->nama_finishing;
-        $finishings->produk_id = $request->produk_id;
         $finishings->save();
 
         return redirect()->route('finishing.index')->with('status', 'Data berhasil disimpan');
@@ -71,7 +70,7 @@ class FinishingController extends Controller
     {
         $finishing = OffsetFinishing::find($id);
 
-        return view('pages.finishing.edit');
+        return view('pages.finishing.edit', ['finishing' => $finishing]);
     }
 
     /**
@@ -84,13 +83,11 @@ class FinishingController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'nama_finishing' => 'required',
-            'produk_id' => 'required'
+            'nama_finishing' => 'required'
         ]);
 
         $finishings = OffsetFinishing::find($id);
         $finishings->nama_finishing = $request->nama_finishing;
-        $finishings->produk_id = $request->produk_id;
         $finishings->save();
 
         return redirect()->route('finishing.index')->with('status', 'Data berhasil diperbaharui');
@@ -112,6 +109,6 @@ class FinishingController extends Controller
         $biaya_finishing = OffsetFinishing::find($id);
         $biaya_finishing->delete();
 
-        return redirect()->route('biaya_finishing.index')->with('status', 'Data berhasil dihapus');
+        return redirect()->route('finishing.index')->with('status', 'Data berhasil dihapus');
     }
 }
