@@ -32,11 +32,12 @@
                                     <div class="col-sm-6">
                                         <select class="form-select form-select-sm" id="jml_halaman_kalender" name="jml_halaman_kalender" required>
                                             <option value="">--Pilih Jumlah--</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="6">6</option>
+                                            <option value="1">1 Lembar</option>
+                                            <option value="2">2 Lembar</option>
+                                            <option value="3">3 Lembar</option>
+                                            <option value="4">4 Lembar</option>
+                                            <option value="6">6 Lembar</option>
+                                            <option value="12">12 Lembar</option>
                                         </select>
                                     </div>
                                 </div>
@@ -47,10 +48,10 @@
                                     <div class="col-sm-6">
                                         <select class="form-select form-select-sm" id="jml_warna" name="jml_warna" required>
                                             <option value="">--Pilih Jumlah--</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
+                                            <option value="1">1 Warna</option>
+                                            <option value="2">2 Warna</option>
+                                            <option value="3">3 Warna</option>
+                                            <option value="4">Full Color</option>
                                         </select>
                                     </div>
                                 </div>
