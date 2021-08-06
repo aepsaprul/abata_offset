@@ -54,7 +54,7 @@ class BahanController extends Controller
         $bahans->nama_bahan = $request->nama_bahan;
         $bahans->harga_bahan = $harga_bahan;
         $bahans->gramasi = $request->gramasi;
-        $bahans->offset_kertas_id = $request->offset_kertas_id;
+        $bahans->kertas_id = $request->offset_kertas_id;
         $bahans->publish = $request->publish;
         $bahans->save();
 
@@ -109,7 +109,7 @@ class BahanController extends Controller
         $bahans->nama_bahan = $request->nama_bahan;
         $bahans->harga_bahan = $harga_bahan;
         $bahans->gramasi = $request->gramasi;
-        $bahans->offset_kertas_id = $request->offset_kertas_id;
+        $bahans->kertas_id = $request->offset_kertas_id;
         $bahans->publish = $request->publish;
         $bahans->save();
 

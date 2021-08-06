@@ -52,9 +52,9 @@ class BiayaCetakController extends Controller
 
         $biaya_cetaks = new OffsetBiayaCetak;
         $biaya_cetaks->nama_biaya = $request->nama_biaya;
-        $biaya_cetaks->offset_mesin_id = $request->offset_mesin_id;
+        $biaya_cetaks->mesin_id = $request->offset_mesin_id;
         $biaya_cetaks->kategori_warna = $request->kategori_warna;
-        $biaya_cetaks->jumlah_min = $request->jumlah_min;
+        $biaya_cetaks->jml_min = $request->jumlah_min;
         $biaya_cetaks->harga_cetak_min = $harga_cetak_min;
         $biaya_cetaks->harga_cetak_lebih = $harga_cetak_lebih;
         $biaya_cetaks->save();
@@ -108,9 +108,9 @@ class BiayaCetakController extends Controller
 
         $biaya_cetaks = OffsetBiayaCetak::find($id);
         $biaya_cetaks->nama_biaya = $request->nama_biaya;
-        $biaya_cetaks->offset_mesin_id = $request->offset_mesin_id;
+        $biaya_cetaks->mesin_id = $request->offset_mesin_id;
         $biaya_cetaks->kategori_warna = $request->kategori_warna;
-        $biaya_cetaks->jumlah_min = $request->jumlah_min;
+        $biaya_cetaks->jml_min = $request->jumlah_min;
         $biaya_cetaks->harga_cetak_min = $harga_cetak_min;
         $biaya_cetaks->harga_cetak_lebih = $harga_cetak_lebih;
         $biaya_cetaks->save();

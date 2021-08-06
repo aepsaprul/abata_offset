@@ -55,7 +55,7 @@
                                             <label for="ukuran_cetak" class="col-sm-6 col-form-label">Ukuran Cetak</label>
                                             <div class="col-sm-6">
                                                 <select class="form-select form-select-sm" id="ukuran_cetak" name="ukuran_kertas" required>
-                                                    <option value="">--Pilih Jumlah--</option>
+                                                    <option value="">--Pilih Ukuran--</option>
                                                     <option value="32 x 48">32 x 48</option>
                                                     <option value="38 x 52">38 x 52</option>
                                                     <option value="40 x 56">40 x 56</option>
@@ -152,10 +152,10 @@
                                                 <div class="col-sm-6">
                                                     <select class="form-select form-select-sm" id="jml_warna_cover" name="jml_warna_cover" required>
                                                         <option value="">--Pilih Jumlah--</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
+                                                        <option value="1">1 Warna</option>
+                                                        <option value="2">2 Warna</option>
+                                                        <option value="3">3 Warna</option>
+                                                        <option value="4">Full Color</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -166,8 +166,9 @@
                                                 <div class="col-sm-6">
                                                     <select class="form-select form-select-sm" id="jenis_kertas_cover" name="jenis_kertas_cover" required>
                                                         <option value="">--Pilih Kertas--</option>
-                                                        <option value="IVORY 230">IVORY 230</option>
-                                                        <option value="AP 120">AP 120</option>
+                                                        @foreach ($produk_relasi->kertas as $kertas)
+                                                            <option value="{{ $kertas->kertas->id }}">{{ $kertas->kertas->nama_kertas }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>

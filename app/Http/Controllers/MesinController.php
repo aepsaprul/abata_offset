@@ -39,30 +39,18 @@ class MesinController extends Controller
     {
         $validated = $request->validate([
             'nama_mesin' => 'required',
-            'ukuran_max_kertas' => 'required',
-            'ukuran_max_cetak' => 'required',
-            'ukuran_min_cetak' => 'required',
-            'jumlah_min' => 'required',
-            'harga_min' => 'required',
-            'harga_lebih' => 'required',
-            'harga_ctp' => 'required',
-            'publish' => 'required'
+            'area_kertas_panjang' => 'required',
+            'area_kertas_lebar' => 'required',
+            'area_cetak_panjang' => 'required',
+            'area_cetak_lebar' => 'required'
         ]);
-
-        $harga_min = str_replace(".","", $request->harga_min);
-        $harga_lebih = str_replace(".","", $request->harga_lebih);
-        $harga_ctp = str_replace(".","", $request->harga_ctp);
 
         $mesins = new OffsetMesin;
         $mesins->nama_mesin = $request->nama_mesin;
-        $mesins->ukuran_max_kertas = $request->ukuran_max_kertas;
-        $mesins->ukuran_max_cetak = $request->ukuran_max_cetak;
-        $mesins->ukuran_min_cetak = $request->ukuran_min_cetak;
-        $mesins->jumlah_min = $request->jumlah_min;
-        $mesins->harga_min = $harga_min;
-        $mesins->harga_lebih = $harga_lebih;
-        $mesins->harga_ctp = $harga_ctp;
-        $mesins->publish = $request->publish;
+        $mesins->area_kertas_panjang = $request->area_kertas_panjang;
+        $mesins->area_kertas_lebar = $request->area_kertas_lebar;
+        $mesins->area_cetak_panjang = $request->area_cetak_panjang;
+        $mesins->area_cetak_lebar = $request->area_cetak_lebar;
         $mesins->save();
 
         return redirect()->route('mesin.index')->with('status', 'Data berhasil disimpan');
@@ -103,30 +91,18 @@ class MesinController extends Controller
     {
         $validated = $request->validate([
             'nama_mesin' => 'required',
-            'ukuran_max_kertas' => 'required',
-            'ukuran_max_cetak' => 'required',
-            'ukuran_min_cetak' => 'required',
-            'jumlah_min' => 'required',
-            'harga_min' => 'required',
-            'harga_lebih' => 'required',
-            'harga_ctp' => 'required',
-            'publish' => 'required'
+            'area_kertas_panjang' => 'required',
+            'area_kertas_lebar' => 'required',
+            'area_cetak_panjang' => 'required',
+            'area_cetak_lebar' => 'required'
         ]);
-
-        $harga_min = str_replace(".","", $request->harga_min);
-        $harga_lebih = str_replace(".","", $request->harga_lebih);
-        $harga_ctp = str_replace(".","", $request->harga_ctp);
 
         $mesins = OffsetMesin::find($id);
         $mesins->nama_mesin = $request->nama_mesin;
-        $mesins->ukuran_max_kertas = $request->ukuran_max_kertas;
-        $mesins->ukuran_max_cetak = $request->ukuran_max_cetak;
-        $mesins->ukuran_min_cetak = $request->ukuran_min_cetak;
-        $mesins->jumlah_min = $request->jumlah_min;
-        $mesins->harga_min = $harga_min;
-        $mesins->harga_lebih = $harga_lebih;
-        $mesins->harga_ctp = $harga_ctp;
-        $mesins->publish = $request->publish;
+        $mesins->area_kertas_panjang = $request->area_kertas_panjang;
+        $mesins->area_kertas_lebar = $request->area_kertas_lebar;
+        $mesins->area_cetak_panjang = $request->area_cetak_panjang;
+        $mesins->area_cetak_lebar = $request->area_cetak_lebar;
         $mesins->save();
 
         return redirect()->route('mesin.index')->with('status', 'Data berhasil disimpan');

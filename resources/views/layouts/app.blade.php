@@ -50,7 +50,7 @@
                           <li><a class="dropdown-item text-uppercase" href="{{ url('jenis_kertas') }}">Jenis Kertas</a></li>
                           <li><a class="dropdown-item text-uppercase" href="{{ url('kertas') }}">Kertas</a></li>
                           <li><a class="dropdown-item text-uppercase" href="{{ url('kertas_produk') }}">Kertas Produk</a></li>
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('master_mesin') }}">Mesin</a></li>
+                          <li><a class="dropdown-item text-uppercase" href="{{ url('mesin') }}">Mesin</a></li>
                           <li><a class="dropdown-item text-uppercase" href="{{ url('produk') }}">Produk</a></li>
                         </ul>
                       </li>

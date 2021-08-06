@@ -49,7 +49,7 @@ class BiayaController extends Controller
 
         $biayas = new OffsetBiaya;
         $biayas->keterangan_biaya = $request->keterangan_biaya;
-        $biayas->jumlah_min = $request->jumlah_min;
+        $biayas->jml_min = $request->jumlah_min;
         $biayas->harga_min = $harga_min;
         $biayas->harga_lebih = $harga_lebih;
         $biayas->save();
@@ -102,7 +102,7 @@ class BiayaController extends Controller
 
         $biayas = OffsetBiaya::find($id);
         $biayas->keterangan_biaya = $request->keterangan_biaya;
-        $biayas->jumlah_min = $request->jumlah_min;
+        $biayas->jml_min = $request->jumlah_min;
         $biayas->harga_min = $harga_min;
         $biayas->harga_lebih = $harga_lebih;
         $biayas->save();

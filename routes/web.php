@@ -55,9 +55,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('mesin', MesinController::class);
     Route::get('mesin/{id}/delete', [MesinController::class, 'delete'])->name('mesin.delete');
 
-    Route::resource('master_mesin', MasterMesinController::class);
-    Route::get('master_mesin/{id}/delete', [MasterMesinController::class, 'delete'])->name('master_mesin.delete');
-
     Route::resource('produk', ProdukController::class);
     Route::get('produk/{id}/delete', [ProdukController::class, 'delete'])->name('produk.delete');
 });

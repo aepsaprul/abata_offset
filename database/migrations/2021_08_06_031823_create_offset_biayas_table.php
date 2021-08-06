@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOffsetFinishingsTable extends Migration
+class CreateOffsetBiayasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateOffsetFinishingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('offset_finishings', function (Blueprint $table) {
+        Schema::create('offset_biayas', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_finishing', 50)->nullable();
+            $table->string('keterangan_biaya', 50)->nullable();
+            $table->integer('jml_min')->nullable();
+            $table->double('harga_min')->nullable();
+            $table->double('harga_lebih')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ class CreateOffsetFinishingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('offset_finishings');
+        Schema::dropIfExists('offset_biayas');
     }
 }
