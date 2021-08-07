@@ -38,11 +38,15 @@ class JenisKertasController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama_kertas' => 'required'
+            'nama_kertas' => 'required',
+            'harga' => 'required'
         ]);
+
+        $harga = str_replace(".", "", $request->harga);
 
         $jenis_kertas = new OffsetJenisKertas;
         $jenis_kertas->nama_kertas = $request->nama_kertas;
+        $jenis_kertas->harga = $harga;
         $jenis_kertas->save();
 
         return redirect()->route('jenis_kertas.index')->with('status', 'Data berhasil disimpan');
@@ -82,11 +86,15 @@ class JenisKertasController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'nama_kertas' => 'required'
+            'nama_kertas' => 'required',
+            'harga' => 'required'
         ]);
+
+        $harga = str_replace(".", "", $request->harga);
 
         $jenis_kertas = OffsetJenisKertas::find($id);
         $jenis_kertas->nama_kertas = $request->nama_kertas;
+        $jenis_kertas->harga = $harga;
         $jenis_kertas->save();
 
         return redirect()->route('jenis_kertas.index')->with('status', 'Data berhasil diperbaharui');

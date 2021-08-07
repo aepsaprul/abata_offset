@@ -26,6 +26,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/{kode_produk}', [App\Http\Controllers\HomeController::class, 'produk'])->name('home.produk');
+Route::post('/home/kalender-dinding', [App\Http\Controllers\HomeController::class, 'kalenderDinding'])->name('home.produk.kalender_dinding');
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('bahan', BahanController::class);
