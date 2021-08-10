@@ -87,21 +87,7 @@ class HomeController extends Controller
         // jumlah plat
         $jml_plat = $jml_halaman_kalender * $jml_warna;
 
-        // hitung biaya susun
-        if ($jml_halaman_kalender == 1) {
-            $biaya_susun = 0;
-            $message = 1;
-        } else if ($jml_halaman_kalender == 6) {
-            $biaya_susun = 500 * $jml_cetak;
-            $message = 2;
-        } elseif ($jml_halaman_kalender == 12) {
-            $biaya_susun = 800 * $jml_cetak;
-            $message = 3;
-        } else {
-            $biaya_susun = 100 * $jml_cetak;
-            $message = 4;
-        }
-
+        // ukuran cetak
         $ukuran_cetak_db = OffsetUkuranCetak::where('id', $ukuran_cetak_id)->first();
         $ukuran_cetak = $ukuran_cetak_db->lebar . " x " . $ukuran_cetak_db->panjang;
 
@@ -129,19 +115,39 @@ class HomeController extends Controller
             echo "ukuran lainnya";
         }
 
+        $ukuran_cetak_detail_db = OffsetUkuranCetakDetail::where('ukuran_cetak_id', $ukuran_cetak_id)->where('mesin_id', $mesin_id)->with('kertas')->first();
+        $ukuran_cetak_detail = $ukuran_cetak_detail_db->kertas->nama_kertas;
+
+        // ukuran potong kertas
+        $ukuran_potong_lebar = $ukuran_cetak_db->lebar + 2;
+        $ukuran_potong_panjang = $ukuran_cetak_db->panjang + 2;
+        $ukuran_potong_kertas = $ukuran_potong_lebar . " x " . $ukuran_potong_panjang;
+
         // hitung kondisi finishing
         if ($jenis_finishing == "KLEM") {
+            $biaya_susun = 0;
             $biaya_finishing = $biaya_klem;
         } elseif ($jenis_finishing == "SPIRAL") {
+            // hitung biaya susun
+            if ($jml_halaman_kalender == 1) {
+                $biaya_susun = 0;
+            } else if ($jml_halaman_kalender == 6) {
+                $biaya_susun = 500 * $jml_cetak;
+            } elseif ($jml_halaman_kalender == 12) {
+                $biaya_susun = 800 * $jml_cetak;
+            } else {
+                $biaya_susun = 100 * $jml_cetak;
+            }
             $biaya_finishing = $biaya_spiral;
             // $biaya_finishing = $biaya_spiral * $jml_cetak;
         } else {
+            $biaya_susun = 0;
             $biaya_finishing = 1000;
             // $biaya_finishing = 1000 * $jml_cetak;
         }
 
 
-        // JENIS BIAYA
+        // jenis kertas
         $offset_jenis_kertas = OffsetJenisKertas::find($jenis_kertas);
         $kertas = $offset_jenis_kertas->harga;
 
@@ -154,6 +160,7 @@ class HomeController extends Controller
         $mesin = OffsetMesin::where('id', $mesin_id)->first();
         $mesin_harga = $mesin->harga_min;
 
+        // biaya
         $biaya_kertas = $kertas * $jml_kertas_insheet;
         $biaya_cetak_min = 200000 * $jml_halaman_kalender;
         $biaya_plat = $jml_halaman_kalender * $mesin->harga_plat;
@@ -163,47 +170,62 @@ class HomeController extends Controller
 
         $margin_profit = 0.2;
         $profit = $margin_profit * $total_biaya;
-
-        // $hitung_kalender = new OffsetHitungProduk;
-        // $hitung_kalender->jml_halaman_kalender = $jml_halaman_kalender;
-        // $hitung_kalender->jml_warna = $jml_warna;
-        // $hitung_kalender->ukuran_cetak = $ukuran_cetak;
-        // $hitung_kalender->kertas_id = $jenis_kertas;
-        // $hitung_kalender->finishing = $jenis_finishing;
-        // $hitung_kalender->laminasi = $laminasi;
-        // $hitung_kalender->jml_cetak = $jml_cetak;
-        // $hitung_kalender->biaya_potong = $biaya_potong;
-        // $hitung_kalender->biaya_design = $biaya_design;
-        // $hitung_kalender->biaya_akomodasi = $biaya_akomodasi;
-        // $hitung_kalender->nama_file = $nama_file;
-        // $hitung_kalender->harga_set_kalender = $jml_set_kalender;
-        // $hitung_kalender->insheet = $jml_kertas_insheet;
-        // $hitung_kalender->harga_kertas_satuan = $kertas;
-        // $hitung_kalender->jml_plat = $jml_plat;
-        // $hitung_kalender->biaya_kertas = $biaya_kertas;
-        // $hitung_kalender->biaya_cetak_min = $biaya_cetak_min;
-        // $hitung_kalender->biaya_cetak_lebih = $biaya_cetak_lebih;
-        // $hitung_kalender->biaya_plat = $biaya_plat;
-        // $hitung_kalender->biaya_set_kalender = $biaya_set_kalender;
-        // $hitung_kalender->biaya_susun = $biaya_susun;
-        // $hitung_kalender->mesin_id = $mesin_id;
-        // $hitung_kalender->total_biaya = $total_biaya;
-        // $hitung_kalender->save();
-
-        // $get_hitung_kalender = OffsetHitungProduk::where('id', $hitung_kalender->id)->first();
+        $grand_total = $total_biaya + $profit;
+        $harga_satuan = $grand_total / $jml_cetak;
 
         return response()->json([
+            'jml_cetak' => $jml_cetak,
+            'jml_halaman' => $jml_halaman_kalender,
+            'jml_warna' => $jml_warna,
+            'ukuran_cetak' => $ukuran_cetak,
+            'jenis_kertas' => $offset_jenis_kertas->nama_kertas,
+            'finishing' => $jenis_finishing,
+            'kertas' => $ukuran_cetak_detail,
+            'mesin' => $mesin->nama_mesin,
+            'jml_plat' => $jml_plat,
+            'insheet' => $jml_kertas_insheet,
+            'ukuran_cetak_real' => $ukuran_cetak,
+            'ukuran_potong_kertas' => $ukuran_potong_kertas,
             'total_biaya' => $total_biaya,
-            // 'id' => $get_hitung_kalender->id,
-            'data' => $total_biaya,
-            'message' => $message
+            'profit' => $profit,
+            'grand_total' => $grand_total,
+            'harga_satuan' => $harga_satuan,
+            'biaya_kertas' => $biaya_kertas,
+            'biaya_cetak_min' => $biaya_cetak_min,
+            'biaya_cetak_lebih' => $biaya_cetak_lebih,
+            'biaya_plat' => $biaya_plat,
+            'biaya_susun' => $biaya_susun,
+            'biaya_set_kalender' => $biaya_set_kalender
         ]);
     }
 
-    public function kalenderDindingDetail($id) {
+    public function kalenderDindingDetail(Request $request) {
         $produks = OffsetProduk::with('kertas')->get();
-        $hitung = OffsetHitungProduk::find($id);
 
-        return view('pages.hitung_kalender_dinding.detail', ['produks' => $produks, 'hitung' => $hitung]);
+        return view('pages.hitung_kalender_dinding.detail', [
+            'produks' => $produks,
+            'jml_cetak' => $request->jml_cetak,
+            'jml_halaman' => $request->jml_halaman,
+            'jml_warna' => $request->jml_warna,
+            'ukuran_cetak' => $request->ukuran_cetak,
+            'jenis_kertas' => $request->jenis_kertas,
+            'finishing' => $request->finishing,
+            'kertas' => $request->ukuran_cetak_detail,
+            'mesin' => $request->mesin,
+            'jml_plat' => $request->jml_plat,
+            'insheet' => $request->insheet,
+            'ukuran_cetak_real' => $request->ukuran_cetak,
+            'ukuran_potong_kertas' => $request->ukuran_potong_kertas,
+            'total_biaya' => $request->total_biaya,
+            'profit' => $request->profit,
+            'grand_total' => $request->grand_total,
+            'harga_satuan' => $request->harga_satuan,
+            'biaya_kertas' => $request->biaya_kertas,
+            'biaya_cetak_min' => $request->biaya_cetak_min,
+            'biaya_cetak_lebih' => $request->biaya_cetak_lebih,
+            'biaya_plat' => $request->biaya_plat,
+            'biaya_susun' => $request->biaya_susun,
+            'biaya_set_kalender' => $request->biaya_set_kalender
+        ]);
     }
 }

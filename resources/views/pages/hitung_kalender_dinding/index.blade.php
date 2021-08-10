@@ -204,9 +204,12 @@
                         </div>
                     </form>
                     <hr>
-                    <div class="row hasil_hitung">
-                        {{-- hasil hitung di jquery  --}}
-                    </div>
+                    <form id="kalender-dinding-detail" action="{{ route('home.produk.kalender_dinding_detail') }}" method="POST">
+                        @csrf
+                        <div class="row hasil_hitung">
+                            {{-- hasil hitung di jquery  --}}
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -280,30 +283,46 @@
                 data: formData,
                 success: function(response) {
                     console.log(response);
-                    // var biaya_total = response.biaya_total;
+                    var url = '{{ route("home.produk.kalender_dinding_detail") }}';
 
-                    // $.each(response.b, function(index, value) {
+                    var dataHasilHitung = "" +
+                        "<div class=\"col-md-12\">" +
+                        "   <div class=\"row\">" +
+                        "       <div class=\"col-md-6\">" +
+                        "           <span>Total Biaya</span>" +
+                        "       </div>" +
+                        "       <div class=\"col-md-6\">" +
+                        "           <div class=\"text-right\">" +
+                        "               <button type=\"submit\" class=\"btn btn-info\">" + response.total_biaya + "</button>" +
+                        "           </div>" +
+                        "       </div>" +
+                        "       <input type=\"hidden\" id=\"jml_cetak\" name=\"jml_cetak\" value=\"" + response.jml_cetak + "\">" +
+                        "       <input type=\"hidden\" id=\"jml_halaman\" name=\"jml_halaman\" value=\"" + response.jml_halaman + "\">" +
+                        "       <input type=\"hidden\" id=\"jml_warna\" name=\"jml_warna\" value=\"" + response.jml_warna + "\">" +
+                        "       <input type=\"hidden\" id=\"ukuran_cetak\" name=\"ukuran_cetak\" value=\"" + response.ukuran_cetak + "\">" +
+                        "       <input type=\"hidden\" id=\"jenis_kertas\" name=\"jenis_kertas\" value=\"" + response.jenis_kertas + "\">" +
+                        "       <input type=\"hidden\" id=\"finishing\" name=\"finishing\" value=\"" + response.finishing + "\">" +
+                        "       <input type=\"hidden\" id=\"kertas\" name=\"kertas\" value=\"" + response.kertas + "\">" +
+                        "       <input type=\"hidden\" id=\"mesin\" name=\"mesin\" value=\"" + response.mesin + "\">" +
+                        "       <input type=\"hidden\" id=\"jml_plat\" name=\"jml_plat\" value=\"" + response.jml_plat + "\">" +
+                        "       <input type=\"hidden\" id=\"insheet\" name=\"insheet\" value=\"" + response.insheet + "\">" +
+                        "       <input type=\"hidden\" id=\"ukuran_cetak_real\" name=\"ukuran_cetak_real\" value=\"" + response.ukuran_cetak_real + "\">" +
+                        "       <input type=\"hidden\" id=\"ukuran_potong_kertas\" name=\"ukuran_potong_kertas\" value=\"" + response.ukuran_potong_kertas + "\">" +
+                        "       <input type=\"hidden\" id=\"biaya_kertas\" name=\"biaya_kertas\" value=\"" + response.biaya_kertas + "\">" +
+                        "       <input type=\"hidden\" id=\"total_biaya\" name=\"total_biaya\" value=\"" + response.total_biaya + "\">" +
+                        "       <input type=\"hidden\" id=\"profit\" name=\"profit\" value=\"" + response.profit + "\">" +
+                        "       <input type=\"hidden\" id=\"grand_total\" name=\"grand_total\" value=\"" + response.grand_total + "\">" +
+                        "       <input type=\"hidden\" id=\"harga_satuan\" name=\"harga_satuan\" value=\"" + response.harga_satuan + "\">" +
+                        "       <input type=\"hidden\" id=\"biaya_kertas\" name=\"biaya_kertas\" value=\"" + response.biaya_kertas + "\">" +
+                        "       <input type=\"hidden\" id=\"biaya_cetak_min\" name=\"biaya_cetak_min\" value=\"" + response.biaya_cetak_min + "\">" +
+                        "       <input type=\"hidden\" id=\"biaya_cetak_lebih\" name=\"biaya_cetak_lebih\" value=\"" + response.biaya_cetak_lebih + "\">" +
+                        "       <input type=\"hidden\" id=\"biaya_plat\" name=\"biaya_plat\" value=\"" + response.biaya_plat + "\">" +
+                        "       <input type=\"hidden\" id=\"biaya_susun\" name=\"biaya_susun\" value=\"" + response.biaya_susun + "\">" +
+                        "       <input type=\"hidden\" id=\"biaya_set_kalender\" name=\"biaya_set_kalender\" value=\"" + response.biaya_set_kalender + "\">" +
+                        "   </div>"
+                        "</div>";
 
-                        // var biaya_total_mesin = value.mesin.harga_min + biaya_total;
-                        var url = '{{ route("home.produk.kalender_dinding_detail", ":id") }}';
-                        url = url.replace(':id', response.id);
-
-                        var dataHasilHitung = "" +
-                            "<div class=\"col-md-12\">" +
-                            "   <div class=\"row\">" +
-                            "       <div class=\"col-md-6\">" +
-                            "           <span>Total Biaya</span>" +
-                            "       </div>" +
-                            "       <div class=\"col-md-6\">" +
-                            "           <div class=\"text-right\">" +
-                            "           <span><a href=\"" + url + "\" class=\"btn btn-info\">" + response.total_biaya + "</a></span>" +
-                            "           </div>" +
-                            "       </div>" +
-                            "   </div>"
-                            "</div>";
-
-                        $(".hasil_hitung").append(dataHasilHitung);
-                    // });
+                    $(".hasil_hitung").append(dataHasilHitung);
                 }
             });
         })

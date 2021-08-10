@@ -29,7 +29,7 @@ Route::get('/home/{kode_produk}', [App\Http\Controllers\HomeController::class, '
 Route::post('/home/ukuran-cetak-detail/', [App\Http\Controllers\HomeController::class, 'ukuranCetakDetail'])->name('home.ukuran_cetak_detail');
 
 Route::post('/home/kalender-dinding', [App\Http\Controllers\HomeController::class, 'kalenderDinding'])->name('home.produk.kalender_dinding');
-Route::get('/home/kalender-dinding-detail/{id}', [App\Http\Controllers\HomeController::class, 'kalenderDindingDetail'])->name('home.produk.kalender_dinding_detail');
+Route::post('/home/kalender-dinding-detail', [App\Http\Controllers\HomeController::class, 'kalenderDindingDetail'])->name('home.produk.kalender_dinding_detail');
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('bahan', BahanController::class);

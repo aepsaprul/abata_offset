@@ -26,32 +26,32 @@
                                         <tr>
                                             <td class="text-right">Jumlah Cetak</td>
                                             <td>:</td>
-                                            <td class="float-right">{{ $hitung->jml_cetak }}</td>
+                                            <td class="float-right">{{ $jml_cetak }}</td>
                                         </tr>
                                         <tr>
                                             <td>Jumlah Halaman</td>
                                             <td>:</td>
-                                            <td>{{ $hitung->jml_halaman_kalender }}</td>
+                                            <td>{{ $jml_halaman }}</td>
                                         </tr>
                                         <tr>
                                             <td>Jumlah Warna</td>
                                             <td>:</td>
-                                            <td>{{ $hitung->jml_warna }}</td>
+                                            <td>{{ $jml_warna }}</td>
                                         </tr>
                                         <tr>
                                             <td>Ukuran Cetak</td>
                                             <td>:</td>
-                                            <td>{{ $hitung->ukuran_cetak }}</td>
+                                            <td>{{ $ukuran_cetak }}</td>
                                         </tr>
                                         <tr>
                                             <td>Jenis Kertas</td>
                                             <td>:</td>
-                                            <td>{{ $hitung->kertas_id }}</td>
+                                            <td>{{ $jenis_kertas }}</td>
                                         </tr>
                                         <tr>
                                             <td>Finishing</td>
                                             <td>:</td>
-                                            <td>{{ $hitung->finishing }}</td>
+                                            <td>{{ $finishing }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -62,27 +62,27 @@
                                     <tr>
                                         <td>Insheet</td>
                                         <td>:</td>
-                                        <td>{{ $hitung->insheet }}</td>
+                                        <td>{{ $insheet }}</td>
                                     </tr>
                                     <tr>
                                         <td>Mesin yg dipakai</td>
                                         <td>:</td>
-                                        <td>{{ $hitung->mesin_id }}</td>
+                                        <td>{{ $mesin }}</td>
                                     </tr>
                                     <tr>
                                         <td>Jumlah Plat</td>
                                         <td>:</td>
-                                        <td>{{ $hitung->jml_plat }}</td>
+                                        <td>{{ $jml_plat }}</td>
                                     </tr>
                                     <tr>
                                         <td>Ukuran Cetak Real</td>
                                         <td>:</td>
-                                        <td>{{ $hitung->ukuran_cetak }}</td>
+                                        <td>{{ $ukuran_cetak_real }}</td>
                                     </tr>
                                     <tr>
                                         <td>Ukuran Potong Kertas</td>
                                         <td>:</td>
-                                        <td>-</td>
+                                        <td>{{ $ukuran_potong_kertas }}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -92,47 +92,47 @@
                                     <tr>
                                         <td>Biaya Kertas</td>
                                         <td>:</td>
-                                        <td>{{ $hitung->biaya_kertas }}</td>
+                                        <td>{{ $biaya_kertas }}</td>
                                     </tr>
                                     <tr>
                                         <td>Biaya Cetak Min</td>
                                         <td>:</td>
-                                        <td>{{ $hitung->biaya_cetak_min }}</td>
+                                        <td>{{ $biaya_cetak_min }}</td>
                                     </tr>
                                     <tr>
                                         <td>Biaya Cetak Lebih</td>
                                         <td>:</td>
-                                        <td>{{ $hitung->biaya_cetak_lebih }}</td>
+                                        <td>{{ $biaya_cetak_lebih }}</td>
                                     </tr>
                                     <tr>
                                         <td>Biaya Plat</td>
                                         <td>:</td>
-                                        <td>{{ $hitung->biaya_plat }}</td>
+                                        <td>{{ $biaya_plat }}</td>
                                     </tr>
                                     <tr>
                                         <td>Total Biaya</td>
                                         <td>:</td>
-                                        <td>{{ $hitung->total_biaya }}</td>
+                                        <td>{{ $total_biaya }}</td>
                                     </tr>
                                     <tr>
                                         <td>Margin Profit</td>
                                         <td>:</td>
-                                        <td>-</td>
+                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td>Profit</td>
                                         <td>:</td>
-                                        <td>-</td>
+                                        <td>{{ $profit }}</td>
                                     </tr>
                                     <tr>
                                         <td>Grand Total</td>
                                         <td>:</td>
-                                        <td>-</td>
+                                        <td>{{ $grand_total }}</td>
                                     </tr>
                                     <tr>
                                         <td>Harga Satuan Kalender</td>
                                         <td>:</td>
-                                        <td>-</td>
+                                        <td>{{ $harga_satuan }}</td>
                                     </tr>
                                 </table>
                             </div>
