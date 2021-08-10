@@ -57,11 +57,9 @@
                                             <div class="col-sm-6">
                                                 <select class="form-select form-select-sm" id="ukuran_cetak" name="ukuran_cetak">
                                                     <option value="">--Pilih Ukuran--</option>
-                                                    <option value="32 x 48">32 x 48</option>
-                                                    <option value="38 x 52">38 x 52</option>
-                                                    <option value="40 x 56">40 x 56</option>
-                                                    <option value="44 x 64">44 x 64</option>
-                                                    <option value="50 x 70">50 x 70</option>
+                                                    @foreach ($ukuran_cetaks as $ukuran_cetak)
+                                                        <option value="{{ $ukuran_cetak->id }}">{{ $ukuran_cetak->lebar }} x {{ $ukuran_cetak->panjang }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -102,6 +100,17 @@
                                                     <option value="">--Pilih Laminasi--</option>
                                                     <option value="ya">Ya</option>
                                                     <option value="tidak">Tidak</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group row mb-3">
+                                            <label for="mesin_id" class="col-sm-6 col-form-label">Mesin</label>
+                                            <div class="col-sm-6">
+                                                <select class="form-select form-select-sm" id="mesin_id" name="mesin_id">
+                                                    <option value="">--Pilih Mesin--</option>
+                                                    {{-- data mesin di javascript  --}}
                                                 </select>
                                             </div>
                                         </div>
@@ -185,7 +194,7 @@
                                 <div class="form-group row mb-3">
                                     <label for="nama_file" class="col-sm-6 col-form-label">Nama File</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-sm" id="nama_file" name="nama_file">
+                                        <input type="text" class="form-control form-control-sm" id="nama_file" name="nama_file" required>
                                     </div>
                                 </div>
                             </div>
@@ -194,6 +203,10 @@
                             </div>
                         </div>
                     </form>
+                    <hr>
+                    <div class="row hasil_hitung">
+                        {{-- hasil hitung di jquery  --}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -218,8 +231,31 @@
             }
         });
 
+        $("#ukuran_cetak").on('change', function () {
+            var id = $(this).val();
+            $("#mesin_id").empty();
+
+            $.ajax({
+                url: '{{ URL::route('home.ukuran_cetak_detail') }}',
+                type: 'POST',
+                data: {
+                    id: id,
+                    _token: CSRF_TOKEN
+                },
+                success: function(response) {
+                    console.log(response);
+                    $.each(response.data, function(index, value) {
+                        var data_mesin = "<option value=\"" + value.mesin.id + "\">" + value.mesin.nama_mesin + "</option>";
+
+                        $("#mesin_id").append(data_mesin);
+                    });
+                }
+            })
+        })
+
         $("#form-kalender-dinding").submit(function (e) {
             e.preventDefault();
+            $(".hasil_hitung").empty();
 
             var formData = {
                 jml_halaman_kalender: $("#jml_halaman_kalender").val(),
@@ -227,6 +263,7 @@
                 ukuran_cetak: $("#ukuran_cetak").val(),
                 jenis_kertas: $("#jenis_kertas").val(),
                 jenis_finishing: $("#jenis_finishing").val(),
+                mesin_id: $("#mesin_id").val(),
                 laminasi: $("#laminasi").val(),
                 jml_cetak: $("#jml_cetak").val(),
                 biaya_potong: $("#biaya_potong").val(),
@@ -243,6 +280,30 @@
                 data: formData,
                 success: function(response) {
                     console.log(response);
+                    // var biaya_total = response.biaya_total;
+
+                    // $.each(response.b, function(index, value) {
+
+                        // var biaya_total_mesin = value.mesin.harga_min + biaya_total;
+                        var url = '{{ route("home.produk.kalender_dinding_detail", ":id") }}';
+                        url = url.replace(':id', response.id);
+
+                        var dataHasilHitung = "" +
+                            "<div class=\"col-md-12\">" +
+                            "   <div class=\"row\">" +
+                            "       <div class=\"col-md-6\">" +
+                            "           <span>Total Biaya</span>" +
+                            "       </div>" +
+                            "       <div class=\"col-md-6\">" +
+                            "           <div class=\"text-right\">" +
+                            "           <span><a href=\"" + url + "\" class=\"btn btn-info\">" + response.total_biaya + "</a></span>" +
+                            "           </div>" +
+                            "       </div>" +
+                            "   </div>"
+                            "</div>";
+
+                        $(".hasil_hitung").append(dataHasilHitung);
+                    // });
                 }
             });
         })

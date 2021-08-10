@@ -16,10 +16,10 @@ class CreateOffsetMesinsTable extends Migration
         Schema::create('offset_mesins', function (Blueprint $table) {
             $table->id();
             $table->string('nama_mesin', 30)->nullable();
-            $table->integer('ukuran_max_kertas')->nullable();
-            $table->integer('ukuran_max_cetak')->nullable();
-            $table->integer('ukuran_min_cetak')->nullable();
-            $table->integer('jml_min')->nullable();
+            $table->integer('area_cetak_panjang')->nullable();
+            $table->integer('area_cetak_lebar')->nullable();
+            $table->integer('area_kertas_panjang')->nullable();
+            $table->integer('area_kertas_lebar')->nullable();
             $table->double('harga_min')->nullable();
             $table->double('harga_lebih')->nullable();
             $table->double('harga_ctp')->nullable();

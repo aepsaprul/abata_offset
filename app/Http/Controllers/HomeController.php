@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\OffsetHitungProduk;
 use App\Models\OffsetJenisKertas;
+use App\Models\OffsetMesin;
 use App\Models\OffsetProduk;
+use App\Models\OffsetUkuranCetak;
+use App\Models\OffsetUkuranCetakDetail;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -48,19 +51,29 @@ class HomeController extends Controller
         if ($kode_produk == "kalenderdinding") {
 
             $produk_relasi = OffsetProduk::where('kode_produk', 'kalenderdinding')->with(['kertas', 'finishing'])->first();
+            $ukuran_cetaks = OffsetUkuranCetak::get();
 
-            return view('pages.hitung_kalender_dinding.index', ['produks' => $produks, 'produk_relasi' => $produk_relasi]);
+            return view('pages.hitung_kalender_dinding.index', ['produks' => $produks, 'produk_relasi' => $produk_relasi, 'ukuran_cetaks' => $ukuran_cetaks]);
         } else {
             echo "data mbuh";
         }
     }
 
+    public function ukuranCetakDetail(Request $request) {
+        $mesin = OffsetUkuranCetakDetail::where('ukuran_cetak_id', $request->id)->with('mesin')->get();
+
+        return response()->json([
+            'data' => $mesin
+        ]);
+    }
+
     public function kalenderDinding(Request $request) {
         $jml_halaman_kalender = $request->jml_halaman_kalender;
         $jml_warna = $request->jml_warna;
-        $ukuran_cetak = $request->ukuran_cetak;
+        $ukuran_cetak_id = $request->ukuran_cetak;
         $jenis_kertas = $request->jenis_kertas;
         $jenis_finishing = $request->jenis_finishing;
+        $mesin_id = $request->mesin_id;
         $laminasi = $request->laminasi;
         $jml_cetak = $request->jml_cetak;
         $biaya_potong = $request->biaya_potong;
@@ -88,6 +101,9 @@ class HomeController extends Controller
             $biaya_susun = 100 * $jml_cetak;
             $message = 4;
         }
+
+        $ukuran_cetak_db = OffsetUkuranCetak::where('id', $ukuran_cetak_id)->first();
+        $ukuran_cetak = $ukuran_cetak_db->lebar . " x " . $ukuran_cetak_db->panjang;
 
         if ($ukuran_cetak == "32 x 48") {
             $biaya_klem = 1000;
@@ -135,41 +151,59 @@ class HomeController extends Controller
             $biaya_cetak_lebih = 0;
         }
 
+        $mesin = OffsetMesin::where('id', $mesin_id)->first();
+        $mesin_harga = $mesin->harga_min;
+
         $biaya_kertas = $kertas * $jml_kertas_insheet;
         $biaya_cetak_min = 200000 * $jml_halaman_kalender;
-        $biaya_plat = $jml_plat * $jml_warna;
+        $biaya_plat = $jml_halaman_kalender * $mesin->harga_plat;
         $biaya_set_kalender = $biaya_finishing * $jml_cetak;
 
-        $total_biaya = $biaya_kertas + $biaya_cetak_min + $biaya_cetak_lebih + $biaya_plat + $biaya_set_kalender;
+        $total_biaya = $biaya_kertas + $biaya_cetak_min + $biaya_cetak_lebih + $biaya_plat + $biaya_set_kalender + $mesin_harga + $biaya_potong + $biaya_design + $biaya_akomodasi;
 
-        $hitung_kalender = new OffsetHitungProduk;
-        $hitung_kalender->jml_halaman_kalender = $jml_halaman_kalender;
-        $hitung_kalender->jml_warna = $jml_warna;
-        $hitung_kalender->ukuran_cetak = $ukuran_cetak;
-        $hitung_kalender->kertas_id = $jenis_kertas;
-        $hitung_kalender->finishing = $jenis_finishing;
-        $hitung_kalender->laminasi = $laminasi;
-        $hitung_kalender->jml_cetak = $jml_cetak;
-        $hitung_kalender->biaya_potong = $biaya_potong;
-        $hitung_kalender->biaya_design = $biaya_design;
-        $hitung_kalender->biaya_akomodasi = $biaya_akomodasi;
-        $hitung_kalender->nama_file = $nama_file;
-        $hitung_kalender->harga_set_kalender = $jml_set_kalender;
-        $hitung_kalender->insheet = $jml_kertas_insheet;
-        $hitung_kalender->harga_kertas_satuan = $kertas;
-        $hitung_kalender->jml_plat = $jml_plat;
-        $hitung_kalender->biaya_kertas = $biaya_kertas;
-        $hitung_kalender->biaya_cetak_min = $biaya_cetak_min;
-        $hitung_kalender->biaya_cetak_lebih = $biaya_cetak_lebih;
-        $hitung_kalender->biaya_plat = $biaya_plat;
-        $hitung_kalender->biaya_set_kalender = $biaya_set_kalender;
-        $hitung_kalender->biaya_susun = $biaya_susun;
-        $hitung_kalender->total_biaya = $total_biaya;
-        $hitung_kalender->save();
+        $margin_profit = 0.2;
+        $profit = $margin_profit * $total_biaya;
+
+        // $hitung_kalender = new OffsetHitungProduk;
+        // $hitung_kalender->jml_halaman_kalender = $jml_halaman_kalender;
+        // $hitung_kalender->jml_warna = $jml_warna;
+        // $hitung_kalender->ukuran_cetak = $ukuran_cetak;
+        // $hitung_kalender->kertas_id = $jenis_kertas;
+        // $hitung_kalender->finishing = $jenis_finishing;
+        // $hitung_kalender->laminasi = $laminasi;
+        // $hitung_kalender->jml_cetak = $jml_cetak;
+        // $hitung_kalender->biaya_potong = $biaya_potong;
+        // $hitung_kalender->biaya_design = $biaya_design;
+        // $hitung_kalender->biaya_akomodasi = $biaya_akomodasi;
+        // $hitung_kalender->nama_file = $nama_file;
+        // $hitung_kalender->harga_set_kalender = $jml_set_kalender;
+        // $hitung_kalender->insheet = $jml_kertas_insheet;
+        // $hitung_kalender->harga_kertas_satuan = $kertas;
+        // $hitung_kalender->jml_plat = $jml_plat;
+        // $hitung_kalender->biaya_kertas = $biaya_kertas;
+        // $hitung_kalender->biaya_cetak_min = $biaya_cetak_min;
+        // $hitung_kalender->biaya_cetak_lebih = $biaya_cetak_lebih;
+        // $hitung_kalender->biaya_plat = $biaya_plat;
+        // $hitung_kalender->biaya_set_kalender = $biaya_set_kalender;
+        // $hitung_kalender->biaya_susun = $biaya_susun;
+        // $hitung_kalender->mesin_id = $mesin_id;
+        // $hitung_kalender->total_biaya = $total_biaya;
+        // $hitung_kalender->save();
+
+        // $get_hitung_kalender = OffsetHitungProduk::where('id', $hitung_kalender->id)->first();
 
         return response()->json([
-            'data' => $biaya_plat,
+            'total_biaya' => $total_biaya,
+            // 'id' => $get_hitung_kalender->id,
+            'data' => $total_biaya,
             'message' => $message
         ]);
+    }
+
+    public function kalenderDindingDetail($id) {
+        $produks = OffsetProduk::with('kertas')->get();
+        $hitung = OffsetHitungProduk::find($id);
+
+        return view('pages.hitung_kalender_dinding.detail', ['produks' => $produks, 'hitung' => $hitung]);
     }
 }

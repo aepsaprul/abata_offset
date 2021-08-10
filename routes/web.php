@@ -26,7 +26,10 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/{kode_produk}', [App\Http\Controllers\HomeController::class, 'produk'])->name('home.produk');
+Route::post('/home/ukuran-cetak-detail/', [App\Http\Controllers\HomeController::class, 'ukuranCetakDetail'])->name('home.ukuran_cetak_detail');
+
 Route::post('/home/kalender-dinding', [App\Http\Controllers\HomeController::class, 'kalenderDinding'])->name('home.produk.kalender_dinding');
+Route::get('/home/kalender-dinding-detail/{id}', [App\Http\Controllers\HomeController::class, 'kalenderDindingDetail'])->name('home.produk.kalender_dinding_detail');
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('bahan', BahanController::class);
@@ -58,4 +61,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('produk', ProdukController::class);
     Route::get('produk/{id}/delete', [ProdukController::class, 'delete'])->name('produk.delete');
+
+    Route::resource('ukuran_cetak', App\Http\Controllers\UkuranCetakController::class);
+    Route::get('ukuran_cetak/{id}/delete', [App\Http\Controllers\UkuranCetakController::class, 'delete'])->name('ukuran_cetak.delete');
+
+    Route::resource('ukuran_cetak_detail', App\Http\Controllers\UkuranCetakDetailController::class);
+    Route::get('ukuran_cetak_detail/{id}/delete', [App\Http\Controllers\UkuranCetakDetailController::class, 'delete'])->name('ukuran_cetak_detail.delete');
 });
