@@ -75,11 +75,16 @@ class HomeController extends Controller
         $jenis_finishing = $request->jenis_finishing;
         $mesin_id = $request->mesin_id;
         $laminasi = $request->laminasi;
-        $jml_cetak = $request->jml_cetak;
-        $biaya_potong = $request->biaya_potong;
-        $biaya_design = $request->biaya_design;
-        $biaya_akomodasi = $request->biaya_akomodasi;
+        $jml_cetak_rp = $request->jml_cetak;
+        $biaya_potong_rp = $request->biaya_potong;
+        $biaya_design_rp = $request->biaya_design;
+        $biaya_akomodasi_rp = $request->biaya_akomodasi;
         $nama_file = $request->nama_file;
+
+        $jml_cetak = str_replace(".", "", $jml_cetak_rp);
+        $biaya_potong = str_replace(".", "", $biaya_potong_rp);
+        $biaya_design = str_replace(".", "", $biaya_design_rp);
+        $biaya_akomodasi = str_replace(".", "", $biaya_akomodasi_rp);
 
         // jumlah set kalender
         $jml_set_kalender = $jml_halaman_kalender * $jml_cetak;
@@ -138,7 +143,7 @@ class HomeController extends Controller
             } else {
                 $biaya_susun = 100 * $jml_cetak;
             }
-            $biaya_finishing = $biaya_spiral;
+            $biaya_finishing = $biaya_spiral + $biaya_susun;
             // $biaya_finishing = $biaya_spiral * $jml_cetak;
         } else {
             $biaya_susun = 0;
@@ -195,7 +200,8 @@ class HomeController extends Controller
             'biaya_cetak_lebih' => $biaya_cetak_lebih,
             'biaya_plat' => $biaya_plat,
             'biaya_susun' => $biaya_susun,
-            'biaya_set_kalender' => $biaya_set_kalender
+            'biaya_set_kalender' => $biaya_set_kalender,
+            'nama_file' => $nama_file
         ]);
     }
 

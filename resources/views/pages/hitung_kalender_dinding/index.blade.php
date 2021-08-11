@@ -123,7 +123,7 @@
                                         <div class="form-group row mb-3">
                                             <label for="jml_cetak" class="col-sm-6 col-form-label">Jumlah Cetak</label>
                                             <div class="col-sm-6">
-                                                <input type="number" class="form-control form-control-sm" id="jml_cetak" name="jml_cetak">
+                                                <input type="text" class="form-control form-control-sm" id="jml_cetak" name="jml_cetak">
                                             </div>
                                         </div>
                                     </div>
@@ -131,7 +131,7 @@
                                         <div class="form-group row mb-3">
                                             <label for="biaya_potong" class="col-sm-6 col-form-label">Biaya Potong</label>
                                             <div class="col-sm-6">
-                                                <input type="number" class="form-control form-control-sm" id="biaya_potong" name="biaya_potong">
+                                                <input type="text" class="form-control form-control-sm" id="biaya_potong" name="biaya_potong">
                                             </div>
                                         </div>
                                     </div>
@@ -139,7 +139,7 @@
                                         <div class="form-group row mb-3">
                                             <label for="biaya_design" class="col-sm-6 col-form-label">Biaya Design</label>
                                             <div class="col-sm-6">
-                                                <input type="number" class="form-control form-control-sm" id="biaya_design" name="biaya_design">
+                                                <input type="text" class="form-control form-control-sm" id="biaya_design" name="biaya_design">
                                             </div>
                                         </div>
                                     </div>
@@ -147,7 +147,15 @@
                                         <div class="form-group row mb-3">
                                             <label for="biaya_akomodasi" class="col-sm-6 col-form-label">Biaya Akomodasi</label>
                                             <div class="col-sm-6">
-                                                <input type="number" class="form-control form-control-sm" id="biaya_akomodasi" name="biaya_akomodasi">
+                                                <input type="text" class="form-control form-control-sm" id="biaya_akomodasi" name="biaya_akomodasi">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group row mb-3">
+                                            <label for="nama_file" class="col-sm-6 col-form-label">Nama File</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control form-control-sm" id="nama_file" name="nama_file" required>
                                             </div>
                                         </div>
                                     </div>
@@ -190,20 +198,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group row mb-3">
-                                    <label for="nama_file" class="col-sm-6 col-form-label">Nama File</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-sm" id="nama_file" name="nama_file" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <button type="submit" class="btn btn-primary">HITUNG</button>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-sm btn-block">HITUNG</button>
                             </div>
                         </div>
                     </form>
-                    <hr>
+                    <br>
                     <form id="kalender-dinding-detail" action="{{ route('home.produk.kalender_dinding_detail') }}" method="POST">
                         @csrf
                         <div class="row hasil_hitung">
@@ -222,6 +222,52 @@
     $(document).ready(function () {
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        var rupiah_jml_cetak = document.getElementById("jml_cetak");
+        rupiah_jml_cetak.addEventListener("keyup", function(e) {
+            // tambahkan 'Rp.' pada saat form di ketik
+            // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+            rupiah_jml_cetak.value = formatRupiah(this.value, "");
+        });
+
+        var rupiah_biaya_potong = document.getElementById("biaya_potong");
+        rupiah_biaya_potong.addEventListener("keyup", function(e) {
+            // tambahkan 'Rp.' pada saat form di ketik
+            // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+            rupiah_biaya_potong.value = formatRupiah(this.value, "");
+        });
+
+        var rupiah_biaya_design = document.getElementById("biaya_design");
+        rupiah_biaya_design.addEventListener("keyup", function(e) {
+            // tambahkan 'Rp.' pada saat form di ketik
+            // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+            rupiah_biaya_design.value = formatRupiah(this.value, "");
+        });
+
+        var rupiah_biaya_akomodasi = document.getElementById("biaya_akomodasi");
+        rupiah_biaya_akomodasi.addEventListener("keyup", function(e) {
+            // tambahkan 'Rp.' pada saat form di ketik
+            // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+            rupiah_biaya_akomodasi.value = formatRupiah(this.value, "");
+        });
+
+        /* Fungsi formatRupiah */
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, "").toString(),
+                split = number_string.split(","),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? "." : "";
+                rupiah += separator + ribuan.join(".");
+            }
+
+            rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+            return prefix == undefined ? rupiah : rupiah ? "" + rupiah : "";
+        }
 
         $('.sub_cover_depan').hide();
 
@@ -283,19 +329,42 @@
                 data: formData,
                 success: function(response) {
                     console.log(response);
-                    var url = '{{ route("home.produk.kalender_dinding_detail") }}';
+                    // var url = '{{ route("home.produk.kalender_dinding_detail") }}';
+                    // var total_biaya = $("#btn_total_biaya").val();
+                    var harga_satuan_rp = formatRp(response.harga_satuan);
+                    var total_biaya_rp = formatRp(response.total_biaya);
+
+                    function formatRp(bilangan) {
+                        var	number_string = bilangan.toString(),
+                            sisa 	= number_string.length % 3,
+                            rupiah 	= number_string.substr(0, sisa),
+                            ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+
+                        if (ribuan) {
+                            separator = sisa ? '.' : '';
+                            rupiah += separator + ribuan.join('.');
+                        }
+                        return rupiah;
+                    }
+                    // $("#btn_total_biaya").val(total_biaya_rp);
+
 
                     var dataHasilHitung = "" +
                         "<div class=\"col-md-12\">" +
-                        "   <div class=\"row\">" +
-                        "       <div class=\"col-md-6\">" +
-                        "           <span>Total Biaya</span>" +
+                        "   <div class=\"card\">" +
+                        "       <div class=\"card-header\">" +
+                        "           Harga Jual" +
                         "       </div>" +
-                        "       <div class=\"col-md-6\">" +
-                        "           <div class=\"text-right\">" +
-                        "               <button type=\"submit\" class=\"btn btn-info\">" + response.total_biaya + "</button>" +
+                        "       <div class=\"card-body\">" +
+                        "           <div class=\"row\">" +
+                        "               <div class=\"d-flex justify-content-between\">" +
+                        "                   <div class=\"p-2\">Rp. " + harga_satuan_rp + "</div>" +
+                        "                   <div class=\"p-2\"><button type=\"submit\" id=\"btn_total_biaya\" class=\"btn\">Rp. " + total_biaya_rp + "</button></div>" +
+                        "               </div>" +
                         "           </div>" +
                         "       </div>" +
+                        "   </div>" +
+                        "   <div class=\"row\">" +
                         "       <input type=\"hidden\" id=\"jml_cetak\" name=\"jml_cetak\" value=\"" + response.jml_cetak + "\">" +
                         "       <input type=\"hidden\" id=\"jml_halaman\" name=\"jml_halaman\" value=\"" + response.jml_halaman + "\">" +
                         "       <input type=\"hidden\" id=\"jml_warna\" name=\"jml_warna\" value=\"" + response.jml_warna + "\">" +
@@ -313,7 +382,6 @@
                         "       <input type=\"hidden\" id=\"profit\" name=\"profit\" value=\"" + response.profit + "\">" +
                         "       <input type=\"hidden\" id=\"grand_total\" name=\"grand_total\" value=\"" + response.grand_total + "\">" +
                         "       <input type=\"hidden\" id=\"harga_satuan\" name=\"harga_satuan\" value=\"" + response.harga_satuan + "\">" +
-                        "       <input type=\"hidden\" id=\"biaya_kertas\" name=\"biaya_kertas\" value=\"" + response.biaya_kertas + "\">" +
                         "       <input type=\"hidden\" id=\"biaya_cetak_min\" name=\"biaya_cetak_min\" value=\"" + response.biaya_cetak_min + "\">" +
                         "       <input type=\"hidden\" id=\"biaya_cetak_lebih\" name=\"biaya_cetak_lebih\" value=\"" + response.biaya_cetak_lebih + "\">" +
                         "       <input type=\"hidden\" id=\"biaya_plat\" name=\"biaya_plat\" value=\"" + response.biaya_plat + "\">" +
