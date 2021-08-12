@@ -31,6 +31,8 @@
                     <th><strong>Nama Mesin</strong></th>
                     <th><strong>Area Kertas</strong></th>
                     <th><strong>Area Cetak</strong></th>
+                    <th><strong>Ongkos</strong></th>
+                    <th><strong>Harga Plat</strong></th>
                     <th><strong>#</strong></th>
                 </tr>
             </thead>
@@ -41,6 +43,8 @@
                     <td>{{ $mesin->nama_mesin }}</td>
                     <td class="text-center">{{ $mesin->area_kertas_panjang }} cm x {{ $mesin->area_kertas_lebar }} cm</td>
                     <td class="text-center">{{ $mesin->area_cetak_panjang }}  cm x {{ $mesin->area_cetak_lebar }} cm</td>
+                    <td class="text-end">{{ rupiah($mesin->harga_min) }}</td>
+                    <td class="text-end">{{ rupiah($mesin->harga_plat) }}</td>
                     <td class="text-center">
                         <a href="{{ route('mesin.edit', [$mesin->id]) }}" class="btn btn-info text-white" title="Ubah"><i class="fas fa-edit"></i></a> |
                         <a href="{{ route('mesin.delete', [$mesin->id]) }}" class="btn btn-info text-white" title="Hapus" onclick="return confirm('Yakin akan dihapus?')"><i class="fas fa-trash"></i></a>

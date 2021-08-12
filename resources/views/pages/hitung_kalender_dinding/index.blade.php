@@ -358,7 +358,7 @@
                         "       <div class=\"card-body\">" +
                         "           <div class=\"row\">" +
                         "               <div class=\"d-flex justify-content-between\">" +
-                        "                   <div class=\"p-2\">Rp. " + harga_satuan_rp + "</div>" +
+                        "                   <div class=\"p-2\">Rp. " + harga_satuan_rp + " / pcs</div>" +
                         "                   <div class=\"p-2\"><button type=\"submit\" id=\"btn_total_biaya\" class=\"btn\">Rp. " + total_biaya_rp + "</button></div>" +
                         "               </div>" +
                         "           </div>" +

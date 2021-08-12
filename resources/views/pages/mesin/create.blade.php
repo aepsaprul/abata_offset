@@ -58,12 +58,58 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="form-group col-md-4">
+                <label for="harga_min">Harga Min</label>
+                <input type="text" class="form-control @error('harga_min') is-invalid @enderror" id="harga_min" placeholder="Harga Min" name="harga_min" required value="{{ old('harga_min') }}">
+                @error('harga_min')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group col-md-4">
+                <label for="harga_plat">Harga Plat</label>
+                <input type="text" class="form-control @error('harga_plat') is-invalid @enderror" id="harga_plat" placeholder="Harga Plat" name="harga_plat" required value="{{ old('harga_plat') }}">
+                @error('harga_plat')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
     </form>
 </div>
 @endsection
 
 @section('script')
+<script>
+    var harga_min_rp = document.getElementById("harga_min");
+    harga_min_rp.addEventListener("keyup", function(e) {
+        // tambahkan 'Rp.' pada saat form di ketik
+        // gunakan fungsi formatharga_min_rp() untuk mengubah angka yang di ketik menjadi format angka
+        harga_min_rp.value = formatRupiah(this.value, "");
+    });
 
+    var harga_plat_rp = document.getElementById("harga_plat");
+    harga_plat_rp.addEventListener("keyup", function(e) {
+        // tambahkan 'Rp.' pada saat form di ketik
+        // gunakan fungsi formatharga_plat_rp() untuk mengubah angka yang di ketik menjadi format angka
+        harga_plat_rp.value = formatRupiah(this.value, "");
+    });
+
+    /* Fungsi formatRupiah */
+    function formatRupiah(angka, prefix) {
+        var number_string = angka.replace(/[^,\d]/g, "").toString(),
+            split = number_string.split(","),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        // tambahkan titik jika yang di input sudah menjadi angka ribuan
+        if (ribuan) {
+            separator = sisa ? "." : "";
+            rupiah += separator + ribuan.join(".");
+        }
+
+        rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+        return prefix == undefined ? rupiah : rupiah ? "" + rupiah : "";
+    }
+</script>
 @endsection
 
