@@ -74,7 +74,7 @@ class HomeController extends Controller
         $jenis_kertas = $request->jenis_kertas;
         $jenis_finishing = $request->jenis_finishing;
         $mesin_id = $request->mesin_id;
-        $laminasi = $request->laminasi;
+        $laminasi_val = $request->laminasi;
         $jml_cetak_rp = $request->jml_cetak;
         $biaya_potong_rp = $request->biaya_potong;
         $biaya_design_rp = $request->biaya_design;
@@ -118,6 +118,12 @@ class HomeController extends Controller
             $jml_kertas_insheet = ($jml_set_kalender / 2) + 50 * $jml_halaman_kalender;
         } else {
             echo "ukuran lainnya";
+        }
+
+        if ($laminasi_val == "ya") {
+            $laminasi = ($ukuran_cetak_db->lebar * $ukuran_cetak_db->panjang) * 0.5;
+        } else {
+            $laminasi = 0;
         }
 
         $ukuran_cetak_detail_db = OffsetUkuranCetakDetail::where('ukuran_cetak_id', $ukuran_cetak_id)->where('mesin_id', $mesin_id)->with('kertas')->first();
@@ -165,13 +171,57 @@ class HomeController extends Controller
         $mesin = OffsetMesin::where('id', $mesin_id)->first();
         $mesin_harga = $mesin->harga_min;
 
+        // ongkos
+        if ($jml_warna == 1) {
+            $ongkos = 100000;
+        } elseif ($jml_warna == 2) {
+            $ongkos = 150000;
+        } else {
+            $ongkos = 200000;
+        }
+
+        // cover
+        if ($request->cover_depan != null) {
+            $cover_depan = $request->cover_depan;
+            $jml_warna_cover = $request->jml_warna_cover;
+            $jenis_kertas_cover = $request->jenis_kertas_cover;
+            if ($ukuran_cetak == "32 x 48") {
+                $jml_kertas_insheet_cover = ($jml_cetak / 4) + 25 * $cover_depan;
+            } elseif ($ukuran_cetak == "38 x 52") {
+                $jml_kertas_insheet_cover = ($jml_cetak / 4) + 25 * $cover_depan;
+            } elseif ($ukuran_cetak == "40 x 56") {
+                $jml_kertas_insheet_cover = ($jml_cetak / 2) + 50 * $cover_depan;
+            } elseif ($ukuran_cetak == "44 x 64") {
+                $jml_kertas_insheet_cover = ($jml_cetak / 2) + 50 * $cover_depan;
+            } elseif ($ukuran_cetak == "50 x 70") {
+                $jml_kertas_insheet_cover = ($jml_cetak / 2) + 50 * $cover_depan;
+            } else {
+                echo "ukuran lainnya";
+            }
+
+            $jml_plat_cover = $jml_warna_cover * 1;
+            $biaya_kertas_cover = $kertas * $jml_kertas_insheet_cover;
+            $biaya_cetak_min_cover = $ongkos * 1;
+            $biaya_cetak_lebih_cover = 60 * ($jml_cetak - 1000) * $cover_depan;
+            $biaya_plat_cover = $cover_depan * $mesin->harga_plat;
+            $biaya_cover = $biaya_kertas_cover + $biaya_cetak_min_cover + $biaya_cetak_lebih_cover + $biaya_plat_cover;
+        } else {
+            $jenis_kertas_cover = "";
+            $jml_plat_cover = 0;
+            $biaya_kertas_cover = 0;
+            $biaya_cetak_min_cover = 0;
+            $biaya_cetak_lebih_cover = 0;
+            $biaya_plat_cover = 0;
+            $biaya_cover = 0;
+        }
+
         // biaya
         $biaya_kertas = $kertas * $jml_kertas_insheet;
-        $biaya_cetak_min = 200000 * $jml_halaman_kalender;
+        $biaya_cetak_min = $ongkos * $jml_halaman_kalender;
         $biaya_plat = $jml_halaman_kalender * $mesin->harga_plat;
         $biaya_set_kalender = $biaya_finishing * $jml_cetak;
 
-        $total_biaya = $biaya_kertas + $biaya_cetak_min + $biaya_cetak_lebih + $biaya_plat + $biaya_set_kalender + $mesin_harga + $biaya_potong + $biaya_design + $biaya_akomodasi;
+        $total_biaya = $biaya_kertas + $biaya_cetak_min + $biaya_cetak_lebih + $biaya_plat + $biaya_set_kalender + $biaya_potong + $biaya_design + $biaya_akomodasi + $laminasi + $biaya_cover;
 
         $margin_profit = 0.2;
         $profit = $margin_profit * $total_biaya;
@@ -201,7 +251,16 @@ class HomeController extends Controller
             'biaya_plat' => $biaya_plat,
             'biaya_susun' => $biaya_susun,
             'biaya_set_kalender' => $biaya_set_kalender,
-            'nama_file' => $nama_file
+            'laminasi' => $laminasi,
+            'nama_file' => $nama_file,
+            'jenis_kertas_cover' => $jenis_kertas_cover,
+            'jml_kertas_insheet_cover' => $jml_kertas_insheet_cover,
+            'jml_plat_cover' => $jml_plat_cover,
+            'biaya_kertas_cover' => $biaya_kertas_cover,
+            'biaya_cetak_min_cover' => $biaya_cetak_min_cover,
+            'biaya_cetak_lebih_cover' => $biaya_cetak_lebih_cover,
+            'biaya_plat_cover' => $biaya_plat_cover,
+            'biaya_cover' => $biaya_cover
         ]);
     }
 

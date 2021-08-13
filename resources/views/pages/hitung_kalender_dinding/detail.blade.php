@@ -82,16 +82,16 @@
                                     <td>:</td>
                                     <td style="text-align: right;">{{ $ukuran_potong_kertas }}</td>
                                 </tr>
-                            </table>
-                        </div>
-                        <div class="col-md-4">
-                            <h4>Total</h4>
-                            <table class="table">
                                 <tr>
                                     <td>Biaya Kertas</td>
                                     <td>:</td>
                                     <td style="text-align: right;">{{ rupiah($biaya_kertas) }}</td>
                                 </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-4">
+                            <h4>Total</h4>
+                            <table class="table">
                                 <tr>
                                     <td>Biaya Cetak Min</td>
                                     <td>:</td>

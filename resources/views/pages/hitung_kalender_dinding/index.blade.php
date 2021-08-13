@@ -94,10 +94,10 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group row mb-3">
-                                            <label for="laminasi" class="col-sm-6 col-form-label">Laminasi</label>
+                                            <label for="laminasi" class="col-sm-6 col-form-label">Varnish UV</label>
                                             <div class="col-sm-6">
                                                 <select class="form-select form-select-sm" id="laminasi" name="laminasi">
-                                                    <option value="">--Pilih Laminasi--</option>
+                                                    <option value="">--Pilih Varnish--</option>
                                                     <option value="ya">Ya</option>
                                                     <option value="tidak">Tidak</option>
                                                 </select>
@@ -160,7 +160,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3">
-                                        <input class="form-check-input" type="checkbox" id="cover_depan" name="cover_depan" value="cover_depan">
+                                        <input class="form-check-input" type="checkbox" id="cover_depan" name="cover_depan" value="">
                                         <label class="form-check-label" for="cover_depan">
                                             Cover Depan
                                         </label>
@@ -274,9 +274,15 @@
         $('#cover_depan').change(function() {
             if (this.checked == true) {
                 $('.sub_cover_depan').show();
+
+                $("#cover_depan").val("1");
             }
             else {
                 $('.sub_cover_depan').hide();
+
+                $("#cover_depan").val("");
+                $("#jml_warna_cover").val("");
+                $("#jenis_kertas_cover").val("");
             }
         });
 
@@ -306,6 +312,23 @@
             e.preventDefault();
             $(".hasil_hitung").empty();
 
+            var cover_depan = $("#cover_depan").val();
+            var jml_warna_cover = $("#jml_warna_cover").val();
+            var jenis_kertas_cover = $("#jenis_kertas_cover").val();
+
+            if (cover_depan != "") {
+                if (jml_warna_cover == "") {
+                    alert('Jumlah Warna Cover Harus Diisi');
+
+                    return false;
+                }
+                if (jenis_kertas_cover == "") {
+                    alert('Jenis Kertas Cover Harus Diisi');
+
+                    return false;
+                }
+            }
+
             var formData = {
                 jml_halaman_kalender: $("#jml_halaman_kalender").val(),
                 jml_warna: $("#jml_warna").val(),
@@ -319,6 +342,9 @@
                 biaya_design: $("#biaya_design").val(),
                 biaya_akomodasi: $("#biaya_akomodasi").val(),
                 nama_file: $("#nama_file").val(),
+                cover_depan: $("#cover_depan").val(),
+                jml_warna_cover: $("#jml_warna_cover").val(),
+                jenis_kertas_cover: $("#jenis_kertas_cover").val(),
                 _token: CSRF_TOKEN
             };
 
@@ -386,7 +412,16 @@
                         "       <input type=\"hidden\" id=\"biaya_cetak_lebih\" name=\"biaya_cetak_lebih\" value=\"" + response.biaya_cetak_lebih + "\">" +
                         "       <input type=\"hidden\" id=\"biaya_plat\" name=\"biaya_plat\" value=\"" + response.biaya_plat + "\">" +
                         "       <input type=\"hidden\" id=\"biaya_susun\" name=\"biaya_susun\" value=\"" + response.biaya_susun + "\">" +
+                        "       <input type=\"hidden\" id=\"laminasi\" name=\"laminasi\" value=\"" + response.laminasi + "\">" +
                         "       <input type=\"hidden\" id=\"biaya_set_kalender\" name=\"biaya_set_kalender\" value=\"" + response.biaya_set_kalender + "\">" +
+                        "       <input type=\"hidden\" id=\"jenis_kertas_cover\" name=\"jenis_kertas_cover\" value=\"" + response.jenis_kertas_cover + "\">" +
+                        "       <input type=\"hidden\" id=\"jml_kertas_insheet_cover\" name=\"jml_kertas_insheet_cover\" value=\"" + response.jml_kertas_insheet_cover + "\">" +
+                        "       <input type=\"hidden\" id=\"jml_plat_cover\" name=\"jml_plat_cover\" value=\"" + response.jml_plat_cover + "\">" +
+                        "       <input type=\"hidden\" id=\"biaya_kertas_cover\" name=\"biaya_kertas_cover\" value=\"" + response.biaya_kertas_cover + "\">" +
+                        "       <input type=\"hidden\" id=\"biaya_cetak_min_cover\" name=\"biaya_cetak_min_cover\" value=\"" + response.biaya_cetak_min_cover + "\">" +
+                        "       <input type=\"hidden\" id=\"biaya_cetak_lebih_cover\" name=\"biaya_cetak_lebih_cover\" value=\"" + response.biaya_cetak_lebih_cover + "\">" +
+                        "       <input type=\"hidden\" id=\"biaya_plat_cover\" name=\"biaya_plat_cover\" value=\"" + response.biaya_plat_cover + "\">" +
+                        "       <input type=\"hidden\" id=\"biaya_cover\" name=\"biaya_cover\" value=\"" + response.biaya_cover + "\">" +
                         "   </div>"
                         "</div>";
 
