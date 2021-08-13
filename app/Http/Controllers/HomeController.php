@@ -120,6 +120,7 @@ class HomeController extends Controller
             echo "ukuran lainnya";
         }
 
+        // laminasi
         if ($laminasi_val == "ya") {
             $laminasi = ($ukuran_cetak_db->lebar * $ukuran_cetak_db->panjang) * 0.5;
         } else {
@@ -207,6 +208,7 @@ class HomeController extends Controller
             $biaya_cover = $biaya_kertas_cover + $biaya_cetak_min_cover + $biaya_cetak_lebih_cover + $biaya_plat_cover;
         } else {
             $jenis_kertas_cover = "";
+            $jml_kertas_insheet_cover = 0;
             $jml_plat_cover = 0;
             $biaya_kertas_cover = 0;
             $biaya_cetak_min_cover = 0;
@@ -290,7 +292,17 @@ class HomeController extends Controller
             'biaya_cetak_lebih' => $request->biaya_cetak_lebih,
             'biaya_plat' => $request->biaya_plat,
             'biaya_susun' => $request->biaya_susun,
-            'biaya_set_kalender' => $request->biaya_set_kalender
+            'biaya_set_kalender' => $request->biaya_set_kalender,
+            'laminasi' => $request->laminasi,
+            'nama_file' => $request->nama_file,
+            'jenis_kertas_cover' => $request->jenis_kertas_cover,
+            'jml_kertas_insheet_cover' => $request->jml_kertas_insheet_cover,
+            'jml_plat_cover' => $request->jml_plat_cover,
+            'biaya_kertas_cover' => $request->biaya_kertas_cover,
+            'biaya_cetak_min_cover' => $request->biaya_cetak_min_cover,
+            'biaya_cetak_lebih_cover' => $request->biaya_cetak_lebih_cover,
+            'biaya_plat_cover' => $request->biaya_plat_cover,
+            'biaya_cover' => $request->biaya_cover
         ]);
     }
 }

@@ -18,7 +18,7 @@
                 <div class="col-md-10">
                     <div class="row">
                         <div class="col-md-4">
-                            <h4>Spesifikasi Item</h4>
+                            <h4 class="text-uppercase">Spesifikasi Item</h4>
                             <table class="table">
                                 <tbody>
                                     <tr>
@@ -53,9 +53,26 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            @if ($biaya_cover != 0)
+                                <h4 class="text-uppercase">Item Cover</h4>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Jenis Kertas</td>
+                                            <td>:</td>
+                                            <td class="text-end">{{ $jenis_kertas_cover }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jumlah Plat</td>
+                                            <td>:</td>
+                                            <td class="text-end">{{ $jml_plat_cover }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            @endif
                         </div>
                         <div class="col-md-4">
-                            <h4>Hasil Perhitungan</h4>
+                            <h4 class="text-uppercase">Hasil Perhitungan</h4>
                             <table class="table">
                                 <tr>
                                     <td>Insheet</td>
@@ -83,15 +100,52 @@
                                     <td style="text-align: right;">{{ $ukuran_potong_kertas }}</td>
                                 </tr>
                                 <tr>
+                                    <td>Varnish UV</td>
+                                    <td>:</td>
+                                    <td style="text-align: right;">{{ $laminasi }}</td>
+                                </tr>
+                            </table>
+                            @if ($biaya_cover != 0)
+                                <h4 class="text-uppercase">Biaya Cover</h4>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Biaya Kertas</td>
+                                            <td>:</td>
+                                            <td class="text-end">{{ rupiah($biaya_kertas_cover) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Biaya Cetak</td>
+                                            <td>:</td>
+                                            <td class="text-end">{{ rupiah($biaya_cetak_min_cover) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Biaya Lebih</td>
+                                            <td>:</td>
+                                            <td class="text-end">{{ rupiah($biaya_cetak_lebih_cover) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Biaya Plat</td>
+                                            <td>:</td>
+                                            <td class="text-end">{{ rupiah($biaya_plat_cover) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Biaya</td>
+                                            <td>:</td>
+                                            <td class="text-end">{{ rupiah($biaya_cover) }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            @endif
+                        </div>
+                        <div class="col-md-4">
+                            <h4 class="text-uppercase">Total</h4>
+                            <table class="table">
+                                <tr>
                                     <td>Biaya Kertas</td>
                                     <td>:</td>
                                     <td style="text-align: right;">{{ rupiah($biaya_kertas) }}</td>
                                 </tr>
-                            </table>
-                        </div>
-                        <div class="col-md-4">
-                            <h4>Total</h4>
-                            <table class="table">
                                 <tr>
                                     <td>Biaya Cetak Min</td>
                                     <td>:</td>
