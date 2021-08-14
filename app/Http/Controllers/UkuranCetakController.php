@@ -16,7 +16,7 @@ class UkuranCetakController extends Controller
      */
     public function index()
     {
-        $ukuran_cetaks = OffsetUkuranCetak::with(['kertas', 'mesin'])->orderBy('id', 'desc')->get();
+        $ukuran_cetaks = OffsetUkuranCetak::orderBy('id', 'desc')->get();
 
         return view('pages.ukuran_cetak.index', ['ukuran_cetaks' => $ukuran_cetaks]);
     }

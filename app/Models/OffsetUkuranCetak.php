@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class OffsetUkuranCetak extends Model
 {
     use HasFactory;
+
+    // public function kertas() {
+    //     return $this->belongsTo(OffsetJenisKertas::)
+    // }
 }

@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@section('style')
+<style>
+    * {
+        font-size: 12px;
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -17,9 +25,9 @@
             <div class="d-flex justify-content-center">
                 <div class="col-md-10">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 p-4">
                             <h4 class="text-uppercase">Spesifikasi Item</h4>
-                            <table class="table">
+                            <table class="table table">
                                 <tbody>
                                     <tr>
                                         <td class="text-right">Jumlah Cetak</td>
@@ -71,7 +79,7 @@
                                 </table>
                             @endif
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 p-4">
                             <h4 class="text-uppercase">Hasil Perhitungan</h4>
                             <table class="table">
                                 <tr>
@@ -138,7 +146,7 @@
                                 </table>
                             @endif
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 p-4">
                             <h4 class="text-uppercase">Total</h4>
                             <table class="table">
                                 <tr>
@@ -186,12 +194,12 @@
                                     <td style="text-align: right;"><input readonly id="profit" value="{{ rupiah($profit) }}" size="5" style="border: none;text-align:right;"></td>
                                 </tr>
                                 <tr>
-                                    <td>Grand Total</td>
+                                    <td>Total Harga Jual</td>
                                     <td>:</td>
                                     <td style="text-align: right;"><input readonly id="grand_total" value="{{ rupiah($grand_total) }}" size="5" style="border: none;text-align:right;"></td>
                                 </tr>
                                 <tr>
-                                    <td>Harga Satuan</td>
+                                    <td>Harga Jual Satuan</td>
                                     <td>:</td>
                                     <td style="text-align: right;"><input readonly id="harga_satuan" value="{{ rupiah($harga_satuan) }}" size="5" style="border: none;text-align:right;"></td>
                                 </tr>

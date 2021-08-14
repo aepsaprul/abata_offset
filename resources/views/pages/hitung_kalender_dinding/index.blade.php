@@ -357,7 +357,7 @@
                     console.log(response);
                     // var url = '{{ route("home.produk.kalender_dinding_detail") }}';
                     // var total_biaya = $("#btn_total_biaya").val();
-                    var harga_satuan_rp = formatRp(response.harga_satuan);
+                    var harga_satuan_rp = formatRp(Math.round(response.harga_satuan));
                     var total_biaya_rp = formatRp(response.total_biaya);
 
                     function formatRp(bilangan) {
