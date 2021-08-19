@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@section('style')
+<style>
+    * {
+        font-size: 12px;
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -385,7 +393,7 @@
                         "           <div class=\"row\">" +
                         "               <div class=\"d-flex justify-content-between\">" +
                         "                   <div class=\"p-2\">Rp. " + harga_satuan_rp + " / pcs</div>" +
-                        "                   <div class=\"p-2\"><button type=\"submit\" id=\"btn_total_biaya\" class=\"btn\">Rp. " + total_biaya_rp + "</button></div>" +
+                        "                   <div class=\"p-2\">" + total_biaya_rp + "</div>" +
                         "               </div>" +
                         "           </div>" +
                         "       </div>" +
@@ -422,7 +430,189 @@
                         "       <input type=\"hidden\" id=\"biaya_cetak_lebih_cover\" name=\"biaya_cetak_lebih_cover\" value=\"" + response.biaya_cetak_lebih_cover + "\">" +
                         "       <input type=\"hidden\" id=\"biaya_plat_cover\" name=\"biaya_plat_cover\" value=\"" + response.biaya_plat_cover + "\">" +
                         "       <input type=\"hidden\" id=\"biaya_cover\" name=\"biaya_cover\" value=\"" + response.biaya_cover + "\">" +
-                        "   </div>"
+                        "   </div>" +
+                        "<div class=\"row\">" +
+                            "<div class=\"col-md-4 p-4\">" +
+                                "<h4 class=\"text-uppercase\">Spesifikasi Item</h4>" +
+                                "<table class=\"table table\">" +
+                                    "<tbody>" +
+                                        "<tr>" +
+                                            "<td class=\"text-right\">Jumlah Cetak</td>" +
+                                            "<td>:</td>" +
+                                            "<td style=\"text-align: right;\"><input readonly id=\"jml_cetak\" value=\"" + response.jml_cetak + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
+                                        "</tr>" +
+                                        "<tr>" +
+                                            "<td>Jumlah Halaman</td>" +
+                                            "<td>:</td>" +
+                                            "<td style=\"text-align: right;\">" + response.jml_halaman + "</td>" +
+                                        "</tr>" +
+                                        "<tr>" +
+                                            "<td>Jumlah Warna</td>" +
+                                            "<td>:</td>" +
+                                            "<td style=\"text-align: right;\">" + response.jml_warna + "</td>" +
+                                        "</tr>" +
+                                        "<tr>" +
+                                            "<td>Ukuran Cetak</td>" +
+                                            "<td>:</td>" +
+                                            "<td style=\"text-align: right;\">" + response.ukuran_cetak + "</td>" +
+                                        "</tr>" +
+                                        "<tr>" +
+                                            "<td>Jenis Kertas</td>" +
+                                            "<td>:</td>" +
+                                            "<td style=\"text-align: right;\">" + response.jenis_kertas + "</td>" +
+                                        "</tr>" +
+                                        "<tr>" +
+                                            "<td>Finishing</td>" +
+                                            "<td>:</td>" +
+                                            "<td style=\"text-align: right;\">" + response.finishing + "</td>" +
+                                        "</tr>" +
+                                    "</tbody>" +
+                                "</table>";
+                                if (response.biaya_cover != 0) {
+                                    dataHasilHitung += "<h4 class=\"text-uppercase\">Item Cover</h4>" +
+                                    "<table class=\"table\">" +
+                                        "<tbody>" +
+                                            "<tr>" +
+                                                "<td>Jenis Kertas</td>" +
+                                                "<td>:</td>" +
+                                                "<td class=\"text-end\">" + response.jenis_kertas_cover + "</td>" +
+                                            "</tr>" +
+                                            "<tr>" +
+                                                "<td>Jumlah Plat</td>" +
+                                                "<td>:</td>" +
+                                                "<td class=\"text-end\">" + response.jml_plat_cover + "</td>" +
+                                            "</tr>" +
+                                        "</tbody>" +
+                                    "</table>";
+                                }
+                            dataHasilHitung += "</div>" +
+                            "<div class=\"col-md-4 p-4\">" +
+                                "<h4 class=\"text-uppercase\">Hasil Perhitungan</h4>" +
+                                "<table class=\"table\">" +
+                                    "<tr>" +
+                                        "<td>Insheet</td>" +
+                                        "<td>:</td>" +
+                                        "<td style=\"text-align: right;\">" + response.insheet + "</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td>Mesin yg dipakai</td>" +
+                                        "<td>:</td>" +
+                                        "<td style=\"text-align: right;\">" + response.mesin + "</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td>Jumlah Plat</td>" +
+                                        "<td>:</td>" +
+                                        "<td style=\"text-align: right;\">" + response.jml_plat + "</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td>Ukuran Cetak Real</td>" +
+                                        "<td>:</td>" +
+                                        "<td style=\"text-align: right;\">" + response.ukuran_cetak_real + "</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td>Ukuran Potong Kertas</td>" +
+                                        "<td>:</td>" +
+                                        "<td style=\"text-align: right;\">" + response.ukuran_potong_kertas + "</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td>Varnish UV</td>" +
+                                        "<td>:</td>" +
+                                        "<td style=\"text-align: right;\">" + response.laminasi + "</td>" +
+                                    "</tr>" +
+                                "</table>";
+                                if (response.biaya_cover != 0) {
+                                    dataHasilHitung += "<h4 class=\"text-uppercase\">Biaya Cover</h4>" +
+                                    "<table class=\"table\">" +
+                                        "<tbody>" +
+                                            "<tr>" +
+                                                "<td>Biaya Kertas</td>" +
+                                                "<td>:</td>" +
+                                                "<td class=\"text-end\">" + response.biaya_kertas_cover + "</td>" +
+                                            "</tr>" +
+                                            "<tr>" +
+                                                "<td>Biaya Cetak</td>" +
+                                                "<td>:</td>" +
+                                                "<td class=\"text-end\">" + response.biaya_cetak_min_cover + "</td>" +
+                                            "</tr>" +
+                                            "<tr>" +
+                                                "<td>Biaya Lebih</td>" +
+                                                "<td>:</td>" +
+                                                "<td class=\"text-end\">" + response.biaya_cetak_lebih_cover + "</td>" +
+                                            "</tr>" +
+                                            "<tr>" +
+                                                "<td>Biaya Plat</td>" +
+                                                "<td>:</td>" +
+                                                "<td class=\"text-end\">" + response.biaya_plat_cover + "</td>" +
+                                            "</tr>" +
+                                            "<tr>" +
+                                                "<td>Total Biaya</td>" +
+                                                "<td>:</td>" +
+                                                "<td class=\"text-end\">" + response.biaya_cover + "</td>" +
+                                            "</tr>" +
+                                        "</tbody>" +
+                                    "</table>";
+                                }
+                            dataHasilHitung += "</div>" +
+                            "<div class=\"col-md-4 p-4\">" +
+                                "<h4 class=\"text-uppercase\">Total</h4>" +
+                                "<table class=\"table\">" +
+                                    "<tr>" +
+                                        "<td>Biaya Kertas</td>" +
+                                        "<td>:</td>" +
+                                        "<td style=\"text-align: right;\">" + response.biaya_kertas + "</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td>Biaya Cetak Min</td>" +
+                                        "<td>:</td>" +
+                                        "<td style=\"text-align: right;\">" + response.biaya_cetak_min + "</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td>Biaya Cetak Lebih</td>" +
+                                        "<td>:</td>" +
+                                        "<td style=\"text-align: right;\">" + response.biaya_cetak_lebih + "</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td>Biaya Plat</td>" +
+                                        "<td>:</td>" +
+                                        "<td style=\"text-align: right;\">" + response.biaya_plat + "</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td>Total Biaya</td>" +
+                                        "<td>:</td>" +
+                                        "<td style=\"text-align: right;\"><input readonly id=\"total_biaya\" value=\"" + response.total_biaya + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td>Margin Profit</td>" +
+                                        "<td>:</td>" +
+                                        "<td style=\"text-align: right;\">" +
+                                            "<div class=\"row\">" +
+                                                "<div class=\"col-md-6 ml-4\">" +
+                                                    "<input type=\"text\" id=\"margin_profit\" name=\"margin_profit\" size=\"3\" value=\"20\" style=\"text-align:right; margin-right: -35px;\">" +
+                                                "</div>" +
+                                                "<div class=\"col-md-6\">" +
+                                                    "%" +
+                                                "</div>" +
+                                            "</div>" +
+                                        "</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td>Profit</td>" +
+                                        "<td>:</td>" +
+                                        "<td style=\"text-align: right;\"><input readonly id=\"profit\" value=\"" + response.profit + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td>Total Harga Jual</td>" +
+                                        "<td>:</td>" +
+                                        "<td style=\"text-align: right;\"><input readonly id=\"grand_total\" value=\"" + response.grand_total + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td>Harga Jual Satuan</td>" +
+                                        "<td>:</td>" +
+                                        "<td style=\"text-align: right;\"><input readonly id=\"harga_satuan\" value=\"" + response.harga_satuan + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
+                                    "</tr>" +
+                                "</table>" +
+                            "</div>" +
+                            "</div>" +
                         "</div>";
 
                     $(".hasil_hitung").append(dataHasilHitung);
