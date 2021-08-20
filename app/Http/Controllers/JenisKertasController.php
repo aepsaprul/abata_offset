@@ -14,7 +14,7 @@ class JenisKertasController extends Controller
      */
     public function index()
     {
-        $jenis_kertas = OffsetJenisKertas::orderBy('id', 'desc')->get();
+        $jenis_kertas = OffsetJenisKertas::orderBy('nama_kertas', 'desc')->get();
 
         return view('pages.jenis_kertas.index', ['jenis_kertas' => $jenis_kertas]);
     }
