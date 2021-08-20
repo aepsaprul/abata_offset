@@ -398,39 +398,6 @@
                         "           </div>" +
                         "       </div>" +
                         "   </div>" +
-                        "   <div class=\"row\">" +
-                        "       <input type=\"hidden\" id=\"jml_cetak\" name=\"jml_cetak\" value=\"" + response.jml_cetak + "\">" +
-                        "       <input type=\"hidden\" id=\"jml_halaman\" name=\"jml_halaman\" value=\"" + response.jml_halaman + "\">" +
-                        "       <input type=\"hidden\" id=\"jml_warna\" name=\"jml_warna\" value=\"" + response.jml_warna + "\">" +
-                        "       <input type=\"hidden\" id=\"ukuran_cetak\" name=\"ukuran_cetak\" value=\"" + response.ukuran_cetak + "\">" +
-                        "       <input type=\"hidden\" id=\"jenis_kertas\" name=\"jenis_kertas\" value=\"" + response.jenis_kertas + "\">" +
-                        "       <input type=\"hidden\" id=\"finishing\" name=\"finishing\" value=\"" + response.finishing + "\">" +
-                        "       <input type=\"hidden\" id=\"kertas\" name=\"kertas\" value=\"" + response.kertas + "\">" +
-                        "       <input type=\"hidden\" id=\"mesin\" name=\"mesin\" value=\"" + response.mesin + "\">" +
-                        "       <input type=\"hidden\" id=\"jml_plat\" name=\"jml_plat\" value=\"" + response.jml_plat + "\">" +
-                        "       <input type=\"hidden\" id=\"insheet\" name=\"insheet\" value=\"" + response.insheet + "\">" +
-                        "       <input type=\"hidden\" id=\"ukuran_cetak_real\" name=\"ukuran_cetak_real\" value=\"" + response.ukuran_cetak_real + "\">" +
-                        "       <input type=\"hidden\" id=\"ukuran_potong_kertas\" name=\"ukuran_potong_kertas\" value=\"" + response.ukuran_potong_kertas + "\">" +
-                        "       <input type=\"hidden\" id=\"biaya_kertas\" name=\"biaya_kertas\" value=\"" + response.biaya_kertas + "\">" +
-                        "       <input type=\"hidden\" id=\"total_biaya\" name=\"total_biaya\" value=\"" + response.total_biaya + "\">" +
-                        "       <input type=\"hidden\" id=\"profit\" name=\"profit\" value=\"" + response.profit + "\">" +
-                        "       <input type=\"hidden\" id=\"grand_total\" name=\"grand_total\" value=\"" + response.grand_total + "\">" +
-                        "       <input type=\"hidden\" id=\"harga_satuan\" name=\"harga_satuan\" value=\"" + response.harga_satuan + "\">" +
-                        "       <input type=\"hidden\" id=\"biaya_cetak_min\" name=\"biaya_cetak_min\" value=\"" + response.biaya_cetak_min + "\">" +
-                        "       <input type=\"hidden\" id=\"biaya_cetak_lebih\" name=\"biaya_cetak_lebih\" value=\"" + response.biaya_cetak_lebih + "\">" +
-                        "       <input type=\"hidden\" id=\"biaya_plat\" name=\"biaya_plat\" value=\"" + response.biaya_plat + "\">" +
-                        "       <input type=\"hidden\" id=\"biaya_susun\" name=\"biaya_susun\" value=\"" + response.biaya_susun + "\">" +
-                        "       <input type=\"hidden\" id=\"laminasi\" name=\"laminasi\" value=\"" + response.laminasi + "\">" +
-                        "       <input type=\"hidden\" id=\"biaya_set_kalender\" name=\"biaya_set_kalender\" value=\"" + response.biaya_set_kalender + "\">" +
-                        "       <input type=\"hidden\" id=\"jenis_kertas_cover\" name=\"jenis_kertas_cover\" value=\"" + response.jenis_kertas_cover + "\">" +
-                        "       <input type=\"hidden\" id=\"jml_kertas_insheet_cover\" name=\"jml_kertas_insheet_cover\" value=\"" + response.jml_kertas_insheet_cover + "\">" +
-                        "       <input type=\"hidden\" id=\"jml_plat_cover\" name=\"jml_plat_cover\" value=\"" + response.jml_plat_cover + "\">" +
-                        "       <input type=\"hidden\" id=\"biaya_kertas_cover\" name=\"biaya_kertas_cover\" value=\"" + response.biaya_kertas_cover + "\">" +
-                        "       <input type=\"hidden\" id=\"biaya_cetak_min_cover\" name=\"biaya_cetak_min_cover\" value=\"" + response.biaya_cetak_min_cover + "\">" +
-                        "       <input type=\"hidden\" id=\"biaya_cetak_lebih_cover\" name=\"biaya_cetak_lebih_cover\" value=\"" + response.biaya_cetak_lebih_cover + "\">" +
-                        "       <input type=\"hidden\" id=\"biaya_plat_cover\" name=\"biaya_plat_cover\" value=\"" + response.biaya_plat_cover + "\">" +
-                        "       <input type=\"hidden\" id=\"biaya_cover\" name=\"biaya_cover\" value=\"" + response.biaya_cover + "\">" +
-                        "   </div>" +
                         "<div class=\"row\">" +
                             "<div class=\"col-md-4 p-4\">" +
                                 "<h4 class=\"text-uppercase\">Spesifikasi Item</h4>" +
@@ -439,7 +406,7 @@
                                         "<tr>" +
                                             "<td class=\"text-right\">Jumlah Cetak</td>" +
                                             "<td>:</td>" +
-                                            "<td style=\"text-align: right;\"><input readonly id=\"jml_cetak\" value=\"" + response.jml_cetak + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
+                                            "<td style=\"text-align: right;\"><input readonly id=\"hitung_jml_cetak\" value=\"" + formatRp(response.jml_cetak) + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
                                         "</tr>" +
                                         "<tr>" +
                                             "<td>Jumlah Halaman</td>" +
@@ -527,17 +494,17 @@
                                             "<tr>" +
                                                 "<td>Biaya Kertas</td>" +
                                                 "<td>:</td>" +
-                                                "<td class=\"text-end\">" + response.biaya_kertas_cover + "</td>" +
+                                                "<td class=\"text-end\">" + formatRp(response.biaya_kertas_cover) + "</td>" +
                                             "</tr>" +
                                             "<tr>" +
                                                 "<td>Biaya Cetak</td>" +
                                                 "<td>:</td>" +
-                                                "<td class=\"text-end\">" + response.biaya_cetak_min_cover + "</td>" +
+                                                "<td class=\"text-end\">" + formatRp(response.biaya_cetak_min_cover) + "</td>" +
                                             "</tr>" +
                                             "<tr>" +
                                                 "<td>Biaya Lebih</td>" +
                                                 "<td>:</td>" +
-                                                "<td class=\"text-end\">" + response.biaya_cetak_lebih_cover + "</td>" +
+                                                "<td class=\"text-end\">" + formatRp(response.biaya_cetak_lebih_cover) + "</td>" +
                                             "</tr>" +
                                             "<tr>" +
                                                 "<td>Biaya Plat</td>" +
@@ -547,7 +514,7 @@
                                             "<tr>" +
                                                 "<td>Total Biaya</td>" +
                                                 "<td>:</td>" +
-                                                "<td class=\"text-end\">" + response.biaya_cover + "</td>" +
+                                                "<td class=\"text-end\">" + formatRp(response.biaya_cover) + "</td>" +
                                             "</tr>" +
                                         "</tbody>" +
                                     "</table>";
@@ -559,27 +526,27 @@
                                     "<tr>" +
                                         "<td>Biaya Kertas</td>" +
                                         "<td>:</td>" +
-                                        "<td style=\"text-align: right;\">" + response.biaya_kertas + "</td>" +
+                                        "<td style=\"text-align: right;\">" + formatRp(response.biaya_kertas) + "</td>" +
                                     "</tr>" +
                                     "<tr>" +
                                         "<td>Biaya Cetak Min</td>" +
                                         "<td>:</td>" +
-                                        "<td style=\"text-align: right;\">" + response.biaya_cetak_min + "</td>" +
+                                        "<td style=\"text-align: right;\">" + formatRp(response.biaya_cetak_min) + "</td>" +
                                     "</tr>" +
                                     "<tr>" +
                                         "<td>Biaya Cetak Lebih</td>" +
                                         "<td>:</td>" +
-                                        "<td style=\"text-align: right;\">" + response.biaya_cetak_lebih + "</td>" +
+                                        "<td style=\"text-align: right;\">" + formatRp(response.biaya_cetak_lebih) + "</td>" +
                                     "</tr>" +
                                     "<tr>" +
                                         "<td>Biaya Plat</td>" +
                                         "<td>:</td>" +
-                                        "<td style=\"text-align: right;\">" + response.biaya_plat + "</td>" +
+                                        "<td style=\"text-align: right;\">" + formatRp(response.biaya_plat) + "</td>" +
                                     "</tr>" +
                                     "<tr>" +
-                                        "<td>Total Biaya</td>" +
+                                        "<td>HPP</td>" +
                                         "<td>:</td>" +
-                                        "<td style=\"text-align: right;\"><input readonly id=\"total_biaya\" value=\"" + response.total_biaya + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
+                                        "<td style=\"text-align: right;\"><input readonly id=\"hitung_total_biaya\" value=\"" + formatRp(response.total_biaya) + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
                                     "</tr>" +
                                     "<tr>" +
                                         "<td>Margin Profit</td>" +
@@ -598,17 +565,17 @@
                                     "<tr>" +
                                         "<td>Profit</td>" +
                                         "<td>:</td>" +
-                                        "<td style=\"text-align: right;\"><input readonly id=\"profit\" value=\"" + response.profit + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
+                                        "<td style=\"text-align: right;\"><input readonly id=\"hitung_profit\" value=\"" + formatRp(Math.round(response.profit)) + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
                                     "</tr>" +
                                     "<tr>" +
                                         "<td>Total Harga Jual</td>" +
                                         "<td>:</td>" +
-                                        "<td style=\"text-align: right;\"><input readonly id=\"grand_total\" value=\"" + response.grand_total + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
+                                        "<td style=\"text-align: right;\"><input readonly id=\"hitung_grand_total\" value=\"" + formatRp(parseInt(response.grand_total)) + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
                                     "</tr>" +
                                     "<tr>" +
                                         "<td>Harga Jual Satuan</td>" +
                                         "<td>:</td>" +
-                                        "<td style=\"text-align: right;\"><input readonly id=\"harga_satuan\" value=\"" + response.harga_satuan + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
+                                        "<td style=\"text-align: right;\"><input readonly id=\"hitung_harga_satuan\" value=\"" + formatRp(Math.round(response.harga_satuan)) + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
                                     "</tr>" +
                                 "</table>" +
                             "</div>" +
@@ -616,6 +583,50 @@
                         "</div>";
 
                     $(".hasil_hitung").append(dataHasilHitung);
+
+                    var jml_cetak_val = $("#hitung_jml_cetak").val();
+                    var total_biaya_val = $("#hitung_total_biaya").val();
+                    var profit_val = $("#hitung_profit").val();
+                    var grand_total_val = $("#hitung_grand_total").val();
+                    var harga_satuan_val = $("#hitung_harga_satuan").val();
+
+                    var jml_cetak = jml_cetak_val.replace(/\./g,'');
+                    var total_biaya = total_biaya_val.replace(/\./g,'');
+                    var profit = profit_val.replace(/\./g,'');
+                    var grand_total = grand_total_val.replace(/\./g,'');
+                    var harga_satuan = harga_satuan_val.replace(/\./g,'');
+
+
+                    $("#margin_profit").on('keyup', function() {
+                        var margin_profit = $(this).val() / 100;
+                        var hitung_profit = margin_profit * total_biaya;
+                        var hitung_grand_total = parseInt(hitung_profit) + parseInt(total_biaya);
+                        var hitung_harga_satuan = Math.round(hitung_grand_total / jml_cetak);
+
+                        var profit_rupiah = formatRupiah(Math.round(hitung_profit));
+                        var grand_total_rupiah = formatRupiah(hitung_grand_total);
+                        var harga_satuan_rupiah = formatRupiah(hitung_harga_satuan);
+
+                        function formatRupiah(bilangan) {
+                            var	number_string = bilangan.toString(),
+                                sisa 	= number_string.length % 3,
+                                rupiah 	= number_string.substr(0, sisa),
+                                ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+
+                            if (ribuan) {
+                                separator = sisa ? '.' : '';
+                                rupiah += separator + ribuan.join('.');
+                            }
+                            return rupiah;
+                        }
+
+
+                        $("#hitung_profit").val(profit_rupiah);
+                        $("#hitung_grand_total").val(grand_total_rupiah);
+                        $("#hitung_harga_satuan").val(harga_satuan_rupiah);
+
+                        console.log(hitung_harga_satuan);
+                    });
                 }
             });
         })
