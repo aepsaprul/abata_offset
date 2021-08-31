@@ -208,7 +208,7 @@ class HomeController extends Controller
 
             $jml_plat_cover = $jml_warna_cover * 1;
             $biaya_kertas_cover = $kertas * $jml_kertas_insheet_cover;
-            $biaya_cetak_min_cover = $ongkos * 1;
+            $biaya_cetak_min_cover = $mesin_harga * 1;
             $biaya_cetak_lebih_cover = 60 * ($jml_cetak - 1000) * $cover_depan;
             $biaya_plat_cover = $cover_depan * $mesin->harga_plat;
             $biaya_cover = $biaya_kertas_cover + $biaya_cetak_min_cover + $biaya_cetak_lebih_cover + $biaya_plat_cover;
@@ -225,7 +225,7 @@ class HomeController extends Controller
 
         // biaya
         $biaya_kertas = $kertas * $jml_kertas_insheet;
-        $biaya_cetak_min = $ongkos * $jml_halaman_kalender;
+        $biaya_cetak_min = $mesin_harga * $jml_halaman_kalender;
         $biaya_plat = $jml_halaman_kalender * $mesin->harga_plat;
         $biaya_set_kalender = $biaya_finishing * $jml_cetak;
 

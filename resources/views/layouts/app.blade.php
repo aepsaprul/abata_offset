@@ -44,9 +44,9 @@
                             Master
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('bahan') }}">Bahan</a></li>
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('biaya_cetak') }}">Biaya Cetak</a></li>
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('biaya_finishing') }}">Biaya Finishing</a></li>
+                          {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('bahan') }}">Bahan</a></li> --}}
+                          {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('biaya_cetak') }}">Biaya Cetak</a></li> --}}
+                          {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('biaya_finishing') }}">Biaya Finishing</a></li> --}}
                           <li><a class="dropdown-item text-uppercase" href="{{ url('finishing') }}">Finishing</a></li>
                           <li><a class="dropdown-item text-uppercase" href="{{ url('finishing_produk') }}">Finishing Produk</a></li>
                           <li><a class="dropdown-item text-uppercase" href="{{ url('jenis_kertas') }}">Jenis Kertas</a></li>
