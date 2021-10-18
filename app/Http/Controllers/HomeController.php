@@ -158,25 +158,25 @@ class HomeController extends Controller
             // $biaya_finishing = 1000 * $jml_cetak;
         }
 
+        $mesin = OffsetMesin::where('id', $mesin_id)->first();
+        $mesin_harga = $mesin->harga_min;
+        $mesin_harga_lebih = $mesin->harga_lebih;
 
         // jenis kertas
         $offset_jenis_kertas = OffsetJenisKertas::find($jenis_kertas);
         $kertas = $offset_jenis_kertas->harga;
 
         if ($jml_cetak > 500 && $jml_cetak < 1000) {
-            $biaya_cetak_lebih = 60 * ($jml_cetak - 500) * $jml_halaman_kalender;
+            $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 500) * $jml_halaman_kalender;
         } elseif ($jml_cetak > 1000 && $jml_cetak < 1500) {
-            $biaya_cetak_lebih = 60 * ($jml_cetak - 1000) * $jml_halaman_kalender;
+            $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 1000) * $jml_halaman_kalender;
         } elseif ($jml_cetak > 1500 && $jml_cetak < 2000) {
-            $biaya_cetak_lebih = 60 * ($jml_cetak - 1500) * $jml_halaman_kalender;
+            $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 1500) * $jml_halaman_kalender;
         } elseif ($jml_cetak > 2000) {
-            $biaya_cetak_lebih = 60 * ($jml_cetak - 2000) * $jml_halaman_kalender;
+            $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 2000) * $jml_halaman_kalender;
         } else {
             $biaya_cetak_lebih = 0;
         }
-
-        $mesin = OffsetMesin::where('id', $mesin_id)->first();
-        $mesin_harga = $mesin->harga_min;
 
         // ongkos
         if ($jml_warna == 1) {
