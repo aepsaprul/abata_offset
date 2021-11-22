@@ -25,6 +25,12 @@
     <!-- Styles -->
     <link href="{{ asset('lib/bootstrap-5/css/bootstrap.min.css') }}" rel="stylesheet">
 
+    <style>
+        * {
+            font-size: 13px;
+        }
+    </style>
+
     @yield('style')
 </head>
 <body>

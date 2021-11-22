@@ -1,13 +1,5 @@
 @extends('layouts.app')
 
-@section('style')
-<style>
-    * {
-        font-size: 12px;
-    }
-</style>
-@endsection
-
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -366,7 +358,7 @@
                     // var url = '{{ route("home.produk.kalender_dinding_detail") }}';
                     // var total_biaya = $("#btn_total_biaya").val();
                     var harga_satuan_rp = formatRp(Math.round(response.harga_satuan));
-                    var total_biaya_rp = formatRp(response.total_biaya);
+                    var total_biaya_rp = formatRp(parseInt(response.grand_total));
 
                     function formatRp(bilangan) {
                         var	number_string = bilangan.toString(),
