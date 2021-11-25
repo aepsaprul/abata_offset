@@ -30,6 +30,7 @@
                 <tr class="text-center bg-secondary text-white">
                     <th>No</th>
                     <th>Nama Kertas</th>
+                    <th>Gramasi</th>
                     <th>Harga</th>
                     <th>#</th>
                 </tr>
@@ -39,7 +40,13 @@
                 <tr>
                     <td class="text-center">{{ $key + 1 }}</td>
                     <td>{{ $jenis_kertas->nama_kertas }}</td>
-                    <td>{{ rupiah($jenis_kertas->harga) }}</td>
+                    <td>
+                        @if ($jenis_kertas->gramasi)
+                            {{ $jenis_kertas->gramasi->ukuran }}</td>
+                        @else
+                            Gramasi tidak ada
+                        @endif
+                    <td class="text-end">{{ rupiah($jenis_kertas->harga) }}</td>
                     <td class="text-center">
                         <a href="{{ route('jenis_kertas.edit', [$jenis_kertas->id]) }}" class="btn btn-info text-white" title="Ubah"><i class="fas fa-edit"></i></a> |
                         <a href="{{ route('jenis_kertas.delete', [$jenis_kertas->id]) }}" class="btn btn-info text-white" title="Hapus" onclick="return confirm('Yakin akan dihapus?')"><i class="fas fa-trash"></i></a>

@@ -23,14 +23,30 @@
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label for="nama_kertas" class="form-label">Nama Kertas</label>
-                <input type="text" class="form-control @error('nama_kertas') is-invalid @enderror" id="nama_kertas" placeholder="Nama Kertas" name="nama_kertas" onkeyup="this.value = this.value.toUpperCase()" value="{{ old('nama_kertas') }}">
-                @error('nama_kertas')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
+                <input
+                    type="text"
+                    class="form-control @error('nama_kertas') is-invalid @enderror"
+                    id="nama_kertas"
+                    placeholder="Nama Kertas"
+                    name="nama_kertas"
+                    onkeyup="this.value = this.value.toUpperCase()"
+                    value="{{ old('nama_kertas') }}">
+                        @error('nama_kertas')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
+                <label for="nama_kertas" class="form-label">Gramasi</label>
+                <select name="gramasi_id" id="gramasi_id" class="form-control">
+                    <option value="">--Pilih Gramasi--</option>
+                    @foreach ($gramasis as $item)
+                        <option value="{{ $item->id }}">{{ $item->ukuran }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group col-md-4">
                 <label for="harga" class="form-label">Harga</label>
                 <input type="text" class="form-control @error('harga') is-invalid @enderror" id="harga" placeholder="Harga" name="harga" onkeyup="this.value = this.value.toUpperCase()" value="{{ old('harga') }}">
                 @error('harga')

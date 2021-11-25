@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OffsetBiayaJasaKalender;
 use App\Models\OffsetHitungProduk;
 use App\Models\OffsetJenisKertas;
 use App\Models\OffsetMesin;
@@ -189,8 +190,10 @@ class HomeController extends Controller
         //     $biaya_cetak_lebih = 0;
         // }
 
+        $biaya_jasa = OffsetBiayaJasaKalender::where('mesin_id', $mesin->id)->where('gramasi_id', $offset_jenis_kertas->gramasi_id)->where('warna_id', $jml_warna)->first();
+
         if ($jml_cetak > 1000) {
-            $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 1000) * $jml_halaman_kalender;
+            $biaya_cetak_lebih = $biaya_jasa->harga_lebih * ($jml_cetak - 1000) * $jml_halaman_kalender;
         } else {
             $biaya_cetak_lebih = 0;
         }

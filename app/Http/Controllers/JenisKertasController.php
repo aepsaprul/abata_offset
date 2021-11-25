@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OffsetGramasi;
 use App\Models\OffsetJenisKertas;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,9 @@ class JenisKertasController extends Controller
      */
     public function create()
     {
-        return view('pages.jenis_kertas.create');
+        $gramasi = OffsetGramasi::get();
+
+        return view('pages.jenis_kertas.create', ['gramasis' => $gramasi]);
     }
 
     /**
@@ -46,6 +49,7 @@ class JenisKertasController extends Controller
 
         $jenis_kertas = new OffsetJenisKertas;
         $jenis_kertas->nama_kertas = $request->nama_kertas;
+        $jenis_kertas->gramasi_id = $request->gramasi_id;
         $jenis_kertas->harga = $harga;
         $jenis_kertas->save();
 
@@ -72,8 +76,9 @@ class JenisKertasController extends Controller
     public function edit($id)
     {
         $jenis_kertas = OffsetJenisKertas::find($id);
+        $gramasi = OffsetGramasi::get();
 
-        return view('pages.jenis_kertas.edit', ['jenis_kertas' => $jenis_kertas]);
+        return view('pages.jenis_kertas.edit', ['jenis_kertas' => $jenis_kertas, 'gramasis' => $gramasi]);
     }
 
     /**
@@ -94,6 +99,7 @@ class JenisKertasController extends Controller
 
         $jenis_kertas = OffsetJenisKertas::find($id);
         $jenis_kertas->nama_kertas = $request->nama_kertas;
+        $jenis_kertas->gramasi_id = $request->gramasi_id;
         $jenis_kertas->harga = $harga;
         $jenis_kertas->save();
 
