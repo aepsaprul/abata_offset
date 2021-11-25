@@ -100,22 +100,27 @@ class HomeController extends Controller
             $biaya_klem = 1000;
             $biaya_spiral = 150 * 36; // 32 + 4
             $jml_kertas_insheet = ($jml_set_kalender / 4) + 25 * $jml_halaman_kalender;
+            $ukuran_plano = "Plano Kecil";
         } elseif ($ukuran_cetak == "38 x 52") {
             $biaya_klem = 1000;
             $biaya_spiral = 150 * 42; // 38 + 4
             $jml_kertas_insheet = ($jml_set_kalender / 4) + 25 * $jml_halaman_kalender;
+            $ukuran_plano = "Plano Kecil";
         } elseif ($ukuran_cetak == "40 x 56") {
             $biaya_klem = 1500;
             $biaya_spiral = 150 * 44; // 40 + 4
             $jml_kertas_insheet = ($jml_set_kalender / 2) + 50 * $jml_halaman_kalender;
+            $ukuran_plano = "Plano Kecil";
         } elseif ($ukuran_cetak == "44 x 64") {
             $biaya_klem = 1500;
             $biaya_spiral = 150 * 48; // 44 + 4
             $jml_kertas_insheet = ($jml_set_kalender / 2) + 50 * $jml_halaman_kalender;
+            $ukuran_plano = "Plano Kecil";
         } elseif ($ukuran_cetak == "50 x 70") {
             $biaya_klem = 2000;
             $biaya_spiral = 150 * 54; // 50 + 4
             $jml_kertas_insheet = ($jml_set_kalender / 2) + 50 * $jml_halaman_kalender;
+            $ukuran_plano = "Plano Besar";
         } else {
             echo "ukuran lainnya";
         }
@@ -166,17 +171,24 @@ class HomeController extends Controller
         $offset_jenis_kertas = OffsetJenisKertas::find($jenis_kertas);
         $kertas = $offset_jenis_kertas->harga;
 
-        if ($jml_cetak > 500 && $jml_cetak < 1000) {
-            $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 500) * $jml_halaman_kalender;
-        } elseif ($jml_cetak > 1000 && $jml_cetak < 1500) {
+        // if ($jml_cetak > 500 && $jml_cetak < 1000) {
+        //     $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 500) * $jml_halaman_kalender;
+        // } elseif ($jml_cetak > 1000 && $jml_cetak < 1500) {
+        //     $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 1000) * $jml_halaman_kalender;
+        // } elseif ($jml_cetak > 1500 && $jml_cetak < 2000) {
+        //     $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 1500) * $jml_halaman_kalender;
+        // } elseif ($jml_cetak > 2000) {
+        //     $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 2000) * $jml_halaman_kalender;
+        // } else {
+        //     $biaya_cetak_lebih = 0;
+        // }
+
+        if ($jml_cetak > 1000) {
             $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 1000) * $jml_halaman_kalender;
-        } elseif ($jml_cetak > 1500 && $jml_cetak < 2000) {
-            $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 1500) * $jml_halaman_kalender;
-        } elseif ($jml_cetak > 2000) {
-            $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 2000) * $jml_halaman_kalender;
         } else {
             $biaya_cetak_lebih = 0;
         }
+
 
         // ongkos
         if ($jml_warna == 1) {
@@ -192,6 +204,10 @@ class HomeController extends Controller
             $cover_depan = $request->cover_depan;
             $jml_warna_cover = $request->jml_warna_cover;
             $jenis_kertas_cover = $request->jenis_kertas_cover;
+
+            $offset_jenis_kertas_cover = OffsetJenisKertas::find($jenis_kertas_cover);
+            $kertas_cover = $offset_jenis_kertas_cover->nama_kertas;
+
             if ($ukuran_cetak == "32 x 48") {
                 $jml_kertas_insheet_cover = ($jml_cetak / 4) + 25 * $cover_depan;
             } elseif ($ukuran_cetak == "38 x 52") {
@@ -214,6 +230,8 @@ class HomeController extends Controller
             $biaya_cover = $biaya_kertas_cover + $biaya_cetak_min_cover + $biaya_cetak_lebih_cover + $biaya_plat_cover;
         } else {
             $jenis_kertas_cover = "";
+            $jml_warna_cover = "";
+            $kertas_cover = "";
             $jml_kertas_insheet_cover = 0;
             $jml_plat_cover = 0;
             $biaya_kertas_cover = 0;
@@ -242,6 +260,7 @@ class HomeController extends Controller
             'jml_warna' => $jml_warna,
             'ukuran_cetak' => $ukuran_cetak,
             'jenis_kertas' => $offset_jenis_kertas->nama_kertas,
+            'ukuran_plano' => $ukuran_plano,
             'finishing' => $jenis_finishing,
             'kertas' => $ukuran_cetak_detail,
             'mesin' => $mesin->nama_mesin,
@@ -257,11 +276,14 @@ class HomeController extends Controller
             'biaya_cetak_min' => $biaya_cetak_min,
             'biaya_cetak_lebih' => $biaya_cetak_lebih,
             'biaya_plat' => $biaya_plat,
+            'biaya_finishing' => $biaya_finishing,
             'biaya_susun' => $biaya_susun,
             'biaya_set_kalender' => $biaya_set_kalender,
             'laminasi' => $laminasi,
             'nama_file' => $nama_file,
             'jenis_kertas_cover' => $jenis_kertas_cover,
+            'kertas_cover' => $kertas_cover,
+            'jml_warna_cover' => $jml_warna_cover,
             'jml_kertas_insheet_cover' => $jml_kertas_insheet_cover,
             'jml_plat_cover' => $jml_plat_cover,
             'biaya_kertas_cover' => $biaya_kertas_cover,

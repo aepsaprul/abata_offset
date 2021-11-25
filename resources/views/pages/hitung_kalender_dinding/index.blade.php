@@ -421,6 +421,11 @@
                                             "<td style=\"text-align: right;\">" + response.jenis_kertas + "</td>" +
                                         "</tr>" +
                                         "<tr>" +
+                                            "<td>Ukuran Plano</td>" +
+                                            "<td>:</td>" +
+                                            "<td style=\"text-align: right;\">" + response.ukuran_plano + "</td>" +
+                                        "</tr>" +
+                                        "<tr>" +
                                             "<td>Finishing</td>" +
                                             "<td>:</td>" +
                                             "<td style=\"text-align: right;\">" + response.finishing + "</td>" +
@@ -428,18 +433,25 @@
                                     "</tbody>" +
                                 "</table>";
                                 if (response.biaya_cover != 0) {
-                                    dataHasilHitung += "<h4 class=\"text-uppercase\">Item Cover</h4>" +
+                                    dataHasilHitung += "<h4 class=\"text-uppercase\">Spesifikasi Cover</h4>" +
                                     "<table class=\"table\">" +
                                         "<tbody>" +
                                             "<tr>" +
+                                                "<td>Jumlah Waran</td>" +
+                                                "<td>:</td>" +
+                                                "<td class=\"text-end\">";
+
+                                                if (response.jml_warna_cover == 4) {
+                                                    dataHasilHitung += "Full Color";
+                                                } else {
+                                                    dataHasilHitung += response.jml_warna_cover + " Warna";
+                                                }
+
+                                            dataHasilHitung += "</td></tr>" +
+                                            "<tr>" +
                                                 "<td>Jenis Kertas</td>" +
                                                 "<td>:</td>" +
-                                                "<td class=\"text-end\">" + response.jenis_kertas_cover + "</td>" +
-                                            "</tr>" +
-                                            "<tr>" +
-                                                "<td>Jumlah Plat</td>" +
-                                                "<td>:</td>" +
-                                                "<td class=\"text-end\">" + response.jml_plat_cover + "</td>" +
+                                                "<td class=\"text-end\">" + response.kertas_cover + "</td>" +
                                             "</tr>" +
                                         "</tbody>" +
                                     "</table>";
@@ -449,7 +461,7 @@
                                 "<h4 class=\"text-uppercase\">Hasil Perhitungan</h4>" +
                                 "<table class=\"table\">" +
                                     "<tr>" +
-                                        "<td>Insheet</td>" +
+                                        "<td>Kertas + Insheet</td>" +
                                         "<td>:</td>" +
                                         "<td style=\"text-align: right;\">" + response.insheet + "</td>" +
                                     "</tr>" +
@@ -501,7 +513,7 @@
                                             "<tr>" +
                                                 "<td>Biaya Plat</td>" +
                                                 "<td>:</td>" +
-                                                "<td class=\"text-end\">" + response.biaya_plat_cover + "</td>" +
+                                                "<td class=\"text-end\">" + formatRp(response.biaya_plat_cover) + "</td>" +
                                             "</tr>" +
                                             "<tr>" +
                                                 "<td>Total Biaya</td>" +
@@ -534,6 +546,11 @@
                                         "<td>Biaya Plat</td>" +
                                         "<td>:</td>" +
                                         "<td style=\"text-align: right;\">" + formatRp(response.biaya_plat) + "</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td>Biaya Finishing</td>" +
+                                        "<td>:</td>" +
+                                        "<td class=\"text-end\">" + formatRp(response.biaya_set_kalender) + "</td>" +
                                     "</tr>" +
                                     "<tr>" +
                                         "<td>HPP</td>" +
