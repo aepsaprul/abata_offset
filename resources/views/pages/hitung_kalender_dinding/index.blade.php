@@ -43,10 +43,9 @@
                                             <div class="col-sm-6">
                                                 <select class="form-select form-select-sm" id="jml_warna" name="jml_warna">
                                                     <option value="">--Pilih Jumlah--</option>
-                                                    <option value="1">1 Warna</option>
-                                                    <option value="2">2 Warna</option>
-                                                    <option value="3">3 Warna</option>
-                                                    <option value="4">Full Color</option>
+                                                    @foreach ($warnas as $item)
+                                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -172,10 +171,9 @@
                                                 <div class="col-sm-6">
                                                     <select class="form-select form-select-sm" id="jml_warna_cover" name="jml_warna_cover">
                                                         <option value="">--Pilih Jumlah--</option>
-                                                        <option value="1">1 Warna</option>
-                                                        <option value="2">2 Warna</option>
-                                                        <option value="3">3 Warna</option>
-                                                        <option value="4">Full Color</option>
+                                                        @foreach ($warnas as $item)
+                                                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>

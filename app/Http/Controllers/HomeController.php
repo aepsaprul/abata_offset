@@ -8,6 +8,7 @@ use App\Models\OffsetMesin;
 use App\Models\OffsetProduk;
 use App\Models\OffsetUkuranCetak;
 use App\Models\OffsetUkuranCetakDetail;
+use App\Models\OffsetWarna;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -49,11 +50,16 @@ class HomeController extends Controller
         $produks = OffsetProduk::with('kertas')->get();
 
         if ($kode_produk == "kalenderdinding") {
-
+            $warna = OffsetWarna::get();
             $produk_relasi = OffsetProduk::where('kode_produk', 'kalenderdinding')->with(['kertas', 'finishing'])->first();
             $ukuran_cetaks = OffsetUkuranCetak::get();
 
-            return view('pages.hitung_kalender_dinding.index', ['produks' => $produks, 'produk_relasi' => $produk_relasi, 'ukuran_cetaks' => $ukuran_cetaks]);
+            return view('pages.hitung_kalender_dinding.index', [
+                'produks' => $produks,
+                'warnas' => $warna,
+                'produk_relasi' => $produk_relasi,
+                'ukuran_cetaks' => $ukuran_cetaks
+            ]);
         } else {
             echo "data mbuh";
         }
