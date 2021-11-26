@@ -178,18 +178,6 @@ class HomeController extends Controller
         $offset_jenis_kertas = OffsetJenisKertas::find($jenis_kertas);
         $kertas = $offset_jenis_kertas->harga;
 
-        // if ($jml_cetak > 500 && $jml_cetak < 1000) {
-        //     $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 500) * $jml_halaman_kalender;
-        // } elseif ($jml_cetak > 1000 && $jml_cetak < 1500) {
-        //     $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 1000) * $jml_halaman_kalender;
-        // } elseif ($jml_cetak > 1500 && $jml_cetak < 2000) {
-        //     $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 1500) * $jml_halaman_kalender;
-        // } elseif ($jml_cetak > 2000) {
-        //     $biaya_cetak_lebih = $mesin_harga_lebih * ($jml_cetak - 2000) * $jml_halaman_kalender;
-        // } else {
-        //     $biaya_cetak_lebih = 0;
-        // }
-
         $biaya_jasa = OffsetBiayaJasaKalender::where('mesin_id', $mesin->id)->where('gramasi_id', $offset_jenis_kertas->gramasi_id)->where('warna_id', $jml_warna)->first();
 
         if ($jml_cetak > 1000) {
@@ -234,7 +222,14 @@ class HomeController extends Controller
             $jml_plat_cover = $jml_warna_cover * 1;
             $biaya_kertas_cover = $kertas * $jml_kertas_insheet_cover;
             $biaya_cetak_min_cover = $mesin_harga * 1;
-            $biaya_cetak_lebih_cover = 60 * ($jml_cetak - 1000) * $cover_depan;
+            // $biaya_cetak_lebih_cover = 60 * ($jml_cetak - 1000) * $cover_depan;
+
+            if ($jml_cetak > 1000) {
+                $biaya_cetak_lebih_cover = $biaya_jasa->harga_lebih * ($jml_cetak - 1000) * $cover_depan;
+            } else {
+                $biaya_cetak_lebih_cover = 0;
+            }
+
             $biaya_plat_cover = $cover_depan * $mesin->harga_plat;
             $biaya_cover = $biaya_kertas_cover + $biaya_cetak_min_cover + $biaya_cetak_lebih_cover + $biaya_plat_cover;
         } else {
@@ -252,7 +247,7 @@ class HomeController extends Controller
 
         // biaya
         $biaya_kertas = $kertas * $jml_kertas_insheet;
-        $biaya_cetak_min = $mesin_harga * $jml_halaman_kalender;
+        $biaya_cetak_min = $biaya_jasa->harga_per_seribu * $jml_halaman_kalender;
         $biaya_plat = $jml_halaman_kalender * $mesin->harga_plat;
         $biaya_set_kalender = $biaya_finishing * $jml_cetak;
 

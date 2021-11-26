@@ -406,8 +406,17 @@
                                         "<tr>" +
                                             "<td>Jumlah Warna</td>" +
                                             "<td>:</td>" +
-                                            "<td style=\"text-align: right;\">" + response.jml_warna + "</td>" +
-                                        "</tr>" +
+                                            "<td style=\"text-align: right;\">";
+
+                                            if (response.jml_warna == 4) {
+                                                dataHasilHitung += "Full Color";
+                                            } else if (response.jml_warna == 5) {
+                                                dataHasilHitung += "Warna Khusus";
+                                            } else {
+                                                dataHasilHitung += response.jml_warna + " Warna";
+                                            }
+
+                                            dataHasilHitung += "</td></tr>" +
                                         "<tr>" +
                                             "<td>Ukuran Cetak</td>" +
                                             "<td>:</td>" +
@@ -441,6 +450,8 @@
 
                                                 if (response.jml_warna_cover == 4) {
                                                     dataHasilHitung += "Full Color";
+                                                } else if (response.jml_warna_cover == 5) {
+                                                    dataHasilHitung += "Warna Khusus";
                                                 } else {
                                                     dataHasilHitung += response.jml_warna_cover + " Warna";
                                                 }
