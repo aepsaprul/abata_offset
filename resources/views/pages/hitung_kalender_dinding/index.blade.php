@@ -167,6 +167,14 @@
                                     <div class="sub_cover_depan">
                                         <div class="col-md-12">
                                             <div class="form-group row mb-3">
+                                                <label for="jml_halaman_cover" class="col-sm-6 col-form-label">Jumlah Halaman Cover</label>
+                                                <div class="col-sm-6">
+                                                    <input type="number" class="form-control form-control-sm" id="jml_halaman_cover" name="jml_halaman_cover" min="0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row mb-3">
                                                 <label for="jml_warna_cover" class="col-sm-6 col-form-label">Jumlah Warna Cover</label>
                                                 <div class="col-sm-6">
                                                     <select class="form-select form-select-sm" id="jml_warna_cover" name="jml_warna_cover">
@@ -279,6 +287,7 @@
                 $('.sub_cover_depan').hide();
 
                 $("#cover_depan").val("");
+                $("#jml_halaman_cover").val("");
                 $("#jml_warna_cover").val("");
                 $("#jenis_kertas_cover").val("");
             }
@@ -311,10 +320,16 @@
             $(".hasil_hitung").empty();
 
             var cover_depan = $("#cover_depan").val();
+            var jml_halaman_cover = $("#jml_halaman_cover").val();
             var jml_warna_cover = $("#jml_warna_cover").val();
             var jenis_kertas_cover = $("#jenis_kertas_cover").val();
 
             if (cover_depan != "") {
+                if (jml_halaman_cover == "") {
+                    alert('Jumlah Halaman Cover Harus Diisi');
+
+                    return false;
+                }
                 if (jml_warna_cover == "") {
                     alert('Jumlah Warna Cover Harus Diisi');
 
@@ -341,6 +356,7 @@
                 biaya_akomodasi: $("#biaya_akomodasi").val(),
                 nama_file: $("#nama_file").val(),
                 cover_depan: $("#cover_depan").val(),
+                jml_halaman_cover: $("#jml_halaman_cover").val(),
                 jml_warna_cover: $("#jml_warna_cover").val(),
                 jenis_kertas_cover: $("#jenis_kertas_cover").val(),
                 _token: CSRF_TOKEN

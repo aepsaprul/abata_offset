@@ -199,38 +199,42 @@ class HomeController extends Controller
         // cover
         if ($request->cover_depan != null) {
             $cover_depan = $request->cover_depan;
+            $jml_halaman_cover = $request->jml_halaman_cover;
             $jml_warna_cover = $request->jml_warna_cover;
             $jenis_kertas_cover = $request->jenis_kertas_cover;
 
             $offset_jenis_kertas_cover = OffsetJenisKertas::find($jenis_kertas_cover);
             $kertas_cover = $offset_jenis_kertas_cover->nama_kertas;
 
+            $biaya_jasa_cover = OffsetBiayaJasaKalender::where('mesin_id', $mesin->id)->where('gramasi_id', $offset_jenis_kertas_cover->gramasi_id)->where('warna_id', $jml_warna_cover)->first();
+
+
             if ($ukuran_cetak == "32 x 48") {
-                $jml_kertas_insheet_cover = ($jml_cetak / 4) + 25 * $cover_depan;
+                $jml_kertas_insheet_cover = ($jml_cetak / 4) + 25 * $jml_halaman_cover;
             } elseif ($ukuran_cetak == "38 x 52") {
-                $jml_kertas_insheet_cover = ($jml_cetak / 4) + 25 * $cover_depan;
+                $jml_kertas_insheet_cover = ($jml_cetak / 4) + 25 * $jml_halaman_cover;
             } elseif ($ukuran_cetak == "40 x 56") {
-                $jml_kertas_insheet_cover = ($jml_cetak / 2) + 50 * $cover_depan;
+                $jml_kertas_insheet_cover = ($jml_cetak / 2) + 50 * $jml_halaman_cover;
             } elseif ($ukuran_cetak == "44 x 64") {
-                $jml_kertas_insheet_cover = ($jml_cetak / 2) + 50 * $cover_depan;
+                $jml_kertas_insheet_cover = ($jml_cetak / 2) + 50 * $jml_halaman_cover;
             } elseif ($ukuran_cetak == "50 x 70") {
-                $jml_kertas_insheet_cover = ($jml_cetak / 2) + 50 * $cover_depan;
+                $jml_kertas_insheet_cover = ($jml_cetak / 2) + 50 * $jml_halaman_cover;
             } else {
                 echo "ukuran lainnya";
             }
 
             $jml_plat_cover = $jml_warna_cover * 1;
             $biaya_kertas_cover = $kertas * $jml_kertas_insheet_cover;
-            $biaya_cetak_min_cover = $mesin_harga * 1;
-            // $biaya_cetak_lebih_cover = 60 * ($jml_cetak - 1000) * $cover_depan;
+            $biaya_cetak_min_cover = $biaya_jasa_cover->harga_per_seribu * $jml_halaman_cover;
+            // $biaya_cetak_lebih_cover = 60 * ($jml_cetak - 1000) * $jml_halaman_cover;
 
             if ($jml_cetak > 1000) {
-                $biaya_cetak_lebih_cover = $biaya_jasa->harga_lebih * ($jml_cetak - 1000) * $cover_depan;
+                $biaya_cetak_lebih_cover = $biaya_jasa_cover->harga_lebih * ($jml_cetak - 1000) * $jml_halaman_cover;
             } else {
                 $biaya_cetak_lebih_cover = 0;
             }
 
-            $biaya_plat_cover = $cover_depan * $mesin->harga_plat;
+            $biaya_plat_cover = $jml_halaman_cover * $mesin->harga_plat;
             $biaya_cover = $biaya_kertas_cover + $biaya_cetak_min_cover + $biaya_cetak_lebih_cover + $biaya_plat_cover;
         } else {
             $jenis_kertas_cover = "";
