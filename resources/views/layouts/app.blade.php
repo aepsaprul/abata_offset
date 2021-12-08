@@ -54,14 +54,14 @@
                           {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('biaya_cetak') }}">Biaya Cetak</a></li> --}}
                           {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('biaya_finishing') }}">Biaya Finishing</a></li> --}}
                           <li><a class="dropdown-item text-uppercase" href="{{ url('finishing') }}">Finishing</a></li>
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('finishing_produk') }}">Finishing Produk</a></li>
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('jenis_kertas') }}">Jenis Kertas</a></li>
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('kertas') }}">Kertas</a></li>
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('kertas_produk') }}">Kertas Produk</a></li>
+                          {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('finishing_produk') }}">Finishing Produk</a></li> --}}
+                          <li><a class="dropdown-item text-uppercase" href="{{ url('jenis_kertas') }}">Kertas</a></li>
+                          {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('kertas') }}">Kertas</a></li> --}}
+                          {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('kertas_produk') }}">Kertas Produk</a></li> --}}
                           <li><a class="dropdown-item text-uppercase" href="{{ url('mesin') }}">Mesin</a></li>
                           <li><a class="dropdown-item text-uppercase" href="{{ url('produk') }}">Produk</a></li>
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('ukuran_cetak') }}">Ukuran Cetak</a></li>
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('ukuran_cetak_detail') }}">Ukuran Cetak Detail</a></li>
+                          {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('ukuran_cetak') }}">Ukuran Cetak</a></li>
+                          <li><a class="dropdown-item text-uppercase" href="{{ url('ukuran_cetak_detail') }}">Ukuran Cetak Detail</a></li> --}}
                         </ul>
                       </li>
                     <li class="nav-item {{ (request()->is('transaksi*')) ? 'active' : '' }}">
@@ -105,6 +105,41 @@
     <script src="{{ asset('lib/bootstrap-5/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('lib/datatables/js/jquery-3.5.1.js') }}"></script>
     <script src="{{ asset('lib/fontawesome-5/js/fontawesome.min.js') }}"></script>
+
+    <script>
+        function format_rupiah(bilangan) {
+            var	number_string = bilangan.toString(),
+                split	= number_string.split(','),
+                sisa 	= split[0].length % 3,
+                rupiah 	= split[0].substr(0, sisa),
+                ribuan 	= split[0].substr(sisa).match(/\d{1,3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+
+            return rupiah;
+        }
+
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, "").toString(),
+                split = number_string.split(","),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? "." : "";
+                rupiah += separator + ribuan.join(".");
+            }
+
+            rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+            return prefix == undefined ? rupiah : rupiah ? "" + rupiah : "";
+        }
+    </script>
 
     @yield('script')
 </body>

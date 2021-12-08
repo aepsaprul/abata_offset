@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\OffsetGramasi;
 use App\Models\OffsetJenisKertas;
+use App\Models\OffsetKertas;
 use Illuminate\Http\Request;
 
 class JenisKertasController extends Controller
@@ -15,7 +16,7 @@ class JenisKertasController extends Controller
      */
     public function index()
     {
-        $jenis_kertas = OffsetJenisKertas::orderBy('nama_kertas', 'desc')->get();
+        $jenis_kertas = OffsetJenisKertas::orderBy('id', 'desc')->get();
 
         return view('pages.jenis_kertas.index', ['jenis_kertas' => $jenis_kertas]);
     }
@@ -27,9 +28,11 @@ class JenisKertasController extends Controller
      */
     public function create()
     {
-        $gramasi = OffsetGramasi::get();
+        $kertas = OffsetKertas::get();
 
-        return view('pages.jenis_kertas.create', ['gramasis' => $gramasi]);
+        return response()->json([
+            'kertas' => $kertas
+        ]);
     }
 
     /**
@@ -49,11 +52,14 @@ class JenisKertasController extends Controller
 
         $jenis_kertas = new OffsetJenisKertas;
         $jenis_kertas->nama_kertas = $request->nama_kertas;
-        $jenis_kertas->gramasi_id = $request->gramasi_id;
+        $jenis_kertas->gramasi = $request->gramasi;
+        $jenis_kertas->kertas_id = $request->kertas_id;
         $jenis_kertas->harga = $harga;
         $jenis_kertas->save();
 
-        return redirect()->route('jenis_kertas.index')->with('status', 'Data berhasil disimpan');
+        return response()->json([
+            'status' => 'Data berhasil disimpan'
+        ]);
     }
 
     /**
@@ -76,9 +82,16 @@ class JenisKertasController extends Controller
     public function edit($id)
     {
         $jenis_kertas = OffsetJenisKertas::find($id);
-        $gramasi = OffsetGramasi::get();
+        $kertas = OffsetKertas::get();
 
-        return view('pages.jenis_kertas.edit', ['jenis_kertas' => $jenis_kertas, 'gramasis' => $gramasi]);
+        return response()->json([
+            'id' => $jenis_kertas->id,
+            'nama_kertas' => $jenis_kertas->nama_kertas,
+            'gramasi' => $jenis_kertas->gramasi,
+            'kertas_id' => $jenis_kertas->kertas_id,
+            'harga' => $jenis_kertas->harga,
+            'kertas' => $kertas
+        ]);
     }
 
     /**
@@ -99,11 +112,14 @@ class JenisKertasController extends Controller
 
         $jenis_kertas = OffsetJenisKertas::find($id);
         $jenis_kertas->nama_kertas = $request->nama_kertas;
-        $jenis_kertas->gramasi_id = $request->gramasi_id;
+        $jenis_kertas->gramasi = $request->gramasi;
+        $jenis_kertas->kertas_id = $request->kertas_id;
         $jenis_kertas->harga = $harga;
         $jenis_kertas->save();
 
-        return redirect()->route('jenis_kertas.index')->with('status', 'Data berhasil diperbaharui');
+        return response()->json([
+            'status' => 'Data berhasil diperbaharui'
+        ]);
     }
 
     /**
@@ -117,9 +133,19 @@ class JenisKertasController extends Controller
         //
     }
 
-    public function delete(Request $request, $id)
+    public function deleteBtn($id)
     {
         $jenis_kertas = OffsetJenisKertas::find($id);
+
+        return response()->json([
+            'id' => $jenis_kertas->id,
+            'nama_kertas' => $jenis_kertas->nama_kertas
+        ]);
+    }
+
+    public function delete(Request $request)
+    {
+        $jenis_kertas = OffsetJenisKertas::find($request->id);
         $jenis_kertas->delete();
 
         return redirect()->route('jenis_kertas.index')->with('status', 'Data berhasil dihapus');

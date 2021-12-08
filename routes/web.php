@@ -48,7 +48,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('finishing_produk/{id}/delete', [App\Http\Controllers\FinishingProdukController::class, 'delete'])->name('finishing_produk.delete');
 
     Route::resource('jenis_kertas', App\Http\Controllers\JenisKertasController::class);
-    Route::get('jenis_kertas/{id}/delete', [App\Http\Controllers\JenisKertasController::class, 'delete'])->name('jenis_kertas.delete');
+    Route::get('jenis_kertas/{id}/delete_btn', [App\Http\Controllers\JenisKertasController::class, 'deleteBtn'])->name('jenis_kertas.delete_btn');
+    Route::post('jenis_kertas/delete', [App\Http\Controllers\JenisKertasController::class, 'delete'])->name('jenis_kertas.delete');
 
     Route::resource('kertas', KertasController::class);
     Route::get('kertas/{id}/delete', [KertasController::class, 'delete'])->name('kertas.delete');
@@ -57,7 +58,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('kertas_produk/{id}/delete', [App\Http\Controllers\KertasProdukController::class, 'delete'])->name('kertas_produk.delete');
 
     Route::resource('mesin', MesinController::class);
-    Route::get('mesin/{id}/delete', [MesinController::class, 'delete'])->name('mesin.delete');
+    Route::get('mesin/{id}/delete_btn', [MesinController::class, 'deleteBtn'])->name('mesin.delete_btn');
+    Route::post('mesin/delete', [MesinController::class, 'delete'])->name('mesin.delete');
 
     Route::resource('produk', ProdukController::class);
     Route::get('produk/{id}/delete', [ProdukController::class, 'delete'])->name('produk.delete');

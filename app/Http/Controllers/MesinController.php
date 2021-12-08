@@ -39,28 +39,23 @@ class MesinController extends Controller
     {
         $validated = $request->validate([
             'nama_mesin' => 'required',
-            'area_kertas_panjang' => 'required',
-            'area_kertas_lebar' => 'required',
             'area_cetak_panjang' => 'required',
             'area_cetak_lebar' => 'required',
-            'harga_min' => 'required',
             'harga_plat' => 'required'
         ]);
 
-        $harga_min = str_replace(".", "", $request->harga_min);
         $harga_plat = str_replace(".", "", $request->harga_plat);
 
         $mesins = new OffsetMesin;
         $mesins->nama_mesin = $request->nama_mesin;
-        $mesins->area_kertas_panjang = $request->area_kertas_panjang;
-        $mesins->area_kertas_lebar = $request->area_kertas_lebar;
         $mesins->area_cetak_panjang = $request->area_cetak_panjang;
         $mesins->area_cetak_lebar = $request->area_cetak_lebar;
-        $mesins->harga_min = $harga_min;
         $mesins->harga_plat = $harga_plat;
         $mesins->save();
 
-        return redirect()->route('mesin.index')->with('status', 'Data berhasil disimpan');
+        return response()->json([
+            'status' => 'Data berhasil disimpan'
+        ]);
     }
 
     /**
@@ -84,7 +79,13 @@ class MesinController extends Controller
     {
         $mesin = OffsetMesin::find($id);
 
-        return view('pages.mesin.edit', ['mesin' => $mesin]);
+        return response()->json([
+            'id' => $mesin->id,
+            'nama_mesin' => $mesin->nama_mesin,
+            'area_cetak_panjang' => $mesin->area_cetak_panjang,
+            'area_cetak_lebar' => $mesin->area_cetak_lebar,
+            'harga_plat' => $mesin->harga_plat
+        ]);
     }
 
     /**
@@ -98,28 +99,23 @@ class MesinController extends Controller
     {
         $validated = $request->validate([
             'nama_mesin' => 'required',
-            'area_kertas_panjang' => 'required',
-            'area_kertas_lebar' => 'required',
             'area_cetak_panjang' => 'required',
             'area_cetak_lebar' => 'required',
-            'harga_min' => 'required',
             'harga_plat' => 'required'
         ]);
 
-        $harga_min = str_replace(".", "", $request->harga_min);
         $harga_plat = str_replace(".", "", $request->harga_plat);
 
         $mesin = OffsetMesin::find($id);
         $mesin->nama_mesin = $request->nama_mesin;
-        $mesin->area_kertas_panjang = $request->area_kertas_panjang;
-        $mesin->area_kertas_lebar = $request->area_kertas_lebar;
         $mesin->area_cetak_panjang = $request->area_cetak_panjang;
         $mesin->area_cetak_lebar = $request->area_cetak_lebar;
-        $mesin->harga_min = $harga_min;
         $mesin->harga_plat = $harga_plat;
         $mesin->save();
 
-        return redirect()->route('mesin.index')->with('status', 'Data berhasil disimpan');
+        return response()->json([
+            'status' => 'Data berhasil diperbaharui'
+        ]);
     }
 
     /**
@@ -133,9 +129,19 @@ class MesinController extends Controller
         //
     }
 
-    public function delete(Request $request, $id)
+    public function deleteBtn($id)
     {
         $mesin = OffsetMesin::find($id);
+
+        return response()->json([
+            'id' => $mesin->id,
+            'nama_mesin' => $mesin->nama_mesin
+        ]);
+    }
+
+    public function delete(Request $request)
+    {
+        $mesin = OffsetMesin::find($request->id);
         $mesin->delete();
 
         return redirect()->route('mesin.index')->with('status', 'Data berhasil dihapus');

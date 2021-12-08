@@ -12,4 +12,8 @@ class OffsetJenisKertas extends Model
     public function gramasi() {
         return $this->belongsTo(OffsetGramasi::class, 'gramasi_id', 'id');
     }
+
+    public function kertas() {
+        return $this->belongsTo(OffsetKertas::class, 'kertas_id', 'id');
+    }
 }

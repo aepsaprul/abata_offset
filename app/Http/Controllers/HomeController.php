@@ -252,7 +252,7 @@ class HomeController extends Controller
         // biaya
         $biaya_kertas = $kertas * $jml_kertas_insheet;
         $biaya_cetak_min = $biaya_jasa->harga_per_seribu * $jml_halaman_kalender;
-        $biaya_plat = $jml_halaman_kalender * $mesin->harga_plat;
+        $biaya_plat = $jml_plat * $mesin->harga_plat;
         $biaya_set_kalender = $biaya_finishing * $jml_cetak;
 
         $total_biaya = $biaya_kertas + $biaya_cetak_min + $biaya_cetak_lebih + $biaya_plat + $biaya_set_kalender + $biaya_potong + $biaya_design + $biaya_akomodasi + $laminasi + $biaya_cover;
