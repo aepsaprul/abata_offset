@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OffsetGramasi;
 use App\Models\OffsetJenisKertas;
 use App\Models\OffsetKertas;
+use GrahamCampbell\ResultType\Result;
 use Illuminate\Http\Request;
 
 class JenisKertasController extends Controller
@@ -17,8 +18,12 @@ class JenisKertasController extends Controller
     public function index()
     {
         $jenis_kertas = OffsetJenisKertas::orderBy('id', 'desc')->get();
+        $ukuran_kertas = OffsetKertas::get();
 
-        return view('pages.jenis_kertas.index', ['jenis_kertas' => $jenis_kertas]);
+        return view('pages.jenis_kertas.index', [
+            'jenis_kertas' => $jenis_kertas,
+            'ukuran_kertas' => $ukuran_kertas
+        ]);
     }
 
     /**
@@ -148,6 +153,72 @@ class JenisKertasController extends Controller
         $jenis_kertas = OffsetJenisKertas::find($request->id);
         $jenis_kertas->delete();
 
-        return redirect()->route('jenis_kertas.index')->with('status', 'Data berhasil dihapus');
+        return response()->json([
+            'status' => 'Data berhasil dihapus'
+        ]);
+    }
+
+    public function ukuranKertasStore(Request $request)
+    {
+        $validated = $request->validate([
+            'nama_kertas' => 'required',
+            'panjang' => 'required',
+            'lebar' => 'required'
+        ]);
+
+        $ukuran_kertas = new OffsetKertas;
+        $ukuran_kertas->nama_kertas = $request->nama_kertas;
+        $ukuran_kertas->panjang = $request->panjang;
+        $ukuran_kertas->lebar = $request->lebar;
+        $ukuran_kertas->save();
+
+        return response()->json([
+            'status' => 'Data berhasil disimpan'
+        ]);
+    }
+
+    public function ukuranKertasEdit($id)
+    {
+        $ukuran_kertas = OffsetKertas::find($id);
+
+        return response()->json([
+            'id' => $ukuran_kertas->id,
+            'nama_kertas' => $ukuran_kertas->nama_kertas,
+            'lebar' => $ukuran_kertas->lebar,
+            'panjang' => $ukuran_kertas->panjang
+        ]);
+    }
+
+    public function ukuranKertasUpdate(Request $request)
+    {
+        $ukuran_kertas = OffsetKertas::find($request->id);
+        $ukuran_kertas->nama_kertas = $request->nama_kertas;
+        $ukuran_kertas->panjang = $request->panjang;
+        $ukuran_kertas->lebar = $request->lebar;
+        $ukuran_kertas->save();
+
+        return response()->json([
+            'status' => 'Data berhasil diperbaharui'
+        ]);
+    }
+
+    public function ukuranKertasDeleteBtn($id)
+    {
+        $ukuran_kertas = OffsetKertas::find($id);
+
+        return response()->json([
+            'id' => $ukuran_kertas->id,
+            'nama_kertas' => $ukuran_kertas->nama_kertas
+        ]);
+    }
+
+    public function ukuranKertasDelete(Request $request)
+    {
+        $ukuran_kertas = OffsetKertas::find($request->id);
+        $ukuran_kertas->delete();
+
+        return response()->json([
+            'status' => 'Data berhasil dihapus'
+        ]);
     }
 }

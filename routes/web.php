@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BahanController;
 use App\Http\Controllers\BiayaCetakController;
 use App\Http\Controllers\BiayaFinishingController;
+use App\Http\Controllers\JenisKertasController;
 use App\Http\Controllers\KertasController;
 use App\Http\Controllers\MesinController;
 use App\Http\Controllers\ProdukController;
@@ -51,8 +52,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('jenis_kertas/{id}/delete_btn', [App\Http\Controllers\JenisKertasController::class, 'deleteBtn'])->name('jenis_kertas.delete_btn');
     Route::post('jenis_kertas/delete', [App\Http\Controllers\JenisKertasController::class, 'delete'])->name('jenis_kertas.delete');
 
-    Route::resource('kertas', KertasController::class);
-    Route::get('kertas/{id}/delete', [KertasController::class, 'delete'])->name('kertas.delete');
+    Route::post('jenis_kertas/ukuran_kertas_store', [App\Http\Controllers\JenisKertasController::class, 'ukuranKertasStore'])->name('jenis_kertas.ukuran_kertas_store');
+    Route::get('jenis_kertas/{id}/ukuran_kertas_edit', [App\Http\Controllers\JenisKertasController::class, 'ukuranKertasEdit'])->name('jenis_kertas.ukuran_kertas_edit');
+    Route::post('jenis_kertas/ukuran_kertas_update', [App\Http\Controllers\JenisKertasController::class, 'ukuranKertasUpdate'])->name('jenis_kertas.ukuran_kertas_update');
+    Route::get('jenis_kertas/{id}/ukuran_kertas_delete_btn', [App\Http\Controllers\JenisKertasController::class, 'ukuranKertasDeleteBtn'])->name('jenis_kertas.ukuran_kertas_delete_btn');
+    Route::post('jenis_kertas/ukuran_kertas_delete', [App\Http\Controllers\JenisKertasController::class, 'ukuranKertasDelete'])->name('jenis_kertas.ukuran_kertas_delete');
+
+    // Route::resource('kertas', KertasController::class);
+    // Route::get('kertas/{id}/delete', [KertasController::class, 'delete'])->name('kertas.delete');
 
     Route::resource('kertas_produk', App\Http\Controllers\KertasProdukController::class);
     Route::get('kertas_produk/{id}/delete', [App\Http\Controllers\KertasProdukController::class, 'delete'])->name('kertas_produk.delete');
