@@ -60,6 +60,7 @@
                           {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('kertas_produk') }}">Kertas Produk</a></li> --}}
                           <li><a class="dropdown-item text-uppercase" href="{{ url('mesin') }}">Mesin</a></li>
                           <li><a class="dropdown-item text-uppercase" href="{{ url('produk') }}">Produk</a></li>
+                          <li><a class="dropdown-item text-uppercase" href="{{ url('jasa_cetak') }}">Jasa Cetak</a></li>
                           {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('ukuran_cetak') }}">Ukuran Cetak</a></li>
                           <li><a class="dropdown-item text-uppercase" href="{{ url('ukuran_cetak_detail') }}">Ukuran Cetak Detail</a></li> --}}
                         </ul>

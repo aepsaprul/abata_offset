@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BahanController;
 use App\Http\Controllers\BiayaCetakController;
 use App\Http\Controllers\BiayaFinishingController;
+use App\Http\Controllers\JasaCetakController;
 use App\Http\Controllers\JenisKertasController;
 use App\Http\Controllers\KertasController;
 use App\Http\Controllers\MesinController;
@@ -33,14 +34,14 @@ Route::post('/home/kalender-dinding', [App\Http\Controllers\HomeController::clas
 Route::post('/home/kalender-dinding-detail', [App\Http\Controllers\HomeController::class, 'kalenderDindingDetail'])->name('home.produk.kalender_dinding_detail');
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('bahan', BahanController::class);
-    Route::get('bahan/{id}/delete', [BahanController::class, 'delete'])->name('bahan.delete');
+    // Route::resource('bahan', BahanController::class);
+    // Route::get('bahan/{id}/delete', [BahanController::class, 'delete'])->name('bahan.delete');
 
-    Route::resource('biaya_cetak', BiayaCetakController::class);
-    Route::get('biaya_cetak/{id}/delete', [BiayaCetakController::class, 'delete'])->name('biaya_cetak.delete');
+    // Route::resource('biaya_cetak', BiayaCetakController::class);
+    // Route::get('biaya_cetak/{id}/delete', [BiayaCetakController::class, 'delete'])->name('biaya_cetak.delete');
 
-    Route::resource('biaya_finishing', BiayaFinishingController::class);
-    Route::get('biaya_finishing/{id}/delete', [BiayaFinishingController::class, 'delete'])->name('biaya_finishing.delete');
+    // Route::resource('biaya_finishing', BiayaFinishingController::class);
+    // Route::get('biaya_finishing/{id}/delete', [BiayaFinishingController::class, 'delete'])->name('biaya_finishing.delete');
 
     Route::resource('finishing', App\Http\Controllers\FinishingController::class);
     Route::get('finishing/{id}/delete', [App\Http\Controllers\FinishingController::class, 'delete'])->name('finishing.delete');
@@ -71,9 +72,17 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('produk', ProdukController::class);
     Route::get('produk/{id}/delete', [ProdukController::class, 'delete'])->name('produk.delete');
 
-    Route::resource('ukuran_cetak', App\Http\Controllers\UkuranCetakController::class);
-    Route::get('ukuran_cetak/{id}/delete', [App\Http\Controllers\UkuranCetakController::class, 'delete'])->name('ukuran_cetak.delete');
+    // Route::resource('ukuran_cetak', App\Http\Controllers\UkuranCetakController::class);
+    // Route::get('ukuran_cetak/{id}/delete', [App\Http\Controllers\UkuranCetakController::class, 'delete'])->name('ukuran_cetak.delete');
 
-    Route::resource('ukuran_cetak_detail', App\Http\Controllers\UkuranCetakDetailController::class);
-    Route::get('ukuran_cetak_detail/{id}/delete', [App\Http\Controllers\UkuranCetakDetailController::class, 'delete'])->name('ukuran_cetak_detail.delete');
+    // Route::resource('ukuran_cetak_detail', App\Http\Controllers\UkuranCetakDetailController::class);
+    // Route::get('ukuran_cetak_detail/{id}/delete', [App\Http\Controllers\UkuranCetakDetailController::class, 'delete'])->name('ukuran_cetak_detail.delete');
+
+    Route::get('jasa_cetak', [JasaCetakController::class, 'index'])->name('jasa_cetak.index');
+    Route::get('jasa_cetak/create', [JasaCetakController::class, 'create'])->name('jasa_cetak.create');
+    Route::post('jasa_cetak/store', [JasaCetakController::class, 'store'])->name('jasa_cetak.store');
+    Route::get('jasa_cetak/{id}/edit', [JasaCetakController::class, 'edit'])->name('jasa_cetak.edit');
+    Route::post('jasa_cetak/update', [JasaCetakController::class, 'update'])->name('jasa_cetak.update');
+    Route::get('jasa_cetak/{id}/delete_btn', [JasaCetakController::class, 'deleteBtn'])->name('jasa_cetak.delete_btn');
+    Route::post('jasa_cetak/delete', [JasaCetakController::class, 'delete'])->name('jasa_cetak.delete');
 });
