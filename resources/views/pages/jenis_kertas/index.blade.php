@@ -51,7 +51,7 @@
                         <tr>
                             <td class="text-center">{{ $key + 1 }}</td>
                             <td>{{ $item->nama_kertas }}</td>
-                            <td>{{ $item->gramasi }}</td>
+                            <td>{{ $item->gramasi }} cm</td>
                             <td>
                                 @if ($item->kertas)
                                     {{ $item->kertas->nama_kertas }}
@@ -157,7 +157,7 @@
                             name="create_nama_kertas">
                     </div>
                     <div class="mb-3">
-                        <label for="create_gramasi" class="form-label">Gramasi</label>
+                        <label for="create_gramasi" class="form-label">Gramasi (cm)</label>
                         <input
                             type="text"
                             class="form-control"
@@ -177,6 +177,12 @@
                             class="form-control"
                             id="create_harga"
                             name="create_harga">
+                    </div>
+                    <div class="mb-3">
+                        <label for="create_produk_id" class="form-label">Jenis Produk Jadi</label>
+                        <div id="create_produk_id" class="border p-3">
+
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -218,7 +224,7 @@
                             name="edit_nama_kertas">
                     </div>
                     <div class="mb-3">
-                        <label for="edit_gramasi" class="form-label">Gramasi</label>
+                        <label for="edit_gramasi" class="form-label">Gramasi (cm)</label>
                         <input
                             type="text"
                             class="form-control"
@@ -238,6 +244,12 @@
                             class="form-control"
                             id="edit_harga"
                             name="edit_harga">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_produk_id" class="form-label">Jenis Produk Jadi</label>
+                        <div id="edit_produk_id" class="border p-3">
+
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -427,6 +439,7 @@
 
         $('#button-create').on('click', function() {
             $('#create_kertas_id').empty();
+            $('#create_produk_id').empty();
 
             var formData = {
                 _token: CSRF_TOKEN
@@ -438,12 +451,22 @@
                 data: formData,
                 success: function(response) {
 
-                    var value = "<option value=\"\">--Pilih Ukuran Kertas--</option>";
+                    var value_kertas = "<option value=\"\">--Pilih Ukuran Kertas--</option>";
                     $.each(response.kertas, function(index, item) {
-                        value += "<option value=\"" + item.id + "\">" + item.nama_kertas + "</option>";
+                        value_kertas += "<option value=\"" + item.id + "\">" + item.nama_kertas + "</option>";
+                    });
+                    $('#create_kertas_id').append(value_kertas);
+
+
+                    $.each(response.produks, function(index, item) {
+                        var value_produk = "" +
+                            "<input class=\"form-check-input\" type=\"checkbox\" name=\"produk_id\" value=\"" + item.id + "\" id=\"produk_id_" + item.id + "\"> " +
+                            "<label class=\"form-check-label pe-2\" for=\"produk_id_" + item.id + "\">" +
+                                item.nama_produk +
+                            "</label><br>";
+                        $('#create_produk_id').append(value_produk);
                     });
 
-                    $('#create_kertas_id').append(value);
                     $('.modal-create').modal('show');
                 }
             });
@@ -465,11 +488,17 @@
         $('#form_create').submit(function(e) {
             e.preventDefault();
 
+            var produk_id = [];
+            $('input[name=produk_id]:checked').each(function() {
+                produk_id.push(this.value);
+            });
+
             var formData = {
                 nama_kertas: $('#create_nama_kertas').val(),
                 gramasi: $('#create_gramasi').val(),
                 kertas_id: $('#create_kertas_id').val(),
                 harga: $('#create_harga').val().replace(/\./g,''),
+                produk: produk_id.toString(),
                 _token: CSRF_TOKEN
             }
 
@@ -490,6 +519,7 @@
         $('body').on('click', '.btn-edit', function(e) {
             e.preventDefault();
             $('#edit_kertas_id').empty();
+            $('#edit_produk_id').empty();
 
             var id = $(this).attr('data-id');
             var url = '{{ route("jenis_kertas.edit", ":id") }}';
@@ -509,6 +539,28 @@
                     $('#edit_nama_kertas').val(response.nama_kertas);
                     $('#edit_gramasi').val(response.gramasi);
                     $('#edit_harga').val(format_rupiah(response.harga));
+
+
+                        $.each(response.produks, function(index, item) {
+                            var value_produk = "" +
+                                "<input class=\"form-check-input\" type=\"checkbox\" name=\"produk_id\" value=\"" + item.id + "\" id=\"produk_id_" + item.id + "\"";
+
+                                if (response.produk != null) {
+                                    var produk_split = response.produk.split(',');
+                                    $.each(produk_split, function(index, value) {
+                                        if (item.id == value) {
+                                            value_produk += " checked";
+                                        }
+                                    });
+                                }
+
+                                value_produk += "> " +
+                                "<label class=\"form-check-label pe-2\" for=\"produk_id_" + item.id + "\">" +
+                                    item.nama_produk +
+                                "</label><br>";
+                            $('#edit_produk_id').append(value_produk);
+                        });
+
 
                     var value = "<option value=\"\">--Pilih Kertas--</option>";
                     $.each(response.kertas, function(index, item) {
@@ -542,6 +594,11 @@
         $('#form_edit').submit(function(e) {
             e.preventDefault();
 
+            var produk_id = [];
+            $('input[name=produk_id]:checked').each(function() {
+                produk_id.push(this.value);
+            });
+
             var id = $('#edit_id').val();
             var url = '{{ route("jenis_kertas.update", ":id") }}';
             url = url.replace(':id', id );
@@ -552,6 +609,7 @@
                 gramasi: $('#edit_gramasi').val(),
                 kertas_id: $('#edit_kertas_id').val(),
                 harga: $('#edit_harga').val().replace(/\./g,''),
+                produk: produk_id.toString(),
                 _token: CSRF_TOKEN
             }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OffsetGramasi;
 use App\Models\OffsetJenisKertas;
 use App\Models\OffsetKertas;
+use App\Models\OffsetProduk;
 use GrahamCampbell\ResultType\Result;
 use Illuminate\Http\Request;
 
@@ -34,9 +35,11 @@ class JenisKertasController extends Controller
     public function create()
     {
         $kertas = OffsetKertas::get();
+        $produk = OffsetProduk::get();
 
         return response()->json([
-            'kertas' => $kertas
+            'kertas' => $kertas,
+            'produks' => $produk
         ]);
     }
 
@@ -60,6 +63,7 @@ class JenisKertasController extends Controller
         $jenis_kertas->gramasi = $request->gramasi;
         $jenis_kertas->kertas_id = $request->kertas_id;
         $jenis_kertas->harga = $harga;
+        $jenis_kertas->produk = $request->produk;
         $jenis_kertas->save();
 
         return response()->json([
@@ -88,6 +92,7 @@ class JenisKertasController extends Controller
     {
         $jenis_kertas = OffsetJenisKertas::find($id);
         $kertas = OffsetKertas::get();
+        $produks = OffsetProduk::get();
 
         return response()->json([
             'id' => $jenis_kertas->id,
@@ -95,6 +100,8 @@ class JenisKertasController extends Controller
             'gramasi' => $jenis_kertas->gramasi,
             'kertas_id' => $jenis_kertas->kertas_id,
             'harga' => $jenis_kertas->harga,
+            'produk' => $jenis_kertas->produk,
+            'produks' => $produks,
             'kertas' => $kertas
         ]);
     }
@@ -120,6 +127,7 @@ class JenisKertasController extends Controller
         $jenis_kertas->gramasi = $request->gramasi;
         $jenis_kertas->kertas_id = $request->kertas_id;
         $jenis_kertas->harga = $harga;
+        $jenis_kertas->produk = $request->produk;
         $jenis_kertas->save();
 
         return response()->json([
