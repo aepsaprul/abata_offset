@@ -201,7 +201,7 @@
                                                     <select class="form-select form-select-sm" id="jenis_kertas_cover" name="jenis_kertas_cover">
                                                         <option value="">--Pilih Kertas--</option>
                                                         @foreach ($produk_relasi as $kertas)
-                                                            <option value="{{ $kertas->id }}">{{ $kertas->nama_kertas }}</option>
+                                                            <option value="{{ $kertas->id }}">{{ $kertas->nama_kertas }} {{ $kertas->gramasi }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
