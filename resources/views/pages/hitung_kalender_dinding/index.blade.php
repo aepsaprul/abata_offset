@@ -54,12 +54,20 @@
                                         <div class="form-group row mb-3">
                                             <label for="ukuran_cetak" class="col-sm-6 col-form-label">Ukuran Cetak</label>
                                             <div class="col-sm-6">
-                                                <select class="form-select form-select-sm" id="ukuran_cetak" name="ukuran_cetak">
+                                                {{-- <select class="form-select form-select-sm" id="ukuran_cetak" name="ukuran_cetak">
                                                     <option value="">--Pilih Ukuran--</option>
                                                     @foreach ($ukuran_cetaks as $ukuran_cetak)
                                                         <option value="{{ $ukuran_cetak->id }}">{{ $ukuran_cetak->lebar }} x {{ $ukuran_cetak->panjang }}</option>
                                                     @endforeach
-                                                </select>
+                                                </select> --}}
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="ukuran_cetak_lebar" name="ukuran_cetak_lebar" class="form-control form-control-sm" placeholder="Lebar">
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="ukuran_cetak_panjang" name="ukuran_cetak_panjang" class="form-control form-control-sm" placeholder="Panjang">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -69,8 +77,8 @@
                                             <div class="col-sm-6">
                                                 <select class="form-select form-select-sm" id="jenis_kertas" name="jenis_kertas">
                                                     <option value="">--Pilih Kertas--</option>
-                                                    @foreach ($produk_relasi->kertas as $kertas)
-                                                        <option value="{{ $kertas->kertas->id }}">{{ $kertas->kertas->nama_kertas }}</option>
+                                                    @foreach ($produk_relasi as $kertas)
+                                                        <option value="{{ $kertas->id }}">{{ $kertas->nama_kertas }} {{ $kertas->gramasi }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -82,8 +90,8 @@
                                             <div class="col-sm-6">
                                                 <select class="form-select form-select-sm" id="jenis_finishing" name="jenis_finishing">
                                                     <option value="">--Pilih Finishing--</option>
-                                                    @foreach ($produk_relasi->finishing as $finishing)
-                                                        <option value="{{ $finishing->finishing->nama_finishing }}">{{ $finishing->finishing->nama_finishing }}</option>
+                                                    @foreach ($finishings as $finishing)
+                                                        <option value="{{ $finishing->nama_finishing }}">{{ $finishing->nama_finishing }}</option>
                                                     @endforeach
 
                                                     {{-- NOTE: mata ayam khusus 1 lembar  --}}
@@ -192,8 +200,8 @@
                                                 <div class="col-sm-6">
                                                     <select class="form-select form-select-sm" id="jenis_kertas_cover" name="jenis_kertas_cover">
                                                         <option value="">--Pilih Kertas--</option>
-                                                        @foreach ($produk_relasi->kertas as $kertas)
-                                                            <option value="{{ $kertas->kertas->id }}">{{ $kertas->kertas->nama_kertas }}</option>
+                                                        @foreach ($produk_relasi as $kertas)
+                                                            <option value="{{ $kertas->id }}">{{ $kertas->nama_kertas }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -293,21 +301,22 @@
             }
         });
 
-        $("#ukuran_cetak").on('change', function () {
-            var id = $(this).val();
+        $("#ukuran_cetak_lebar").on('keyup', function () {
             $("#mesin_id").empty();
+
+            var formData = {
+                lebar: $('#ukuran_cetak_lebar').val(),
+                _token: CSRF_TOKEN
+            }
 
             $.ajax({
                 url: '{{ URL::route('home.ukuran_cetak_detail') }}',
                 type: 'POST',
-                data: {
-                    id: id,
-                    _token: CSRF_TOKEN
-                },
+                data: formData,
                 success: function(response) {
-                    console.log(response);
+                    $("#mesin_id").empty();
                     $.each(response.data, function(index, value) {
-                        var data_mesin = "<option value=\"" + value.mesin.id + "\">" + value.mesin.nama_mesin + "</option>";
+                        var data_mesin = "<option value=\"" + value.id + "\">" + value.nama_mesin + "</option>";
 
                         $("#mesin_id").append(data_mesin);
                     });
@@ -345,7 +354,8 @@
             var formData = {
                 jml_halaman_kalender: $("#jml_halaman_kalender").val(),
                 jml_warna: $("#jml_warna").val(),
-                ukuran_cetak: $("#ukuran_cetak").val(),
+                ukuran_cetak_lebar: $("#ukuran_cetak_lebar").val(),
+                ukuran_cetak_panjang: $("#ukuran_cetak_panjang").val(),
                 jenis_kertas: $("#jenis_kertas").val(),
                 jenis_finishing: $("#jenis_finishing").val(),
                 mesin_id: $("#mesin_id").val(),
@@ -368,7 +378,7 @@
                 type: "POST",
                 data: formData,
                 success: function(response) {
-                    console.log(response);
+                    console.log(response.biaya_plat_cover);
                     // var url = '{{ route("home.produk.kalender_dinding_detail") }}';
                     // var total_biaya = $("#btn_total_biaya").val();
                     var harga_satuan_rp = formatRp(Math.round(response.harga_satuan));

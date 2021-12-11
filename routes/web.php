@@ -75,8 +75,8 @@ Route::middleware(['auth'])->group(function () {
     // Route::resource('ukuran_cetak', App\Http\Controllers\UkuranCetakController::class);
     // Route::get('ukuran_cetak/{id}/delete', [App\Http\Controllers\UkuranCetakController::class, 'delete'])->name('ukuran_cetak.delete');
 
-    // Route::resource('ukuran_cetak_detail', App\Http\Controllers\UkuranCetakDetailController::class);
-    // Route::get('ukuran_cetak_detail/{id}/delete', [App\Http\Controllers\UkuranCetakDetailController::class, 'delete'])->name('ukuran_cetak_detail.delete');
+    Route::resource('ukuran_cetak_detail', App\Http\Controllers\UkuranCetakDetailController::class);
+    Route::get('ukuran_cetak_detail/{id}/delete', [App\Http\Controllers\UkuranCetakDetailController::class, 'delete'])->name('ukuran_cetak_detail.delete');
 
     Route::get('jasa_cetak', [JasaCetakController::class, 'index'])->name('jasa_cetak.index');
     Route::get('jasa_cetak/create', [JasaCetakController::class, 'create'])->name('jasa_cetak.create');

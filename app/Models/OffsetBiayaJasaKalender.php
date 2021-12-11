@@ -16,4 +16,8 @@ class OffsetBiayaJasaKalender extends Model
     public function warna() {
         return $this->belongsTo(OffsetWarna::class, 'warna_id', 'id');
     }
+
+    public function gramasi() {
+        return $this->belongsTo(OffsetGramasi::class, 'gramasi_id', 'id');
+    }
 }

@@ -11,7 +11,7 @@ class JasaCetakController extends Controller
 {
     public function index()
     {
-        $jasa_cetak = OffsetBiayaJasaKalender::with(['mesin', 'warna'])->orderBy('id', 'desc')->get();
+        $jasa_cetak = OffsetBiayaJasaKalender::with(['mesin', 'warna', 'gramasi'])->orderBy('id', 'desc')->get();
 
         return view('pages.jasa_cetak.index', ['jasa_cetaks' => $jasa_cetak]);
     }

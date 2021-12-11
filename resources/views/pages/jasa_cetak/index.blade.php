@@ -29,6 +29,7 @@
             <thead>
                 <tr class="text-center bg-secondary text-white">
                     <th>No</th>
+                    <th>Gramasi</th>
                     <th>Mesin</th>
                     <th>Jumlah Warna</th>
                     <th>Biaya Min Cetak</th>
@@ -40,6 +41,7 @@
                 @foreach ($jasa_cetaks as $key => $item)
                 <tr>
                     <td class="text-center">{{ $key + 1 }}</td>
+                    <td>{{ $item->gramasi->ukuran }}</td>
                     <td>{{ $item->mesin->nama_mesin }}</td>
                     <td>{{ $item->warna->nama }}</td>
                     <td class="text-end">{{ rupiah($item->harga_per_seribu) }}</td>
