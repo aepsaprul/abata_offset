@@ -190,7 +190,7 @@ class HomeController extends Controller
         // hitung kondisi finishing
         if ($jenis_finishing == "KLEM") {
             $biaya_susun = 0;
-            $biaya_finishing = $biaya_klem;
+            $biaya_finishing = $biaya_klem * $jml_cetak;
         } elseif ($jenis_finishing == "SPIRAL") {
             // hitung biaya susun
             if ($jml_halaman_kalender == 1) {
@@ -205,6 +205,9 @@ class HomeController extends Controller
             // $biaya_finishing = $biaya_spiral + $biaya_susun;
             $biaya_finishing = ($biaya_spiral * $jml_cetak) + $biaya_susun;
             // $biaya_finishing = $biaya_spiral * $jml_cetak;
+        } elseif ($jenis_finishing == "MATA AYAM") {
+            $biaya_susun = 0;
+            $biaya_finishing = 800 * $jml_cetak;
         } else {
             $biaya_susun = 0;
             $biaya_finishing = 0;
