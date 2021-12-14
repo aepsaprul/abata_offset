@@ -378,7 +378,6 @@
                 type: "POST",
                 data: formData,
                 success: function(response) {
-                    console.log(response.biaya_plat_cover);
                     // var url = '{{ route("home.produk.kalender_dinding_detail") }}';
                     // var total_biaya = $("#btn_total_biaya").val();
                     var harga_satuan_rp = formatRp(Math.round(response.harga_satuan));
@@ -590,7 +589,7 @@
                                     "<tr>" +
                                         "<td>HPP</td>" +
                                         "<td>:</td>" +
-                                        "<td style=\"text-align: right;\"><input readonly id=\"hitung_total_biaya\" value=\"" + formatRp(response.total_biaya) + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
+                                        "<td style=\"text-align: right;\"><input readonly id=\"hitung_total_biaya\" value=\"" + formatRp(response.total_biaya) + "\" size=\"10\" style=\"border: none;text-align:right;\"></td>" +
                                     "</tr>" +
                                     "<tr>" +
                                         "<td>Margin Profit</td>" +
@@ -609,17 +608,17 @@
                                     "<tr>" +
                                         "<td>Profit</td>" +
                                         "<td>:</td>" +
-                                        "<td style=\"text-align: right;\"><input readonly id=\"hitung_profit\" value=\"" + formatRp(Math.round(response.profit)) + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
+                                        "<td style=\"text-align: right;\"><input readonly id=\"hitung_profit\" value=\"" + formatRp(Math.round(response.profit)) + "\" size=\"8\" style=\"border: none;text-align:right;\"></td>" +
                                     "</tr>" +
                                     "<tr>" +
                                         "<td>Total Harga Jual</td>" +
                                         "<td>:</td>" +
-                                        "<td style=\"text-align: right;\"><input readonly id=\"hitung_grand_total\" value=\"" + formatRp(parseInt(response.grand_total)) + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
+                                        "<td style=\"text-align: right;\"><input readonly id=\"hitung_grand_total\" value=\"" + formatRp(parseInt(response.grand_total)) + "\" size=\"8\" style=\"border: none;text-align:right;\"></td>" +
                                     "</tr>" +
                                     "<tr>" +
                                         "<td>Harga Jual Satuan</td>" +
                                         "<td>:</td>" +
-                                        "<td style=\"text-align: right;\"><input readonly id=\"hitung_harga_satuan\" value=\"" + formatRp(Math.round(response.harga_satuan)) + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
+                                        "<td style=\"text-align: right;\"><input readonly id=\"hitung_harga_satuan\" value=\"" + formatRp(Math.round(response.harga_satuan)) + "\" size=\"8\" style=\"border: none;text-align:right;\"></td>" +
                                     "</tr>" +
                                 "</table>" +
                             "</div>" +
@@ -669,7 +668,6 @@
                         $("#hitung_grand_total").val(grand_total_rupiah);
                         $("#hitung_harga_satuan").val(harga_satuan_rupiah);
 
-                        console.log(hitung_harga_satuan);
                     });
                 }
             });

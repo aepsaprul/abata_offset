@@ -202,7 +202,8 @@ class HomeController extends Controller
             } else {
                 $biaya_susun = 100 * $jml_cetak;
             }
-            $biaya_finishing = $biaya_spiral + $biaya_susun;
+            // $biaya_finishing = $biaya_spiral + $biaya_susun;
+            $biaya_finishing = ($biaya_spiral * $jml_cetak) + $biaya_susun;
             // $biaya_finishing = $biaya_spiral * $jml_cetak;
         } else {
             $biaya_susun = 0;
@@ -324,7 +325,8 @@ class HomeController extends Controller
         $biaya_kertas = $kertas * $jml_kertas_insheet;
         $biaya_cetak_min = $biaya_jasa->harga_per_seribu * $jml_halaman_kalender;
         $biaya_plat = $jml_plat * $mesin->harga_plat;
-        $biaya_set_kalender = $biaya_finishing * $jml_cetak;
+        // $biaya_set_kalender = $biaya_finishing * $jml_cetak;
+        $biaya_set_kalender = $biaya_finishing;
 
         $total_biaya = $biaya_kertas + $biaya_cetak_min + $biaya_cetak_lebih + $biaya_plat + $biaya_set_kalender + $biaya_potong + $biaya_design + $biaya_akomodasi + $laminasi + $biaya_cover;
 
