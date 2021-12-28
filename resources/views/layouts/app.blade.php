@@ -13,99 +13,136 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('img/maskot.png') }}">
 
     <title>{{ config('app.name', 'Offset') }}</title>
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link href="{{ asset('lib/fontawesome-5/css/all.css') }}" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="{{ asset('theme/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{{ asset('theme/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="{{ asset('lib/bootstrap-5/css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <style>
-        * {
-            font-size: 13px;
-        }
-    </style>
+    <!-- Custom Theme Style -->
+    <link href="{{ asset('theme/build/css/custom.min.css') }}" rel="stylesheet">
 
     @yield('style')
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">OFFSET</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item {{ (request()->is('home*')) ? 'active' : '' }}">
-                        <a class="nav-link text-uppercase" aria-current="page" href="{{ url('home') }}">Home</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Master
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('bahan') }}">Bahan</a></li> --}}
-                          {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('biaya_cetak') }}">Biaya Cetak</a></li> --}}
-                          {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('biaya_finishing') }}">Biaya Finishing</a></li> --}}
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('finishing') }}">Finishing</a></li>
-                          {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('finishing_produk') }}">Finishing Produk</a></li> --}}
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('jenis_kertas') }}">Kertas</a></li>
-                          {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('kertas') }}">Kertas</a></li> --}}
-                          {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('kertas_produk') }}">Kertas Produk</a></li> --}}
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('mesin') }}">Mesin</a></li>
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('produk') }}">Produk</a></li>
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('jasa_cetak') }}">Jasa Cetak</a></li>
-                          {{-- <li><a class="dropdown-item text-uppercase" href="{{ url('ukuran_cetak') }}">Ukuran Cetak</a></li>
-                          <li><a class="dropdown-item text-uppercase" href="{{ url('ukuran_cetak_detail') }}">Ukuran Cetak Detail</a></li> --}}
-                        </ul>
-                      </li>
-                    <li class="nav-item {{ (request()->is('transaksi*')) ? 'active' : '' }}">
-                        <a class="nav-link text-uppercase" href="{{ url('transaksi') }}">Transaksi</a>
-                    </li>
-                    <li class="nav-item {{ (request()->is('laporan*')) ? 'active' : '' }}">
-                        <a class="nav-link text-uppercase" href="{{ url('laporan') }}">Laporan</a>
-                    </li>
-                    <li class="nav-item {{ (request()->is('pelanggan*')) ? 'active' : '' }}">
-                        <a class="nav-link text-uppercase" href="{{ url('pelanggan') }}">Pelanggan</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ Auth::user()->name }}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">Logout</a>
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="index.html" class="site_title"><img src="{{ asset('img/maskot.png') }}" alt="" style="max-width: 30px;"> <span>Wahana Satria</span></a>
+                    </div>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="http://localhost/abata_ho/storage/app/public/{{ Auth::user()->karyawan->foto }}" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>{{ Auth::user()->name }}</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a href="{{ url('home') }}"><i class="fa fa-home"></i> Home</a>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-database"></i> Master <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="{{ url('finishing') }}">Finishing</a></li>
+                                        <li><a href="{{ url('jenis_kertas') }}">Kertas</a></li>
+                                        <li><a href="{{ url('mesin') }}">Mesin</a></li>
+                                        <li><a href="{{ url('produk') }}">Produk</a></li>
+                                        <li><a href="{{ url('jasa_cetak') }}">Jasa Cetak</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="{{ url('transaksi') }}"><i class="fa fa-exchange"></i> Transaksi</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('laporan') }}"><i class="fa fa-copy"></i> Laporan</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('pelanggan') }}"><i class="fa fa-users"></i> Pelanggan</a>
                                 </li>
                             </ul>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
                 </div>
             </div>
-        </div>
-    </nav>
-    <div id="app">
-        <main class="py-4">
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <nav class="nav navbar-nav">
+                        <ul class=" navbar-right">
+                            <li class="nav-item dropdown open" style="padding-left: 15px;">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                <img src="http://localhost/abata_ho/storage/app/public/{{ Auth::user()->karyawan->foto }}" alt="">{{ Auth::user()->name }}
+                                </a>
+                                <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item"  href="javascript:;"> Profile</a>
+                                    <a class="dropdown-item"  href="javascript:;">
+                                    <span class="badge bg-red pull-right">50%</span>
+                                    <span>Settings</span>
+                                    </a>
+                                <a class="dropdown-item"  href="javascript:;">Help</a>
+                                <a class="dropdown-item"
+                                    href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                        <i class="fa fa-sign-out pull-right"></i> Log Out</a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+
             @yield('content')
-        </main>
+
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
     </div>
 
-    <script src="{{ asset('lib/bootstrap-5/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('lib/datatables/js/jquery-3.5.1.js') }}"></script>
-    <script src="{{ asset('lib/fontawesome-5/js/fontawesome.min.js') }}"></script>
+    <!-- jQuery -->
+    <script src="{{ asset('theme/vendors/jquery/dist/jquery.min.js') }}"></script>
+    <!-- Bootstrap -->
+    <script src="{{ asset('theme/vendors/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="{{ asset('theme/build/js/custom.min.js') }}"></script>
+
+    @yield('script')
 
     <script>
         function format_rupiah(bilangan) {
@@ -141,8 +178,6 @@
             return prefix == undefined ? rupiah : rupiah ? "" + rupiah : "";
         }
     </script>
-
-    @yield('script')
 </body>
 </html>
 @endguest

@@ -1,79 +1,87 @@
-@extends('layouts.app')
-
-@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
-    <title>Offset Login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="{{ asset('lib/images/logo-daun.png') }}" rel="icon" type="image/x-icon">
+<title>Abata</title>
 
-    {{-- styles  --}}
-    <link href="{{ asset('lib/bootstrap-5/css/bootstrap.min.css') }}" rel="stylesheet">
+<!-- Bootstrap -->
+<link href="{{ asset('theme/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="{{ asset('theme/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+<!-- NProgress -->
+<link href="{{ asset('theme/vendors/nprogress/nprogress.css') }}" rel="stylesheet">
+
+<!-- Custom Theme Style -->
+<link href="{{ asset('theme/build/css/custom.min.css') }}" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-4 mt-5">
-                <div class="card shadow-sm p-3 mb-5 bg-body rounde">
-                    <div class="card-body">
-                        <div class="text-center">
-                            <img src="{{ asset('img/maskot.png') }}" style="max-width: 150px;">
+
+<body class="login">
+    <div>
+        <div class="login_wrapper">
+            <div class="animate form login_form">
+                <section class="login_content p-4 bg-white shadow-sm border rounded">
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <h1>Login</h1>
+                        <div>
+                            <input type="text" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="E-Mail" required="" />
+
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
+                        <div>
+                            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" required="" />
 
-                            <div class="form-group">
-                                <label for="email" class="col-form-label text-md-right">{{ __('E-Mail') }}</label>
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="checkbox text-left">
+                            <label>
+                                <input type="checkbox" class="flat" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Tetap Masuk') }}
+                            </label>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary btn-block submit">Log in</button>
+                        </div>
 
-                                <div class="col-md-12">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        <div class="clearfix"></div>
 
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+                        <div class="separator">
+
+                            <div class="clearfix"></div>
+                            <br />
+
+                            <div>
+                                <h1><img src="{{ asset('img/maskot.png') }}" alt="Logo Biru Abata" style="max-width: 80px;"> Wahana Satria</h1>
+                                <p>©2021 All Rights Reserved. Abata Group</p>
                             </div>
-
-                            <div class="form-group">
-                                <label for="password" class="col-form-label text-md-right">{{ __('Password') }}</label>
-
-                                <div class="col-md-12">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group my-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="d-grid gap-2">
-                                    <button type="submit" class="btn btn-primary" type="button">Login</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                        </div>
+                    </form>
+                </section>
             </div>
         </div>
     </div>
+
+	<!-- jQuery -->
+	<script src="{{ asset('theme/vendors/jquery/dist/jquery.min.js') }}"></script>
+	<!-- Bootstrap -->
+	<script src="{{ asset('theme/vendors/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+	<!-- FastClick -->
+	<script src="{{ asset('theme/vendors/fastclick/lib/fastclick.js') }}"></script>
+	<!-- NProgress -->
+	<script src="{{ asset('theme/vendors/nprogress/nprogress.js') }}"></script>
+	<!-- bootstrap-progressbar -->
+	<script src="{{ asset('theme/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
 </body>
 </html>
-@endsection

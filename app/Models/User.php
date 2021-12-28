@@ -40,4 +40,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function karyawan() {
+        return $this->belongsTo(MasterKaryawan::class, 'master_karyawan_id', 'id');
+    }
 }
