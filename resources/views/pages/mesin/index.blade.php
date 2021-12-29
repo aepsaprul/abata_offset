@@ -167,7 +167,7 @@
                         class="close"
                         data-dismiss="modal">
                             <span aria-hidden="true">x</span>
-                    </button>>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
