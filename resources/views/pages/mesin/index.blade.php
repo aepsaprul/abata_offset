@@ -1,67 +1,96 @@
 @extends('layouts.app')
 
 @section('style')
-<link href="{{ asset('lib/datatables/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet">
+
+<!-- Datatables -->
+<link href="{{ asset('theme/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('theme/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('theme/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('theme/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('theme/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}" rel="stylesheet">
+
 @endsection
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h5 class="text-center text-uppercase font-weight-bold"><span style="border-bottom: 1px solid #000; padding: 5px;">Data Mesin</span></h5>
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+
+            </div>
         </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-md-4">
-            <button
-                id="button-create"
-                type="button"
-                class="btn btn-info text-white"
-                title="Tambah">
-                    <i class="fas fa-plus"></i>
-            </button>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Data Mesin</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive">
+                                    <div class="col-md-4 mb-3">
+                                        <button
+                                            id="button-create"
+                                            type="button"
+                                            class="btn btn-info btn-sm text-white"
+                                            title="Tambah">
+                                                <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">No</th>
+                                                <th class="text-center">Nama Mesin</th>
+                                                <th class="text-center">Area Cetak</th>
+                                                <th class="text-center">Harga Plat</th>
+                                                <th class="text-center">#</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($mesins as $key => $item)
+                                            <tr>
+                                                <td class="text-center">{{ $key + 1 }}</td>
+                                                <td>{{ $item->nama_mesin }}</td>
+                                                <td class="text-center">{{ $item->area_cetak_panjang }}  cm x {{ $item->area_cetak_lebar }} cm</td>
+                                                <td class="text-end">{{ rupiah($item->harga_plat) }}</td>
+                                                <td class="text-center">
+                                                    <button
+                                                        type="button"
+                                                        data-id="{{ $item->id }}"
+                                                        class="btn btn-info btn-sm text-white btn-edit"
+                                                        title="Ubah">
+                                                            <i class="fa fa-edit"></i>
+                                                    </button> |
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-info btn-sm text-white btn-delete"
+                                                        data-id="{{ $item->id }}"
+                                                        title="Hapus">
+                                                            <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row mt-4">
-        <table id="example" class="table table-bordered" style="width:100%">
-            <thead>
-                <tr class="text-center bg-secondary text-white">
-                    <th><strong>No</strong></th>
-                    <th><strong>Nama Mesin</strong></th>
-                    <th><strong>Area Cetak</strong></th>
-                    <th><strong>Harga Plat</strong></th>
-                    <th><strong>#</strong></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($mesins as $key => $item)
-                <tr>
-                    <td class="text-center">{{ $key + 1 }}</td>
-                    <td>{{ $item->nama_mesin }}</td>
-                    <td class="text-center">{{ $item->area_cetak_panjang }}  cm x {{ $item->area_cetak_lebar }} cm</td>
-                    <td class="text-end">{{ rupiah($item->harga_plat) }}</td>
-                    <td class="text-center">
-                        <button
-                            type="button"
-                            data-id="{{ $item->id }}"
-                            class="btn btn-info text-white btn-edit"
-                            title="Ubah">
-                                <i class="fas fa-edit"></i>
-                        </button> |
-                        <button
-                            type="button"
-                            class="btn btn-info text-white btn-delete"
-                            data-id="{{ $item->id }}"
-                            title="Hapus">
-                                <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
     </div>
 </div>
+<!-- /page content -->
 
 {{-- modal create  --}}
 <div class="modal fade modal-create" tabindex="-1">
@@ -72,9 +101,9 @@
                     <h5 class="modal-title text-white">Tambah Data Mesin</h5>
                     <button
                         type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close">
+                        class="close"
+                        data-dismiss="modal">
+                            <span aria-hidden="true">x</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -135,10 +164,10 @@
                     <h5 class="modal-title text-white">Ubah Data Mesin</h5>
                     <button
                         type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close">
-                    </button>
+                        class="close"
+                        data-dismiss="modal">
+                            <span aria-hidden="true">x</span>
+                    </button>>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
@@ -216,11 +245,23 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('lib/datatables/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('lib/datatables/js/dataTables.bootstrap5.min.js') }}"></script>
-<script src="{{ asset('lib/datatables/js/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('lib/datatables/js/jszip.min.js') }}"></script>
-<script src="{{ asset('lib/datatables/js/buttons.html5.min.js') }}"></script>
+
+<!-- Datatables -->
+<script src="{{ asset('theme/vendors/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-scroller/js/dataTables.scroller.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/jszip/dist/jszip.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/pdfmake/build/pdfmake.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/pdfmake/build/vfs_fonts.js') }}"></script>
 
 <script>
     $(document).ready(function() {

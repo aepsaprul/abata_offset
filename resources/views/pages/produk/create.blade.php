@@ -1,73 +1,135 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h3 class="text-center text-uppercase font-weight-bold">Tambah Produk</h3>
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+
         </div>
-    </div>
-    <!-- <div class="row justify-content-center"> -->
-    <form class="mt-3" action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
+        <div class="clearfix"></div>
         <div class="row">
-            <div class="col-md-12">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <a href="{{ url('/produk') }}"><i class="fas fa-arrow-left"></i></a>
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Tambah Data Produk</h2>
+                        <div class="nav navbar-right panel_toolbox">
+                            <a href="{{ route('produk.index') }}" class="btn btn-warning btn-sm">Kembali</a>
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
-                    <div>
-                        <button type="submit" class="btn btn-primary float-right"><i class="fas fa-save"></i></button>
+                    <div class="x_content">
+                        <br />
+                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" class="mt-3" action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="d-flex justify-content-center mb-3">
+                                <div class="p-2">
+                                    <div class="form-group row ">
+                                        <label class="control-label col-md-4 col-sm-4 for="foto">Foto (max 500kb)</label>
+                                        <div class="col-md-8 col-sm-8 ">
+                                            <input
+                                                type="file"
+                                                class="form-control-file @error('foto') is-invalid @enderror"
+                                                id="foto"
+                                                name="foto"
+                                                required>
+                                            @error('foto')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <label class="control-label col-md-4 col-sm-4 for="nama_produk">Nama Produk</label>
+                                        <div class="col-md-8 col-sm-8 ">
+                                            <input
+                                                type="text"
+                                                class="form-control @error('nama_produk') is-invalid @enderror"
+                                                id="nama_produk"
+                                                placeholder="Nama Produk"
+                                                name="nama_produk"
+                                                onkeyup="this.value = this.value.toUpperCase()"
+                                                required
+                                                value="{{ old('nama_produk') }}">
+                                            @error('nama_produk')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <label class="control-label col-md-4 col-sm-4 for="kode_produk">Kode Produk</label>
+                                        <div class="col-md-8 col-sm-8 ">
+                                            <input
+                                                type="text"
+                                                class="form-control @error('kode_produk') is-invalid @enderror"
+                                                id="kode_produk"
+                                                placeholder="Kode Produk"
+                                                name="kode_produk"
+                                                required
+                                                value="{{ old('kode_produk') }}">
+                                            @error('kode_produk')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <label class="control-label col-md-4 col-sm-4 for="keterangan">Keterangan</label>
+                                        <div class="col-md-8 col-sm-8 ">
+                                            <input
+                                                type="text"
+                                                class="form-control @error('keterangan') is-invalid @enderror"
+                                                id="keterangan"
+                                                placeholder="Keterangan"
+                                                name="keterangan"
+                                                required
+                                                value="{{ old('keterangan') }}">
+                                            @error('keterangan')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <label class="control-label col-md-4 col-sm-4 for="harga">Harga</label>
+                                        <div class="col-md-8 col-sm-8 ">
+                                            <input
+                                                type="text"
+                                                class="form-control @error('harga') is-invalid @enderror"
+                                                id="harga"
+                                                placeholder="Harga"
+                                                name="harga"
+                                                required
+                                                value="{{ old('harga') }}">
+                                            @error('harga')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <label class="control-label col-md-4 col-sm-4 for="publish">Publish</label>
+                                        <div class="col-md-8 col-sm-8 ">
+                                            <select class="form-control" id="publish" name="publish">
+                                                <option value="y">Y</option>
+                                                <option value="n">N</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="item form-group">
+                                <div class="col-md-6 col-sm-6 offset-md-3">
+                                    <button type="submit" class="btn btn-success btn-sm">Submit</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="form-group col-md-4">
-                <label for="foto">Foto (max 500kb)</label>
-                <input type="file" class="form-control-file @error('foto') is-invalid @enderror" id="foto" name="foto" required>
-                @error('foto')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="form-group col-md-4">
-                <label for="nama_produk">Nama Produk</label>
-                <input type="text" class="form-control @error('nama_produk') is-invalid @enderror" id="nama_produk" placeholder="Nama Produk" name="nama_produk" onkeyup="this.value = this.value.toUpperCase()" required value="{{ old('nama_produk') }}">
-                @error('nama_produk')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="form-group col-md-4">
-                <label for="kode_produk">Kode Produk</label>
-                <input type="text" class="form-control @error('kode_produk') is-invalid @enderror" id="kode_produk" placeholder="Kode Produk" name="kode_produk" required value="{{ old('kode_produk') }}">
-                @error('kode_produk')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="form-group col-md-4">
-                <label for="keterangan">Keterangan</label>
-                <input type="text" class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" placeholder="Keterangan" name="keterangan" required value="{{ old('keterangan') }}">
-                @error('keterangan')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="form-group col-md-4">
-                <label for="harga">Harga</label>
-                <input type="text" class="form-control @error('harga') is-invalid @enderror" id="harga" placeholder="Harga" name="harga" required value="{{ old('harga') }}">
-                @error('harga')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="form-group col-md-4">
-                <label for="foto">Publish</label>
-                <select class="form-control" id="publish" name="publish">
-                    <option value="y">Y</option>
-                    <option value="n">N</option>
-                </select>
-            </div>
-        </div>
-    </form>
+    </div>
 </div>
+<!-- /page content -->
+
 @endsection
 
 @section('script')

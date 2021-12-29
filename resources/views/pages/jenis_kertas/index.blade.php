@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('style')
+
 <!-- Datatables -->
 <link href="{{ asset('theme/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ asset('theme/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}" rel="stylesheet">
@@ -9,6 +10,7 @@
 <link href="{{ asset('theme/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}" rel="stylesheet">
 {{-- select2 --}}
 <link rel="stylesheet" href="{{ asset('theme/vendors/select2/dist/css/select2.min.css') }}">
+
 @endsection
 
 @section('content')
@@ -168,7 +170,7 @@
                         type="button"
                         class="close"
                         data-dismiss="modal">
-                            <span aria-hidden="true">×</span>
+                            <span aria-hidden="true">x</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -235,7 +237,7 @@
                         type="button"
                         class="close"
                         data-dismiss="modal">
-                            <span aria-hidden="true">×</span>
+                            <span aria-hidden="true">x</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -316,7 +318,7 @@
                         type="button"
                         class="close"
                         data-dismiss="modal">
-                            <span aria-hidden="true">×</span>
+                            <span aria-hidden="true">x</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -371,7 +373,7 @@
                         type="button"
                         class="close"
                         data-dismiss="modal">
-                            <span aria-hidden="true">×</span>
+                            <span aria-hidden="true">x</span>
                     </button>
                 </div>
                 <div class="modal-body">
