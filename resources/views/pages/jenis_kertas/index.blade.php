@@ -1,137 +1,161 @@
 @extends('layouts.app')
 
 @section('style')
-<link href="{{ asset('lib/datatables/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('lib/select2/css/select2.min.css') }}">
+<!-- Datatables -->
+<link href="{{ asset('theme/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('theme/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('theme/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('theme/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('theme/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}" rel="stylesheet">
+{{-- select2 --}}
+<link rel="stylesheet" href="{{ asset('theme/vendors/select2/dist/css/select2.min.css') }}">
 @endsection
 
 @section('content')
-<div class="container">
-    {{-- <div class="row justify-content-center"> --}}
-    <div class="row">
-        <div class="col-md-12">
-            <h5 class="text-center text-uppercase font-weight-bold"><span style="border-bottom: 1px solid #000; padding: 5px;">Data Kertas</span></h5>
-        </div>
-    </div>
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Kertas</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Ukuran Kertas</a>
-        </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div class="row mt-3">
-                <div class="col-md-4">
-                    <button
-                        id="button-create"
-                        type="button"
-                        class="btn btn-info text-white"
-                        title="Tambah">
-                            <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <table id="example" class="table table-bordered" style="width:100%">
-                    <thead>
-                        <tr class="text-center bg-secondary text-white">
-                            <th>No</th>
-                            <th>Nama Kertas</th>
-                            <th>Gramasi</th>
-                            <th>Ukuran Kertas</th>
-                            <th>Harga</th>
-                            <th>#</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($jenis_kertas as $key => $item)
-                        <tr>
-                            <td class="text-center">{{ $key + 1 }}</td>
-                            <td>{{ $item->nama_kertas }}</td>
-                            <td>{{ $item->gramasi }} cm</td>
-                            <td>
-                                @if ($item->kertas)
-                                    {{ $item->kertas->nama_kertas }}
-                                @else
-                                    Ukuran Kertas Kosong
-                                @endif
-                            </td>
-                            <td class="text-end">{{ rupiah($item->harga) }}</td>
-                            <td class="text-center">
-                                <button
-                                    class="btn btn-info text-white btn-edit"
-                                    data-id="{{ $item->id }}"
-                                    title="Ubah">
-                                        <i class="fas fa-edit"></i>
-                                </button> |
-                                <button
-                                    class="btn btn-info text-white btn-delete"
-                                    data-id="{{ $item->id }}"
-                                    title="Hapus">
-                                        <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+
             </div>
         </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="row mt-3">
-                <div class="col-md-4">
-                    <button
-                        id="button-create-ukuran-kertas"
-                        type="button"
-                        class="btn btn-info text-white"
-                        title="Tambah">
-                            <i class="fas fa-plus"></i>
-                    </button>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Data Kertas</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="kertas-tab" data-toggle="tab" href="#kertas" role="tab" aria-controls="kertas" aria-selected="true">Kertas</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="ukuran-kertas-tab" data-toggle="tab" href="#ukuran-kertas" role="tab" aria-controls="ukuran-kertas" aria-selected="false">Ukuran Kertas</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="kertas" role="tabpanel" aria-labelledby="kertas-tab">
+                                        <div class="card-box table-responsive">
+                                            <div class="col-md-4 mb-3">
+                                                <button
+                                                    id="button-create"
+                                                    type="button"
+                                                    class="btn btn-info btn-sm text-white"
+                                                    title="Tambah">
+                                                        <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">No</th>
+                                                        <th class="text-center">Nama Kertas</th>
+                                                        <th class="text-center">Gramasi</th>
+                                                        <th class="text-center">Ukuran Kertas</th>
+                                                        <th class="text-center">Harga</th>
+                                                        <th class="text-center">#</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($jenis_kertas as $key => $item)
+                                                        <tr>
+                                                            <td class="text-center">{{ $key + 1 }}</td>
+                                                            <td>{{ $item->nama_kertas }}</td>
+                                                            <td>{{ $item->gramasi }} cm</td>
+                                                            <td>
+                                                                @if ($item->kertas)
+                                                                    {{ $item->kertas->nama_kertas }}
+                                                                @else
+                                                                    Ukuran Kertas Kosong
+                                                                @endif
+                                                            </td>
+                                                            <td class="text-end">{{ rupiah($item->harga) }}</td>
+                                                            <td class="text-center">
+                                                                <button
+                                                                    class="btn btn-info btn-sm text-white btn-edit"
+                                                                    data-id="{{ $item->id }}"
+                                                                    title="Ubah">
+                                                                        <i class="fa fa-edit"></i>
+                                                                </button> |
+                                                                <button
+                                                                    class="btn btn-info btn-sm text-white btn-delete"
+                                                                    data-id="{{ $item->id }}"
+                                                                    title="Hapus">
+                                                                        <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="ukuran-kertas" role="tabpanel" aria-labelledby="ukuran-kertas-tab">
+                                        <div class="card-box table-responsive">
+                                            <div class="col-md-4 mb-3">
+                                                <button
+                                                    id="button-create-ukuran-kertas"
+                                                    type="button"
+                                                    class="btn btn-info btn-sm text-white"
+                                                    title="Tambah">
+                                                        <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                            <table id="table_two" class="table table-striped table-bordered" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">No</th>
+                                                        <th class="text-center">Kategori Ukuran Kertas</th>
+                                                        <th class="text-center">Panjang</th>
+                                                        <th class="text-center">Lebar</th>
+                                                        <th class="text-center">#</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($ukuran_kertas as $key => $item)
+                                                        <tr>
+                                                            <td class="text-center">{{ $key + 1 }}</td>
+                                                            <td>{{ $item->nama_kertas }}</td>
+                                                            <td class="text-center">{{ $item->panjang }} cm</td>
+                                                            <td class="text-center">{{ $item->lebar }} cm</td>
+                                                            <td class="text-center">
+                                                                <button
+                                                                    class="btn btn-info btn-sm text-white btn-edit-ukuran-kertas"
+                                                                    data-id="{{ $item->id }}"
+                                                                    title="Ubah">
+                                                                        <i class="fa fa-edit"></i>
+                                                                </button> |
+                                                                <button
+                                                                    class="btn btn-info btn-sm text-white btn-delete-ukuran-kertas"
+                                                                    data-id="{{ $item->id }}"
+                                                                    title="Hapus">
+                                                                        <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-4">
-                <table id="table_two" class="table table-bordered" style="width:100%">
-                    <thead>
-                        <tr class="text-center bg-secondary text-white">
-                            <th>No</th>
-                            <th>Kategori Ukuran Kertas</th>
-                            <th>Panjang</th>
-                            <th>Lebar</th>
-                            <th>#</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($ukuran_kertas as $key => $item)
-                        <tr>
-                            <td class="text-center">{{ $key + 1 }}</td>
-                            <td>{{ $item->nama_kertas }}</td>
-                            <td class="text-center">{{ $item->panjang }} cm</td>
-                            <td class="text-center">{{ $item->lebar }} cm</td>
-                            <td class="text-center">
-                                <button
-                                    class="btn btn-info text-white btn-edit-ukuran-kertas"
-                                    data-id="{{ $item->id }}"
-                                    title="Ubah">
-                                        <i class="fas fa-edit"></i>
-                                </button> |
-                                <button
-                                    class="btn btn-info text-white btn-delete-ukuran-kertas"
-                                    data-id="{{ $item->id }}"
-                                    title="Hapus">
-                                        <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
 </div>
+<!-- /page content -->
 
 {{-- modal create  --}}
 <div class="modal fade modal-create" tabindex="-1">
@@ -142,9 +166,9 @@
                     <h5 class="modal-title text-white">Tambah Data Kertas</h5>
                     <button
                         type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close">
+                        class="close"
+                        data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -209,9 +233,9 @@
                     <h5 class="modal-title text-white">Ubah Data Kertas</h5>
                     <button
                         type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close">
+                        class="close"
+                        data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -290,9 +314,9 @@
                     <h5 class="modal-title text-white">Tambah Data Ukuran Kertas</h5>
                     <button
                         type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close">
+                        class="close"
+                        data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -345,9 +369,9 @@
                     <h5 class="modal-title text-white">Ubah Data Ukuran Kertas</h5>
                     <button
                         type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close">
+                        class="close"
+                        data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -418,12 +442,23 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('lib/datatables/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('lib/datatables/js/dataTables.bootstrap5.min.js') }}"></script>
-<script src="{{ asset('lib/datatables/js/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('lib/datatables/js/jszip.min.js') }}"></script>
-<script src="{{ asset('lib/datatables/js/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('lib/select2/js/select2.min.js') }}"></script>
+<!-- Datatables -->
+<script src="{{ asset('theme/vendors/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js') }}"></script>
+<script src="{{ asset('theme/vendors/datatables.net-scroller/js/dataTables.scroller.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/jszip/dist/jszip.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/pdfmake/build/pdfmake.min.js') }}"></script>
+<script src="{{ asset('theme/vendors/pdfmake/build/vfs_fonts.js') }}"></script>
+<script src="{{ asset('theme/vendors/select2/dist/js/select2.min.js') }}"></script>
 
 <script>
     $(document).ready(function() {
@@ -459,11 +494,11 @@
 
 
                     $.each(response.produks, function(index, item) {
-                        var value_produk = "" +
+                        var value_produk = "<div class=\"ml-3\">" +
                             "<input class=\"form-check-input\" type=\"checkbox\" name=\"produk_id\" value=\"" + item.id + "\" id=\"produk_id_" + item.id + "\"> " +
                             "<label class=\"form-check-label pe-2\" for=\"produk_id_" + item.id + "\">" +
                                 item.nama_produk +
-                            "</label><br>";
+                            "</label></div>";
                         $('#create_produk_id').append(value_produk);
                     });
 
@@ -542,7 +577,7 @@
 
 
                         $.each(response.produks, function(index, item) {
-                            var value_produk = "" +
+                            var value_produk = "<div class=\"ml-3\">" +
                                 "<input class=\"form-check-input\" type=\"checkbox\" name=\"produk_id\" value=\"" + item.id + "\" id=\"produk_id_" + item.id + "\"";
 
                                 if (response.produk != null) {
@@ -557,7 +592,7 @@
                                 value_produk += "> " +
                                 "<label class=\"form-check-label pe-2\" for=\"produk_id_" + item.id + "\">" +
                                     item.nama_produk +
-                                "</label><br>";
+                                "</label></div>";
                             $('#edit_produk_id').append(value_produk);
                         });
 
