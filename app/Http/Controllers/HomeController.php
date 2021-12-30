@@ -259,7 +259,7 @@ class HomeController extends Controller
             $jenis_kertas_cover = $request->jenis_kertas_cover;
 
             $offset_jenis_kertas_cover = OffsetJenisKertas::find($jenis_kertas_cover);
-            $kertas_cover = $offset_jenis_kertas_cover->nama_kertas;
+            $kertas_cover = $offset_jenis_kertas_cover->nama_kertas . " " . $offset_jenis_kertas_cover->gramasi;
 
             if ($offset_jenis_kertas->gramasi <= 310) {
                 $biaya_jasa_cover = OffsetBiayaJasaKalender::where('mesin_id', $mesin->id)
@@ -365,8 +365,8 @@ class HomeController extends Controller
             'biaya_set_kalender' => $biaya_set_kalender,
             'laminasi' => $laminasi,
             'nama_file' => $nama_file,
-            'jenis_kertas_cover' => $offset_jenis_kertas_cover->nama_kertas . " " . $offset_jenis_kertas_cover->gramasi,
-            'kertas_cover' => $offset_jenis_kertas_cover->nama_kertas . " " . $offset_jenis_kertas_cover->gramasi,
+            'jenis_kertas_cover' => $kertas_cover,
+            'kertas_cover' => $kertas_cover,
             'jml_warna_cover' => $jml_warna_cover,
             'jml_kertas_insheet_cover' => $jml_kertas_insheet_cover,
             'jml_plat_cover' => $jml_plat_cover,
