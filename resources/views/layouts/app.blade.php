@@ -70,6 +70,14 @@
                                     </ul>
                                 </li>
                                 <li>
+                                    <a><i class="fa fa-archive"></i> Produk <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        @foreach ($produks as $item)
+                                            <li><a href="{{ route('home.produk', ['kode_produk' => $item->kode_produk]) }}">{{ $item->nama_produk }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                                {{-- <li>
                                     <a href="{{ url('transaksi') }}"><i class="fa fa-exchange"></i> Transaksi</a>
                                 </li>
                                 <li>
@@ -77,7 +85,7 @@
                                 </li>
                                 <li>
                                     <a href="{{ url('pelanggan') }}"><i class="fa fa-users"></i> Pelanggan</a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>

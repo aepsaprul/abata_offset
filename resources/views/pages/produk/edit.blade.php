@@ -38,8 +38,7 @@
                                                 type="file"
                                                 class="form-control-file @error('foto') is-invalid @enderror"
                                                 id="foto"
-                                                name="foto"
-                                                required>
+                                                name="foto">
                                             @error('foto')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror

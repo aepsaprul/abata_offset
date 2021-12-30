@@ -1,21 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2">
-            <ul class="list-group">
-                @foreach ($produks as $produk)
-                <li class="list-group-item"><a href="{{ route('home.produk', ['kode_produk' => $produk->kode_produk]) }}" class="text-decoration-none text-dark">{{ $produk->nama_produk }}</a></li>
-                @endforeach
-            </ul>
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+
         </div>
-        <div class="col-md-10">
-            <div class="row">
-                <h3 class="text-center text-uppercase mb-5">Kalender Dinding</h3>
-            </div>
-            <div class="d-flex justify-content-center">
-                <div class="col-md-10">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Pehitungan Kalender Dinding</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
                     <form id="form-kalender-dinding">
                         @csrf
                         <div class="row">
@@ -25,7 +27,7 @@
                                         <div class="form-group row mb-3">
                                             <label for="jml_halaman_kalender" class="col-sm-6 col-form-label">Jumlah Halaman Kalender</label>
                                             <div class="col-sm-6">
-                                                <select class="form-select form-select-sm" id="jml_halaman_kalender" name="jml_halaman_kalender">
+                                                <select class="form-control form-control-sm" id="jml_halaman_kalender" name="jml_halaman_kalender">
                                                     <option value="">--Pilih Jumlah--</option>
                                                     <option value="1">1 Lembar</option>
                                                     <option value="2">2 Lembar</option>
@@ -41,7 +43,7 @@
                                         <div class="form-group row mb-3">
                                             <label for="jml_warna" class="col-sm-6 col-form-label">Jumlah Warna</label>
                                             <div class="col-sm-6">
-                                                <select class="form-select form-select-sm" id="jml_warna" name="jml_warna">
+                                                <select class="form-control form-control-sm" id="jml_warna" name="jml_warna">
                                                     <option value="">--Pilih Jumlah--</option>
                                                     @foreach ($warnas as $item)
                                                         <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -54,12 +56,6 @@
                                         <div class="form-group row mb-3">
                                             <label for="ukuran_cetak" class="col-sm-6 col-form-label">Ukuran Cetak</label>
                                             <div class="col-sm-6">
-                                                {{-- <select class="form-select form-select-sm" id="ukuran_cetak" name="ukuran_cetak">
-                                                    <option value="">--Pilih Ukuran--</option>
-                                                    @foreach ($ukuran_cetaks as $ukuran_cetak)
-                                                        <option value="{{ $ukuran_cetak->id }}">{{ $ukuran_cetak->lebar }} x {{ $ukuran_cetak->panjang }}</option>
-                                                    @endforeach
-                                                </select> --}}
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <input type="text" id="ukuran_cetak_lebar" name="ukuran_cetak_lebar" class="form-control form-control-sm" placeholder="Lebar">
@@ -75,7 +71,7 @@
                                         <div class="form-group row mb-3">
                                             <label for="jenis_kertas" class="col-sm-6 col-form-label">Jenis Kertas</label>
                                             <div class="col-sm-6">
-                                                <select class="form-select form-select-sm" id="jenis_kertas" name="jenis_kertas">
+                                                <select class="form-control form-control-sm" id="jenis_kertas" name="jenis_kertas">
                                                     <option value="">--Pilih Kertas--</option>
                                                     @foreach ($produk_relasi as $kertas)
                                                         <option value="{{ $kertas->id }}">{{ $kertas->nama_kertas }} {{ $kertas->gramasi }}</option>
@@ -88,7 +84,7 @@
                                         <div class="form-group row mb-3">
                                             <label for="jenis_finishing" class="col-sm-6 col-form-label">Jenis Finishing</label>
                                             <div class="col-sm-6">
-                                                <select class="form-select form-select-sm" id="jenis_finishing" name="jenis_finishing">
+                                                <select class="form-control form-control-sm" id="jenis_finishing" name="jenis_finishing">
                                                     <option value="">--Pilih Finishing--</option>
                                                     @foreach ($finishings as $finishing)
                                                         <option value="{{ $finishing->nama_finishing }}">{{ $finishing->nama_finishing }}</option>
@@ -103,7 +99,7 @@
                                         <div class="form-group row mb-3">
                                             <label for="laminasi" class="col-sm-6 col-form-label">Varnish UV</label>
                                             <div class="col-sm-6">
-                                                <select class="form-select form-select-sm" id="laminasi" name="laminasi">
+                                                <select class="form-control form-control-sm" id="laminasi" name="laminasi">
                                                     <option value="">--Pilih Varnish--</option>
                                                     <option value="ya">Ya</option>
                                                     <option value="tidak">Tidak</option>
@@ -115,7 +111,7 @@
                                         <div class="form-group row mb-3">
                                             <label for="mesin_id" class="col-sm-6 col-form-label">Mesin</label>
                                             <div class="col-sm-6">
-                                                <select class="form-select form-select-sm" id="mesin_id" name="mesin_id">
+                                                <select class="form-control form-control-sm" id="mesin_id" name="mesin_id">
                                                     <option value="">--Pilih Mesin--</option>
                                                     {{-- data mesin di javascript  --}}
                                                 </select>
@@ -167,10 +163,11 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3">
-                                        <input class="form-check-input" type="checkbox" id="cover_depan" name="cover_depan" value="">
-                                        <label class="form-check-label" for="cover_depan">
-                                            Cover Depan
-                                        </label>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" id="cover_depan" name="cover_depan" value=""> Cover Depan
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="sub_cover_depan">
                                         <div class="col-md-12">
@@ -185,7 +182,7 @@
                                             <div class="form-group row mb-3">
                                                 <label for="jml_warna_cover" class="col-sm-6 col-form-label">Jumlah Warna Cover</label>
                                                 <div class="col-sm-6">
-                                                    <select class="form-select form-select-sm" id="jml_warna_cover" name="jml_warna_cover">
+                                                    <select class="form-control form-control-sm" id="jml_warna_cover" name="jml_warna_cover">
                                                         <option value="">--Pilih Jumlah--</option>
                                                         @foreach ($warnas as $item)
                                                             <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -198,7 +195,7 @@
                                             <div class="form-group row mb-3">
                                                 <label for="jenis_kertas_cover" class="col-sm-6 col-form-label">Jenis Kertas Cover</label>
                                                 <div class="col-sm-6">
-                                                    <select class="form-select form-select-sm" id="jenis_kertas_cover" name="jenis_kertas_cover">
+                                                    <select class="form-control form-control-sm" id="jenis_kertas_cover" name="jenis_kertas_cover">
                                                         <option value="">--Pilih Kertas--</option>
                                                         @foreach ($produk_relasi as $kertas)
                                                             <option value="{{ $kertas->id }}">{{ $kertas->nama_kertas }} {{ $kertas->gramasi }}</option>
@@ -211,11 +208,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary btn-sm btn-block">HITUNG</button>
-                            </div>
-                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm btn-block">Hitung</button>
                     </form>
                     <br>
                     <form id="kalender-dinding-detail" action="{{ route('home.produk.kalender_dinding_detail') }}" method="POST">
@@ -224,11 +217,14 @@
                             {{-- hasil hitung di jquery  --}}
                         </div>
                     </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!-- /page content -->
+
 @endsection
 
 @section('script')
@@ -405,21 +401,19 @@
                         "           Harga Jual" +
                         "       </div>" +
                         "       <div class=\"card-body\">" +
-                        "           <div class=\"row\">" +
-                        "               <div class=\"d-flex justify-content-between\">" +
-                        "                   <div class=\"p-2\">Rp. " + harga_satuan_rp + " / pcs</div>" +
-                        "                   <div class=\"p-2\">" + total_biaya_rp + "</div>" +
-                        "               </div>" +
-                        "           </div>" +
+                                    "<div class=\"d-flex justify-content-between\">" +
+                                        "<div class=\"p-2\">Rp. " + harga_satuan_rp + " / pcs</div>" +
+                                        "<div class=\"p-2\">" + total_biaya_rp + "</div>" +
+                                    "</div>" +
                         "       </div>" +
                         "   </div>" +
                         "<div class=\"row\">" +
                             "<div class=\"col-md-4 p-4\">" +
                                 "<h4 class=\"text-uppercase\">Spesifikasi Item</h4>" +
-                                "<table class=\"table table\">" +
+                                "<table class=\"table\">" +
                                     "<tbody>" +
                                         "<tr>" +
-                                            "<td class=\"text-right\">Jumlah Cetak</td>" +
+                                            "<td>Jumlah Cetak</td>" +
                                             "<td>:</td>" +
                                             "<td style=\"text-align: right;\"><input readonly id=\"hitung_jml_cetak\" value=\"" + formatRp(response.jml_cetak) + "\" size=\"5\" style=\"border: none;text-align:right;\"></td>" +
                                         "</tr>" +
@@ -471,7 +465,7 @@
                                             "<tr>" +
                                                 "<td>Jumlah Waran</td>" +
                                                 "<td>:</td>" +
-                                                "<td class=\"text-end\">";
+                                                "<td style=\"text-align: right;\">";
 
                                                 if (response.jml_warna_cover == 4) {
                                                     dataHasilHitung += "Full Color";
@@ -485,7 +479,7 @@
                                             "<tr>" +
                                                 "<td>Jenis Kertas</td>" +
                                                 "<td>:</td>" +
-                                                "<td class=\"text-end\">" + response.kertas_cover + "</td>" +
+                                                "<td style=\"text-align: right;\">" + response.kertas_cover + "</td>" +
                                             "</tr>" +
                                         "</tbody>" +
                                     "</table>";
@@ -532,27 +526,27 @@
                                             "<tr>" +
                                                 "<td>Biaya Kertas</td>" +
                                                 "<td>:</td>" +
-                                                "<td class=\"text-end\">" + formatRp(response.biaya_kertas_cover) + "</td>" +
+                                                "<td style=\"text-align: right;\">" + formatRp(response.biaya_kertas_cover) + "</td>" +
                                             "</tr>" +
                                             "<tr>" +
                                                 "<td>Biaya Cetak</td>" +
                                                 "<td>:</td>" +
-                                                "<td class=\"text-end\">" + formatRp(response.biaya_cetak_min_cover) + "</td>" +
+                                                "<td style=\"text-align: right;\">" + formatRp(response.biaya_cetak_min_cover) + "</td>" +
                                             "</tr>" +
                                             "<tr>" +
                                                 "<td>Biaya Lebih</td>" +
                                                 "<td>:</td>" +
-                                                "<td class=\"text-end\">" + formatRp(response.biaya_cetak_lebih_cover) + "</td>" +
+                                                "<td style=\"text-align: right;\">" + formatRp(response.biaya_cetak_lebih_cover) + "</td>" +
                                             "</tr>" +
                                             "<tr>" +
                                                 "<td>Biaya Plat</td>" +
                                                 "<td>:</td>" +
-                                                "<td class=\"text-end\">" + formatRp(response.biaya_plat_cover) + "</td>" +
+                                                "<td style=\"text-align: right;\">" + formatRp(response.biaya_plat_cover) + "</td>" +
                                             "</tr>" +
                                             "<tr>" +
                                                 "<td>Total Biaya</td>" +
                                                 "<td>:</td>" +
-                                                "<td class=\"text-end\">" + formatRp(response.biaya_cover) + "</td>" +
+                                                "<td style=\"text-align: right;\">" + formatRp(response.biaya_cover) + "</td>" +
                                             "</tr>" +
                                         "</tbody>" +
                                     "</table>";
@@ -584,7 +578,7 @@
                                     "<tr>" +
                                         "<td>Biaya Finishing</td>" +
                                         "<td>:</td>" +
-                                        "<td class=\"text-end\">" + formatRp(response.biaya_set_kalender) + "</td>" +
+                                        "<td style=\"text-align: right;\">" + formatRp(response.biaya_set_kalender) + "</td>" +
                                     "</tr>" +
                                     "<tr>" +
                                         "<td>HPP</td>" +
@@ -596,8 +590,8 @@
                                         "<td>:</td>" +
                                         "<td style=\"text-align: right;\">" +
                                             "<div class=\"row\">" +
-                                                "<div class=\"col-md-6 ml-4\">" +
-                                                    "<input type=\"text\" id=\"margin_profit\" name=\"margin_profit\" size=\"3\" value=\"20\" style=\"text-align:right; margin-right: -35px;\">" +
+                                                "<div class=\"col-md-6\">" +
+                                                    "<input type=\"text\" id=\"margin_profit\" name=\"margin_profit\" size=\"3\" value=\"20\" style=\"text-align:right; margin-right: -40px;\">" +
                                                 "</div>" +
                                                 "<div class=\"col-md-6\">" +
                                                     "%" +

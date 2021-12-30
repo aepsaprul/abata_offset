@@ -496,11 +496,12 @@
 
 
                     $.each(response.produks, function(index, item) {
-                        var value_produk = "<div class=\"ml-3\">" +
-                            "<input class=\"form-check-input\" type=\"checkbox\" name=\"produk_id\" value=\"" + item.id + "\" id=\"produk_id_" + item.id + "\"> " +
-                            "<label class=\"form-check-label pe-2\" for=\"produk_id_" + item.id + "\">" +
-                                item.nama_produk +
-                            "</label></div>";
+                        var value_produk = "" +
+                            "<div class=\"checkbox\">" +
+                                "<label>" +
+                                    "<input type=\"checkbox\"name=\"produk_id\" value=\"" + item.id + "\" id=\"produk_id_" + item.id + "\"> " + item.nama_produk +
+                                "</label>" +
+                            "</div>";
                         $('#create_produk_id').append(value_produk);
                     });
 
@@ -579,22 +580,21 @@
 
 
                         $.each(response.produks, function(index, item) {
-                            var value_produk = "<div class=\"ml-3\">" +
-                                "<input class=\"form-check-input\" type=\"checkbox\" name=\"produk_id\" value=\"" + item.id + "\" id=\"produk_id_" + item.id + "\"";
-
-                                if (response.produk != null) {
-                                    var produk_split = response.produk.split(',');
-                                    $.each(produk_split, function(index, value) {
-                                        if (item.id == value) {
-                                            value_produk += " checked";
+                            var value_produk = "" +
+                                "<div class=\"checkbox\">" +
+                                    "<label>" +
+                                        "<input type=\"checkbox\" name=\"produk_id\" value=\"" + item.id + "\" id=\"produk_id_" + item.id + "\"";
+                                        if (response.produk != null) {
+                                            var produk_split = response.produk.split(',');
+                                            $.each(produk_split, function(index, value) {
+                                                if (item.id == value) {
+                                                    value_produk += " checked";
+                                                }
+                                            });
                                         }
-                                    });
-                                }
-
-                                value_produk += "> " +
-                                "<label class=\"form-check-label pe-2\" for=\"produk_id_" + item.id + "\">" +
-                                    item.nama_produk +
-                                "</label></div>";
+                                        value_produk += "> " + item.nama_produk +
+                                    "</label>" +
+                                "</div>";
                             $('#edit_produk_id').append(value_produk);
                         });
 
