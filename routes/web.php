@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BahanController;
 use App\Http\Controllers\BiayaCetakController;
 use App\Http\Controllers\BiayaFinishingController;
+use App\Http\Controllers\HitungController;
 use App\Http\Controllers\JasaCetakController;
 use App\Http\Controllers\JenisKertasController;
 use App\Http\Controllers\KertasController;
@@ -85,4 +86,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('jasa_cetak/update', [JasaCetakController::class, 'update'])->name('jasa_cetak.update');
     Route::get('jasa_cetak/{id}/delete_btn', [JasaCetakController::class, 'deleteBtn'])->name('jasa_cetak.delete_btn');
     Route::post('jasa_cetak/delete', [JasaCetakController::class, 'delete'])->name('jasa_cetak.delete');
+
+    // paper bag
+    Route::get('paper_bag', [HitungController::class, 'paperBag'])->name('paper_bag.index');
 });
