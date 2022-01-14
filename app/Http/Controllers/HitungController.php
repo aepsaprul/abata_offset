@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OffsetJenisKertas;
+use App\Models\OffsetWarna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -9,113 +11,77 @@ class HitungController extends Controller
 {
     public function paperBag()
     {
-        return view('pages.hitung_paper_bag.index');
+        $warna = OffsetWarna::get();
+
+        return view('pages.hitung_paper_bag.index', ['warnas' => $warna]);
     }
 
-    public function hitung()
+    public function hitung(Request $request)
     {
-        // ukuran real
-        $panjang = 28;
-        $lebar = 42;
-        $tinggi = 4;
+        $jumlah_cetak_rp = $request->jumlah_cetak;
+        $panjang_real = $request->panjang_real;
+        $lebar_real = $request->lebar_real;
+        $tinggi_real = $request->tinggi_real;
+        $kertas_id = $request->kertas_id;
+        $biaya_pisau_rp = $request->biaya_pisau;
+        $biaya_desain_rp = $request->biaya_desain;
+        $biaya_akomodasi_rp = $request->biaya_akomodasi;
+        $biaya_lain_rp = $request->biaya_lain;
+        $laminasi = $request->laminasi;
+        $finishing_rp = $request->finishing;
 
-        // title
-        $lipatan_bawah = $tinggi - 2;
+        // ubah rupiah ke integer
+        $jumlah_cetak = str_replace(".", "", $jumlah_cetak_rp);
+        $finishing = str_replace(".", "", $finishing_rp);
+        $biaya_pisau = str_replace(".", "", $biaya_pisau_rp);
+        $biaya_desain = str_replace(".", "", $biaya_desain_rp);
+        $biaya_akomodasi = str_replace(".", "", $biaya_akomodasi_rp);
+        $biaya_lain = str_replace(".", "", $biaya_lain_rp);
+
+        // plano
+        $plano = planoPaperBag($panjang_real, $lebar_real, $tinggi_real);
+        $plano_explode = explode(',', $plano);
+        $plano_title = $plano_explode[0];
+        $plano_value = $plano_explode[1];
+
+        // hitung total cetak
+        $total_cetak = ($jumlah_cetak + 75) / $plano_value;
+        $total_cetak_ceil = ceil($total_cetak);
+
+        // ukuran cetak
+        $lipatan_bawah = $tinggi_real - 2;
         $lipatan_atas = $lipatan_bawah * 0.5;
         $lipatan_lem = $lipatan_atas;
+        $plat_lebar = $lipatan_atas + $lebar_real + $lipatan_bawah;
+        $plat_panjang = 2 * ($panjang_real + $tinggi_real) + $lipatan_lem;
 
-        // ukuran plat
-        $plat_lebar = $lipatan_atas + $lebar + $lipatan_bawah;
-        $plat_panjang = 2 * ($panjang + $tinggi) + $lipatan_lem;
+        $biaya_finishing = $finishing * $jumlah_cetak;
 
+        // kertas
+        $kertas_query = OffsetJenisKertas::find($kertas_id);
+        $biaya_kertas = $kertas_query->harga * $total_cetak_ceil;
 
-        // ukuran plano kecil
-        $plano_panjang_1 = 100;
-        $plano_lebar_1 = 65;
-
-        // hitung plano kecil
-            // lebar x panjang (standar)
-            $hitung_lebar_plat_lebar_plano_kecil = $plano_lebar_1 / $plat_lebar;
-            $hitung_panjang_plat_panjang_plano_kecil = $plano_panjang_1 / $plat_panjang;
-            // hasil
-            $hasil_1 = floor($hitung_lebar_plat_lebar_plano_kecil) * floor($hitung_panjang_plat_panjang_plano_kecil);
-
-            // lebar x panjang (di tukar)
-            $hitung_lebar_plat_panjang_plano_kecil = $plano_lebar_1 / $plat_panjang;
-            $hitung_panjang_plat_lebar_plano_kecil = $plano_panjang_1 / $plat_lebar;
-            // hasil
-            $hasil_2 = floor($hitung_lebar_plat_panjang_plano_kecil) * floor($hitung_panjang_plat_lebar_plano_kecil);
-
-
-        // ukuran plano besar
-        $plano_panjang_2 = 109;
-        $plano_lebar_2 = 79;
-
-        // hitung plano besar
-            // lebar x panjang (standar)
-            $hitung_lebar_plat_lebar_plano_besar = $plano_lebar_2 / $plat_lebar;
-            $hitung_panjang_plat_panjang_plano_besar = $plano_panjang_2 / $plat_panjang;
-            // hasil
-            $hasil_3 = floor($hitung_lebar_plat_lebar_plano_besar) * floor($hitung_panjang_plat_panjang_plano_besar);
-
-            // lebar x panjang (di tukar)
-            $hitung_lebar_plat_panjang_plano_besar = $plano_lebar_2 / $plat_panjang;
-            $hitung_panjang_plat_lebar_plano_besar = $plano_panjang_2 / $plat_lebar;
-            // hasil
-            $hasil_4 = floor($hitung_lebar_plat_panjang_plano_besar) * floor($hitung_panjang_plat_lebar_plano_besar);
-
-        // result
-        $array = array(1 => $hasil_1, 2 => $hasil_2, 3 => $hasil_3, 4 => $hasil_4);
-        $maxValue = max($array);
-        $maxIndex = array_search(max($array), $array);
-
-        if ($maxIndex == 1 || $maxIndex == 2) {
-            $maxx = "Plano Kecil";
-        }
-        if ($maxIndex == 3 || $maxIndex == 4) {
-            $maxx = "Plano Besar";
+        // biaya laminasi
+        if ($laminasi != 0) {
+            $biaya_laminasi = $plat_panjang * $plat_lebar * 0.90 * $jumlah_cetak;
+        } else {
+            $biaya_laminasi = 0;
         }
 
-        return $maxx . " dapat " . $maxValue;
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
 
-
-        echo "panjang plat = " . $plat_panjang;
-        echo "<br>";
-        echo "lebar plat = " . $plat_lebar;
-        echo "<br>";
-        echo "- hitung lebar plano " . $plano_lebar_1 . " / " . $plat_lebar . " = " . floor($hitung_lebar_plat_lebar_plano_kecil);
-        echo "<br>";
-        echo "- hitung panjang plano " . $plano_panjang_1 . " / " . $plat_panjang . " = " . floor($hitung_panjang_plat_panjang_plano_kecil);
-        echo "<br>";
-        echo "hasil plano kecil = " . floor($hasil_1);
-        echo "<br>";
-        echo "- hitung lebar plano " . $plano_lebar_1 . " / " . $plat_panjang . " = " . floor($hitung_lebar_plat_panjang_plano_kecil);
-        echo "<br>";
-        echo "- hitung panjang plano " . $plano_panjang_1 . " / " . $plat_lebar . " = " . floor($hitung_panjang_plat_lebar_plano_kecil);
-        echo "<br>";
-        echo "hitung plano kecil = " . floor($hasil_2);
-        echo "<br>";
-        echo "<hr>";
-
-        echo "panjang plat = " . $plat_panjang;
-        echo "<br>";
-        echo "lebar plat = " . $plat_lebar;
-        echo "<br>";
-        echo "- hitung lebar plano " . $plano_lebar_2 . " / " . $plat_lebar . " = " . floor($hitung_lebar_plat_lebar_plano_besar);
-        echo "<br>";
-        echo "- hitung panjang plano " . $plano_panjang_2 . " / " . $plat_panjang . " = " . floor($hitung_panjang_plat_panjang_plano_besar);
-        echo "<br>";
-        echo "hasil plano besar = " . floor($hasil_3);
-        echo "<br>";
-        echo "- hitung lebar plano " . $plano_lebar_2 . " / " . $plat_panjang . " = " . floor($hitung_lebar_plat_panjang_plano_besar);
-        echo "<br>";
-        echo "- hitung panjang plano " . $plano_panjang_2 . " / " . $plat_lebar . " = " . floor($hitung_panjang_plat_lebar_plano_besar);
-        echo "<br>";
-        echo "hitung plano besar = " . floor($hasil_4);
-        echo "<br>";
-        echo "<hr>";
+        return response()->json([
+            'jumlah_cetak' => $jumlah_cetak,
+            'ukuran_jadi' => $panjang_real . " x " . $lebar_real . " x " . $tinggi_real,
+            'kertas_id' => $kertas_id,
+            'plano' => $plano_title . " - " . $plano_value,
+            'ukuran_cetak' => $plat_panjang . " x " . $plat_lebar,
+            'biaya_laminasi' => $biaya_laminasi,
+            'biaya_finishing' => $biaya_finishing,
+            'biaya_pisau' => $biaya_pisau,
+            'biaya_desain' => $biaya_desain,
+            'biaya_akomodasi' => $biaya_akomodasi,
+            'biaya_lain' => $biaya_lain,
+            'biaya_kertas' => $biaya_kertas
+        ]);
     }
 }

@@ -22,6 +22,11 @@
     <!-- Font Awesome -->
     <link href="{{ asset('theme/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
 
+    <!-- PNotify -->
+    <link href="{{ asset('theme/vendors/pnotify/dist/pnotify.css') }}" rel="stylesheet">
+    <link href="{{ asset('theme/vendors/pnotify/dist/pnotify.buttons.css') }}" rel="stylesheet">
+    <link href="{{ asset('theme/vendors/pnotify/dist/pnotify.nonblock.css') }}" rel="stylesheet">
+
     <!-- Custom Theme Style -->
     <link href="{{ asset('theme/build/css/custom.min.css') }}" rel="stylesheet">
 
@@ -154,6 +159,11 @@
     <script src="{{ asset('theme/vendors/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap -->
     <script src="{{ asset('theme/vendors/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- PNotify -->
+    <script src="{{ asset('theme/vendors/pnotify/dist/pnotify.js') }}"></script>
+    <script src="{{ asset('theme/vendors/pnotify/dist/pnotify.buttons.js') }}"></script>
+    <script src="{{ asset('theme/vendors/pnotify/dist/pnotify.nonblock.js') }}"></script>
 
     <!-- Custom Theme Scripts -->
     <script src="{{ asset('theme/build/js/custom.min.js') }}"></script>

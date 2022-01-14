@@ -89,5 +89,5 @@ Route::middleware(['auth'])->group(function () {
 
     // paper bag
     Route::get('paper_bag', [HitungController::class, 'paperBag'])->name('paper_bag.index');
-    Route::get('paper_bag/hitung', [HitungController::class, 'hitung'])->name('paper_bag.hitung');
+    Route::post('paper_bag/hitung', [HitungController::class, 'hitung'])->name('paper_bag.hitung');
 });

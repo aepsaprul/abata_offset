@@ -39,10 +39,11 @@
                                         <button
                                             id="button-create"
                                             type="button"
-                                            class="btn btn-info btn-sm text-white"
+                                            class="btn btn-primary btn-sm text-white pl-3 pr-3"
                                             title="Tambah">
-                                                <i class="fa fa-plus"></i>
+                                                <i class="fa fa-plus"></i> Tambah
                                         </button>
+                                        <div class="clearfix"></div>
                                     </div>
                                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
@@ -62,20 +63,29 @@
                                                 <td class="text-center">{{ $item->area_cetak_panjang }}  cm x {{ $item->area_cetak_lebar }} cm</td>
                                                 <td class="text-end">{{ rupiah($item->harga_plat) }}</td>
                                                 <td class="text-center">
-                                                    <button
-                                                        type="button"
-                                                        data-id="{{ $item->id }}"
-                                                        class="btn btn-info btn-sm text-white btn-edit"
-                                                        title="Ubah">
-                                                            <i class="fa fa-edit"></i>
-                                                    </button> |
-                                                    <button
-                                                        type="button"
-                                                        class="btn btn-info btn-sm text-white btn-delete"
-                                                        data-id="{{ $item->id }}"
-                                                        title="Hapus">
-                                                            <i class="fa fa-trash"></i>
-                                                    </button>
+                                                    <div class="btn-group">
+                                                        <a
+                                                            class="dropdown-toggle"
+                                                            data-toggle="dropdown"
+                                                            aria-haspopup="true"
+                                                            aria-expanded="false">
+                                                                <i class="fa fa-cog"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a
+                                                                class="dropdown-item btn-edit"
+                                                                href="#"
+                                                                data-id="{{ $item->id }}">
+                                                                    <i class="fa fa-pencil px-2"></i> Ubah
+                                                            </a>
+                                                            <a
+                                                                class="dropdown-item btn-delete"
+                                                                href="#"
+                                                                data-id="{{ $item->id }}">
+                                                                    <i class="fa fa-trash px-2"></i> Hapus
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             @endforeach

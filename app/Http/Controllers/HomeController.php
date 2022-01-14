@@ -66,8 +66,13 @@ class HomeController extends Controller
                 'produk_relasi' => $produk_relasi
             ]);
         } elseif ($kode_produk == "paperbag") {
+            $warna = OffsetWarna::get();
             $jenis_kertas = OffsetJenisKertas::where('produk', '2')->get();
-            return view('pages.hitung_paper_bag.index', ['jenis_kertas' => $jenis_kertas]);
+
+            return view('pages.hitung_paper_bag.index', [
+                'warnas' => $warna,
+                'jenis_kertas' => $jenis_kertas
+            ]);
         } else {
             echo "data mbuh";
         }

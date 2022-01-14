@@ -39,8 +39,6 @@ class MesinController extends Controller
     {
         $validated = $request->validate([
             'nama_mesin' => 'required',
-            'area_cetak_panjang' => 'required',
-            'area_cetak_lebar' => 'required',
             'harga_plat' => 'required'
         ]);
 
@@ -99,8 +97,6 @@ class MesinController extends Controller
     {
         $validated = $request->validate([
             'nama_mesin' => 'required',
-            'area_cetak_panjang' => 'required',
-            'area_cetak_lebar' => 'required',
             'harga_plat' => 'required'
         ]);
 

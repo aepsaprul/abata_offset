@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\OffsetBiayaJasaKalender;
+use App\Models\OffsetGramasi;
 use App\Models\OffsetMesin;
 use App\Models\OffsetWarna;
 use Illuminate\Http\Request;
@@ -18,10 +19,12 @@ class JasaCetakController extends Controller
 
     public function create()
     {
+        $gramasi = OffsetGramasi::get();
         $mesin = OffsetMesin::get();
         $warna = OffsetWarna::get();
 
         return response()->json([
+            'gramasis' => $gramasi,
             'mesins' => $mesin,
             'warnas' => $warna
         ]);
@@ -33,6 +36,7 @@ class JasaCetakController extends Controller
         $harga_lebih = str_replace(".", "", $request->harga_lebih);
 
         $jasa_cetak = new OffsetBiayaJasaKalender;
+        $jasa_cetak->gramasi_id = $request->gramasi_id;
         $jasa_cetak->mesin_id = $request->mesin_id;
         $jasa_cetak->warna_id = $request->warna_id;
         $jasa_cetak->harga_per_seribu = $harga_per_seribu;
@@ -47,15 +51,18 @@ class JasaCetakController extends Controller
     public function edit($id)
     {
         $jasa_cetak = OffsetBiayaJasaKalender::find($id);
+        $gramasi = OffsetGramasi::get();
         $mesin = OffsetMesin::get();
         $warna = OffsetWarna::get();
 
         return response()->json([
             'id' => $jasa_cetak->id,
+            'gramasi_id' => $jasa_cetak->gramasi_id,
             'mesin_id' => $jasa_cetak->mesin_id,
             'warna_id' => $jasa_cetak->warna_id,
             'harga_per_seribu' => $jasa_cetak->harga_per_seribu,
             'harga_lebih' => $jasa_cetak->harga_lebih,
+            'gramasis' => $gramasi,
             'mesins' => $mesin,
             'warnas' => $warna
         ]);
@@ -67,6 +74,7 @@ class JasaCetakController extends Controller
         $harga_lebih = str_replace(".", "", $request->harga_lebih);
 
         $jasa_cetak = OffsetBiayaJasaKalender::find($request->id);
+        $jasa_cetak->gramasi_id = $request->gramasi_id;
         $jasa_cetak->mesin_id = $request->mesin_id;
         $jasa_cetak->warna_id = $request->warna_id;
         $jasa_cetak->harga_per_seribu = $harga_per_seribu;

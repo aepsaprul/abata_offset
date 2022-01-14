@@ -28,7 +28,7 @@
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Data Mesin</h2>
+                        <h2>Data Jasa Cetak</h2>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
@@ -39,10 +39,11 @@
                                         <button
                                             id="button-create"
                                             type="button"
-                                            class="btn btn-info btn-sm text-white"
+                                            class="btn btn-primary btn-sm text-white pl-3 pr-3"
                                             title="Tambah">
-                                                <i class="fa fa-plus"></i>
+                                                <i class="fa fa-plus"></i> Tambah
                                         </button>
+                                        <div class="clearfix"></div>
                                     </div>
                                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
@@ -60,24 +61,39 @@
                                             @foreach ($jasa_cetaks as $key => $item)
                                             <tr>
                                                 <td class="text-center">{{ $key + 1 }}</td>
-                                                <td>{{ $item->gramasi->ukuran }}</td>
+                                                <td>
+                                                    @if ($item->gramasi != null)
+                                                        {{ $item->gramasi->ukuran }}
+                                                    @endif
+                                                </td>
                                                 <td>{{ $item->mesin->nama_mesin }}</td>
                                                 <td>{{ $item->warna->nama }}</td>
-                                                <td class="text-end">{{ rupiah($item->harga_per_seribu) }}</td>
-                                                <td class="text-end">{{ rupiah($item->harga_lebih) }}</td>
+                                                <td class="text-right">{{ rupiah($item->harga_per_seribu) }}</td>
+                                                <td class="text-right">{{ rupiah($item->harga_lebih) }}</td>
                                                 <td class="text-center">
-                                                    <button
-                                                        class="btn btn-info btn-sm text-white btn-edit"
-                                                        data-id="{{ $item->id }}"
-                                                        title="Ubah">
-                                                            <i class="fa fa-edit"></i>
-                                                    </button> |
-                                                    <button
-                                                        class="btn btn-info btn-sm text-white btn-delete"
-                                                        data-id="{{ $item->id }}"
-                                                        title="Hapus">
-                                                            <i class="fa fa-trash"></i>
-                                                    </button>
+                                                    <div class="btn-group">
+                                                        <a
+                                                            class="dropdown-toggle"
+                                                            data-toggle="dropdown"
+                                                            aria-haspopup="true"
+                                                            aria-expanded="false">
+                                                                <i class="fa fa-cog"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a
+                                                                class="dropdown-item btn-edit"
+                                                                href="#"
+                                                                data-id="{{ $item->id }}">
+                                                                    <i class="fa fa-pencil px-2"></i> Ubah
+                                                            </a>
+                                                            <a
+                                                                class="dropdown-item btn-delete"
+                                                                href="#"
+                                                                data-id="{{ $item->id }}">
+                                                                    <i class="fa fa-trash px-2"></i> Hapus
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -110,6 +126,12 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
+                        <label for="create_gramasi_id" class="form-label">Gramasi</label>
+                        <select name="create_gramasi_id" id="create_gramasi_id" class="form-control">
+
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="create_mesin_id" class="form-label">Mesin</label>
                         <select name="create_mesin_id" id="create_mesin_id" class="form-control">
 
@@ -139,7 +161,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="border-0 text-white bg-primary" style="padding: 5px 10px;">Simpan</button>
+                    <button class="btn btn-primary btn-create-spinner" disabled style="width: 120px; display: none;">
+                        <span class="spinner-grow spinner-grow-sm"></span>
+                        Loading..
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-create-save" style="width: 120px;"><i class="fa fa-save"></i> Simpan</button>
                 </div>
             </form>
         </div>
@@ -159,7 +185,7 @@
                     name="edit_id">
 
                 <div class="modal-header bg-primary">
-                    <h5 class="modal-title text-white">Ubah Data Kertas</h5>
+                    <h5 class="modal-title text-white">Ubah Data Jasa Cetak</h5>
                     <button
                         type="button"
                         class="close"
@@ -168,6 +194,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="edit_gramasi_id" class="form-label">Gramasi</label>
+                        <select name="edit_gramasi_id" id="edit_gramasi_id" class="form-control">
+
+                        </select>
+                    </div>
                     <div class="mb-3">
                         <label for="edit_mesin_id" class="form-label">Mesin</label>
                         <select name="edit_mesin_id" id="edit_mesin_id" class="form-control">
@@ -198,7 +230,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="border-0 text-white bg-primary" style="padding: 5px 10px;">Simpan</button>
+                    <button class="btn btn-primary btn-edit-spinner" disabled style="width: 130px; display: none;">
+                        <span class="spinner-grow spinner-grow-sm"></span>
+                        Loading..
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-edit-save" style="width: 130px;"><i class="fa fa-save"></i> Perbaharui</button>
                 </div>
             </form>
         </div>
@@ -227,17 +263,6 @@
                     <button type="submit" class="btn btn-primary text-center" style="width: 100px;">Ya</button>
                 </div>
             </form>
-        </div>
-    </div>
-</div>
-
-{{-- modal proses berhasil  --}}
-<div class="modal fade modal-proses" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                Proses sukses.... <i class="fas fa-check text-success"></i>
-            </div>
         </div>
     </div>
 </div>
@@ -271,6 +296,7 @@
         });
 
         $('#button-create').on('click', function() {
+            $('#create_gramasi_id').empty();
             $('#create_mesin_id').empty();
             $('#create_warna_id').empty();
 
@@ -283,6 +309,11 @@
                 type: 'GET',
                 data: formData,
                 success: function(response) {
+                    var value_gramasi = "<option value=\"\">--Pilih Gramasi--</option>";
+                    $.each(response.gramasis, function(index, item) {
+                        value_gramasi += "<option value=\"" + item.id + "\">" + item.ukuran + "</option>";
+                    });
+                    $('#create_gramasi_id').append(value_gramasi);
 
                     var value_mesin = "<option value=\"\">--Pilih Mesin--</option>";
                     $.each(response.mesins, function(index, item) {
@@ -330,9 +361,18 @@
                 url: '{{ URL::route('jasa_cetak.store') }} ',
                 type: 'POST',
                 data: formData,
+                beforeSend: function() {
+                    $('.btn-create-spinner').css("display", "block");
+                    $('.btn-create-save').css("display", "none");
+                },
                 success: function(response) {
-                    $('.modal-create').modal('hide');
-                    $('.modal-proses').modal('show');
+                    var a = new PNotify({
+                        title: 'Success',
+                        text: 'Data berhasil ditambah',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });
+
                     setTimeout(() => {
                         window.location.reload(1);
                     }, 1000);
@@ -342,6 +382,7 @@
 
         $('body').on('click', '.btn-edit', function(e) {
             e.preventDefault();
+            $('#edit_gramasi_id').empty();
             $('#edit_mesin_id').empty();
             $('#edit_warna_id').empty();
 
@@ -363,6 +404,19 @@
                     $('#edit_harga_per_seribu').val(response.harga_per_seribu);
                     $('#edit_harga_lebih').val(response.harga_lebih);
 
+                    // gramasi
+                    var value_gramasi = "<option value=\"\">--Pilih Gramasi--</option>";
+                    $.each(response.gramasis, function(index, item) {
+                        value_gramasi += "<option value=\"" + item.id + "\"";
+
+                        if (item.id == response.gramasi_id) {
+                            value_gramasi += "selected";
+                        }
+                        value_gramasi += ">" + item.ukuran + "</option>";
+                    });
+                    $('#edit_gramasi_id').append(value_gramasi);
+
+                    // mesin
                     var value_mesin = "<option value=\"\">--Pilih Mesin--</option>";
                     $.each(response.mesins, function(index, item) {
                         value_mesin += "<option value=\"" + item.id + "\"";
@@ -374,6 +428,7 @@
                     });
                     $('#edit_mesin_id').append(value_mesin);
 
+                    // warna
                     var value_warna = "<option value=\"\">--Pilih Warna--</option>";
                     $.each(response.warnas, function(index, item) {
                         value_warna += "<option value=\"" + item.id + "\"";
@@ -420,9 +475,18 @@
                 url: '{{ URL::route('jasa_cetak.update') }}',
                 type: 'POST',
                 data: formData,
+                beforeSend: function() {
+                    $('.btn-edit-spinner').css("display", "block");
+                    $('.btn-edit-save').css("display", "none");
+                },
                 success: function(response) {
-                    $('.modal-edit').modal('hide');
-                    $('.modal-proses').modal('show');
+                    var a = new PNotify({
+                        title: 'Success',
+                        text: 'Data berhasil ditambah',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });
+
                     setTimeout(() => {
                         $('.modal-proses').modal('hide');
                         window.location.reload(1);
