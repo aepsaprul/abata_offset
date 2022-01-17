@@ -4,13 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BahanController;
 use App\Http\Controllers\BiayaCetakController;
 use App\Http\Controllers\BiayaFinishingController;
-use App\Http\Controllers\HitungController;
 use App\Http\Controllers\JasaCetakController;
 use App\Http\Controllers\JenisKertasController;
 use App\Http\Controllers\KertasController;
 use App\Http\Controllers\MesinController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\MasterMesinController;
+use App\Http\Controllers\PaperBagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('jasa_cetak/delete', [JasaCetakController::class, 'delete'])->name('jasa_cetak.delete');
 
     // paper bag
-    Route::get('paper_bag', [HitungController::class, 'paperBag'])->name('paper_bag.index');
-    Route::post('paper_bag/hitung', [HitungController::class, 'hitung'])->name('paper_bag.hitung');
+    Route::get('paper_bag', [PaperBagController::class, 'paperBag'])->name('paper_bag.index');
+    Route::post('paper_bag/mesin', [PaperBagController::class, 'mesin'])->name('paper_bag.mesin');
+    Route::post('paper_bag/hitung', [PaperBagController::class, 'hitung'])->name('paper_bag.hitung');
 });

@@ -88,9 +88,11 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group row mb-3">
-                                                <label for="finishing" class="col-sm-4 col-form-label">Biaya Finishing</label>
+                                                <label for="mesin_id" class="col-sm-4 col-form-label">Mesin</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" name="finishing" id="finishing" class="form-control form-control-sm">
+                                                    <select class="form-control form-control-sm" id="mesin_id" name="mesin_id">
+                                                        <option value="0">--Pilih Mesin--</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -98,6 +100,14 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group row mb-3">
+                                                <label for="finishing" class="col-sm-4 col-form-label">Biaya Finishing</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="finishing" id="finishing" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-md-12">
                                             <div class="form-group row mb-3">
                                                 <label for="biaya_pisau" class="col-sm-4 col-form-label">Biaya Pisau</label>
@@ -116,9 +126,9 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group row mb-3">
-                                                <label for="biaya_akomodasi" class="col-sm-4 col-form-label">Biaya Akomodasi</label>
+                                                <label for="biaya_potong" class="col-sm-4 col-form-label">Biaya Potong</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control form-control-sm" id="biaya_akomodasi" name="biaya_akomodasi">
+                                                    <input type="text" class="form-control form-control-sm" id="biaya_potong" name="biaya_potong">
                                                 </div>
                                             </div>
                                         </div>
@@ -174,11 +184,39 @@
         $('#biaya_desain').on("keyup", function(e) {
             $('#biaya_desain').val(formatRupiah(this.value, ""));
         });
-        $('#biaya_akomodasi').on("keyup", function(e) {
-            $('#biaya_akomodasi').val(formatRupiah(this.value, ""));
+        $('#biaya_potong').on("keyup", function(e) {
+            $('#biaya_potong').val(formatRupiah(this.value, ""));
         });
         $('#biaya_lain').on("keyup", function(e) {
             $('#biaya_lain').val(formatRupiah(this.value, ""));
+        });
+
+        $('#tinggi_real').on("keyup", function() {
+            if ($('#lebar_real').val() == "") {
+                alert('Lebar diisi terlebih dahulu');
+            } else {
+                $('#mesin_id').empty();
+
+                var formData = {
+                    lebar: $('#lebar_real').val(),
+                    tinggi: $('#tinggi_real').val(),
+                    _token: CSRF_TOKEN
+                }
+
+                $.ajax({
+                    url: '{{ URL::route('paper_bag.mesin') }}',
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        $("#mesin_id").empty();
+                        $.each(response.mesins, function(index, value) {
+                        var data_mesin = "<option value=\"" + value.id + "\">" + value.nama_mesin + "</option>";
+
+                        $("#mesin_id").append(data_mesin);
+                    });
+                    }
+                });
+            }
         });
 
         $('#form-paper-bag').submit(function(e) {
@@ -187,15 +225,17 @@
 
             var formData = {
                 jumlah_cetak: $('#jumlah_cetak').val(),
+                warna_id: $('#warna_id').val(),
                 panjang_real: $('#panjang_real').val(),
                 lebar_real: $('#lebar_real').val(),
                 tinggi_real: $('#tinggi_real').val(),
                 kertas_id: $('#kertas_id').val(),
                 laminasi: $('#laminasi').val(),
+                mesin_id: $('#mesin_id').val(),
                 finishing: $('#finishing').val(),
                 biaya_pisau: $('#biaya_pisau').val(),
                 biaya_desain: $('#biaya_desain').val(),
-                biaya_akomodasi: $('#biaya_akomodasi').val(),
+                biaya_potong: $('#biaya_potong').val(),
                 biaya_lain: $('#biaya_lain').val(),
                 nama_file: $('#nama_file').val(),
                 _token: CSRF_TOKEN
@@ -254,6 +294,12 @@
                                                 "<span>" + formatRp(response.jumlah_cetak) + "</span>" +
                                             "</div>" +
                                         "</div>" +
+                                        "<div class=\"form-group row \">" +
+                                            "<label class=\"control-label col-md-4 col-sm-4 \">Warna</label>" +
+                                            "<div class=\"col-md-8 col-sm-8 text-right\">" +
+                                                "<span>" + response.warna + "</span>" +
+                                            "</div>" +
+                                        "</div>" +
                                         "<div class=\"form-group row\">" +
                                             "<label class=\"control-label col-md-4 col-sm-4 \">Ukuran Jadi</label>" +
                                             "<div class=\"col-md-8 col-sm-8 text-right\">" +
@@ -263,22 +309,52 @@
                                         "<div class=\"form-group row\">" +
                                             "<label class=\"control-label col-md-4 col-sm-4 \">Jenis Kertas</label>" +
                                             "<div class=\"col-md-8 col-sm-8 text-right\">" +
-                                                "<span>" + response.kertas_id + "</span>" +
+                                                "<span>" + response.kertas + "</span>" +
                                             "</div>" +
                                         "</div>" +
+                                    "</div>" +
+                                    "<div class=\"col-md-4 p-4\">" +
+                                        "<h4 class=\"text-uppercase font-weight-bold mb-3\">Hasil Perhitungan</h4>" +
                                         "<div class=\"form-group row\">" +
                                             "<label class=\"control-label col-md-4 col-sm-4 \">Plano</label>" +
                                             "<div class=\"col-md-8 col-sm-8 text-right\">" +
                                                 "<span>" + response.plano + "</span>" +
                                             "</div>" +
                                         "</div>" +
-                                    "</div>" +
-                                    "<div class=\"col-md-4 p-4\">" +
-                                        "<h4 class=\"text-uppercase font-weight-bold mb-3\">Hasil Perhitungan</h4>" +
                                         "<div class=\"form-group row \">" +
                                             "<label class=\"control-label col-md-4 col-sm-4 \">Ukuran Cetak</label>" +
                                             "<div class=\"col-md-8 col-sm-8 text-right\">" +
                                                 "<span>" + response.ukuran_cetak + "</span>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class=\"form-group row \">" +
+                                            "<label class=\"control-label col-md-4 col-sm-4 \">Laminasi</label>" +
+                                            "<div class=\"col-md-8 col-sm-8 text-right\">" +
+                                                "<span>" + response.jenis_laminasi + "</span>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class=\"form-group row \">" +
+                                            "<label class=\"control-label col-md-4 col-sm-4 \">Insheet</label>" +
+                                            "<div class=\"col-md-8 col-sm-8 text-right\">" +
+                                                "<span>" + response.insheet + "</span>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class=\"form-group row \">" +
+                                            "<label class=\"control-label col-md-4 col-sm-4 \">Mesin</label>" +
+                                            "<div class=\"col-md-8 col-sm-8 text-right\">" +
+                                                "<span>" + response.mesin + "</span>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class=\"form-group row \">" +
+                                            "<label class=\"control-label col-md-4 col-sm-4 \">Jumlah Plat</label>" +
+                                            "<div class=\"col-md-8 col-sm-8 text-right\">" +
+                                                "<span>" + response.plat_jumlah + "</span>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class=\"form-group row \">" +
+                                            "<label class=\"control-label col-md-4 col-sm-4 \">Harga Plat</label>" +
+                                            "<div class=\"col-md-8 col-sm-8 text-right\">" +
+                                                "<span>" + formatRp(response.plat_harga) + "</span>" +
                                             "</div>" +
                                         "</div>" +
                                     "</div>" +
@@ -288,6 +364,18 @@
                                             "<label class=\"control-label col-md-5 col-sm-5 \">Biaya Laminasi</label>" +
                                             "<div class=\"col-md-7 col-sm-7 text-right\">" +
                                                 "<span>" + formatRp(response.biaya_laminasi) + "</span>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class=\"form-group row\">" +
+                                            "<label class=\"control-label col-md-5 col-sm-5 \">Biaya Minimal</label>" +
+                                            "<div class=\"col-md-7 col-sm-7 text-right\">" +
+                                                "<span>" + formatRp(response.biaya_minimal) + "</span>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class=\"form-group row\">" +
+                                            "<label class=\"control-label col-md-5 col-sm-5 \">Biaya Lebih</label>" +
+                                            "<div class=\"col-md-7 col-sm-7 text-right\">" +
+                                                "<span>" + formatRp(response.biaya_lebih) + "</span>" +
                                             "</div>" +
                                         "</div>" +
                                         "<div class=\"form-group row\">" +
@@ -315,9 +403,9 @@
                                             "</div>" +
                                         "</div>" +
                                         "<div class=\"form-group row\">" +
-                                            "<label class=\"control-label col-md-5 col-sm-5 \">Biaya Akomodasi</label>" +
+                                            "<label class=\"control-label col-md-5 col-sm-5 \">Biaya Potong</label>" +
                                             "<div class=\"col-md-7 col-sm-7 text-right\">" +
-                                                "<span>" + formatRp(response.biaya_akomodasi) + "</span>" +
+                                                "<span>" + formatRp(response.biaya_potong) + "</span>" +
                                             "</div>" +
                                         "</div>" +
                                         "<div class=\"form-group row\">" +
