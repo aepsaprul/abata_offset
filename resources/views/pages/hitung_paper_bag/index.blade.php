@@ -250,6 +250,7 @@
                     $('.btn-hitung').css("display", "none");
                 },
                 success: function(response) {
+                    console.log(response.biaya_lebih_pond);
                     var a = new PNotify({
                         title: 'Success',
                         text: 'Data berhasil ditampilkan',
@@ -280,8 +281,8 @@
                                     "</div>" +
                                     "<div class=\"card-body\">" +
                                         "<div class=\"d-flex justify-content-between\">" +
-                                            "<div class=\"p-2\">Rp. 3.000 / pcs</div>" +
-                                            "<div class=\"p-2\"> Rp. 7.000.000</div>" +
+                                            "<div class=\"p-2\">Rp. " + formatRp(response.harga_satuan) + " / pcs</div>" +
+                                            "<div class=\"p-2\"> Rp. " + formatRp(response.harga_jual) + "</div>" +
                                         "</div>" +
                                     "</div>" +
                                 "</div>" +
@@ -409,9 +410,56 @@
                                             "</div>" +
                                         "</div>" +
                                         "<div class=\"form-group row\">" +
+                                            "<label class=\"control-label col-md-5 col-sm-5 \">Biaya Pond</label>" +
+                                            "<div class=\"col-md-7 col-sm-7 text-right\">" +
+                                                "<span>" + formatRp(response.biaya_minimal_pond) + "</span>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class=\"form-group row\">" +
+                                            "<label class=\"control-label col-md-5 col-sm-5 \">Biaya Lebih Pond</label>" +
+                                            "<div class=\"col-md-7 col-sm-7 text-right\">" +
+                                                "<span>" + formatRp(response.biaya_lebih_pond) + "</span>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class=\"form-group row\">" +
                                             "<label class=\"control-label col-md-5 col-sm-5 \">Biaya Lain - Lain</label>" +
                                             "<div class=\"col-md-7 col-sm-7 text-right\">" +
                                                 "<span>" + formatRp(response.biaya_lain) + "</span>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class=\"form-group row\">" +
+                                            "<label class=\"control-label col-md-5 col-sm-5 \">HPP</label>" +
+                                            "<div class=\"col-md-7 col-sm-7 text-right\">" +
+                                                "<span>" + formatRp(response.hpp) + "</span>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class=\"form-group row\">" +
+                                            "<label class=\"control-label col-md-5 col-sm-5 \">Margin Profit</label>" +
+                                            "<div class=\"col-md-7 col-sm-7\">" +
+                                                "<div class=\"input-group mb-3\">" +
+                                                "<input type=\"text\" class=\"form-control form-control-sm text-right\" aria-label=\"Recipient's username\"aria-describedby=\"basic-addon2\" value=\"20\">" +
+                                                    "<div class=\"input-group-append\">" +
+                                                        "<span class=\"input-group-text\" id=\"basic-addon2\">%</span>" +
+                                                    "</div>" +
+                                                "</div>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class=\"form-group row\">" +
+                                            "<label class=\"control-label col-md-5 col-sm-5 \">Profit</label>" +
+                                            "<div class=\"col-md-7 col-sm-7 text-right\">" +
+                                                "<span>" + formatRp(response.profit) + "</span>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class=\"form-group row\">" +
+                                            "<label class=\"control-label col-md-5 col-sm-5 \">Harga Jual</label>" +
+                                            "<div class=\"col-md-7 col-sm-7 text-right\">" +
+                                                "<span>" + formatRp(response.harga_jual) + "</span>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class=\"form-group row\">" +
+                                            "<label class=\"control-label col-md-5 col-sm-5 \">Harga Satuan</label>" +
+                                            "<div class=\"col-md-7 col-sm-7 text-right\">" +
+                                                "<span>" + formatRp(response.harga_satuan) + "</span>" +
                                             "</div>" +
                                         "</div>" +
                                     "</div>" +

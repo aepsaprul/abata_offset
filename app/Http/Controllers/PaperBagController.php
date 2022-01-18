@@ -62,6 +62,7 @@ class PaperBagController extends Controller
         $finishing_rp = $request->finishing;
 
         $mesin = OffsetMesin::find($mesin_id);
+        $mesin_pond = OffsetBiayaCetak::where('mesin_id', 5)->where('warna_id', $warna_id)->first();
         $warna = OffsetWarna::find($warna_id);
         $kertas = OffsetJenisKertas::find($kertas_id);
 
@@ -73,7 +74,7 @@ class PaperBagController extends Controller
         $biaya_potong = str_replace(".", "", $biaya_potong_rp);
         $biaya_lain = str_replace(".", "", $biaya_lain_rp);
 
-        // jasa cetak
+        // jasa cetak & pond
         if ($kertas->gramasi <= 310) {
             $biaya_jasa = OffsetBiayaCetak::where('mesin_id', $mesin->id)
                 ->where('gramasi_id', 1)
@@ -87,11 +88,14 @@ class PaperBagController extends Controller
         }
 
         $biaya_minimal = $biaya_jasa->harga_per_seribu;
+        $biaya_minimal_pond = $mesin_pond->harga_per_seribu;
 
         if ($jumlah_cetak > 1000) {
             $biaya_lebih = $biaya_jasa->harga_lebih * ($jumlah_cetak - 1000);
+            $biaya_lebih_pond = $mesin_pond->harga_lebih * ($jumlah_cetak - 1000);
         } else {
             $biaya_lebih = 0;
+            $biaya_lebih_pond = 0;
         }
 
         // plano
@@ -141,6 +145,14 @@ class PaperBagController extends Controller
             $biaya_laminasi = 0;
         }
 
+        // total biaya
+        $hpp = $biaya_kertas + $plat_harga + $biaya_laminasi + $biaya_finishing + $biaya_pisau + $biaya_desain + $biaya_potong + $biaya_minimal_pond + $biaya_lebih_pond + $biaya_lain + $biaya_minimal + $biaya_lebih;
+
+        $margin_profit = 0.2;
+        $profit = $margin_profit * $hpp;
+        $harga_jual = $hpp + $profit;
+        $harga_satuan = $harga_jual / $jumlah_cetak;
+
         return response()->json([
             'jumlah_cetak' => $jumlah_cetak,
             'warna' => $warna->nama,
@@ -158,10 +170,16 @@ class PaperBagController extends Controller
             'biaya_pisau' => $biaya_pisau,
             'biaya_desain' => $biaya_desain,
             'biaya_potong' => $biaya_potong,
+            'biaya_minimal_pond' => $biaya_minimal_pond,
+            'biaya_lebih_pond' => $biaya_lebih_pond,
             'biaya_lain' => $biaya_lain,
             'biaya_kertas' => $biaya_kertas,
             'biaya_minimal' => $biaya_minimal,
-            'biaya_lebih' => $biaya_lebih
+            'biaya_lebih' => $biaya_lebih,
+            'hpp' => $hpp,
+            'profit' => $profit,
+            'harga_jual' => $harga_jual,
+            'harga_satuan' => $harga_satuan
         ]);
     }
 }
