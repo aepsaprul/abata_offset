@@ -436,8 +436,8 @@
                                         "<div class=\"form-group row\">" +
                                             "<label class=\"control-label col-md-5 col-sm-5 \">Margin Profit</label>" +
                                             "<div class=\"col-md-7 col-sm-7\">" +
-                                                "<div class=\"input-group mb-3\">" +
-                                                "<input type=\"text\" class=\"form-control form-control-sm text-right\" aria-label=\"Recipient's username\"aria-describedby=\"basic-addon2\" value=\"20\">" +
+                                                "<div class=\"input-group input-group-sm mb-3\">" +
+                                                "<input type=\"text\" class=\"form-control text-right\" aria-label=\"Recipient's username\"aria-describedby=\"basic-addon2\" value=\"20\">" +
                                                     "<div class=\"input-group-append\">" +
                                                         "<span class=\"input-group-text\" id=\"basic-addon2\">%</span>" +
                                                     "</div>" +
