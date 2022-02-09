@@ -1,0 +1,47 @@
+sebelum tanggal 7 desember
+Status Level Karyawan
+3 bulan Training
+1 Tahun : Amatir ( masa dedikasi loyalitas )
+2 Tahun : Basic
+3 Tahun : Yunior
+4 Tahun : Senior
+5 Tahun : Profesional
+
+1. Okta progres yg pengajuan server dkk, dan yg sdh dibeli yg mana
+2. Fu mas vibi update revisi, point ada di okta
+3. Project yg bs dikerjain freelance
+4. Alfin : restore point mana aja yg slsi
+5. Modul pembuatan command center
+6. Struktur data server seperti apa antara cabang dan di HO
+7. Project untuk des
+
+revisi aplikasi offset sementara *:
+
+1. Harga Jual yg total itu seharusnya ambil dari total harga jual bukan hpp, yg satuan sdh betul
+2. biaya cetak lebih jika <= 1000 maka tidak muncul, ( cnth : cetak 1500, maka biaya cetak lebih 500x 150 (oliver 72) = 75.000
+3. revisi judul field "Jumlah Kertas+Insheet"
+4. dibawahnya kertas ada info plano besar atau kecil yang digunakan
+5. biaya finishing dimunculkan di rincian biaya
+6. Judul "Spesifikasi Cover", dan isinya Jumlah warna & jenis kertas ( sesuai yg dipilih diatas)
+
+PR buat aq confirm :
+1. ukuran kertas jika tidak dimunculkan tidak apa2?
+2. harga cetak & biaya cetak lebih untuk yg 2 or 3 warna
+
+1. Harga ongkos cetak warna biasaya dibedakan oleh gramasi <=310gr & > 310gr, sama dengan ketentuan untuk perhitungan warna khusus *harga diinput sesuai pL aja dulu , harga sticker di PL abaikan
+2. ongkos cetak 2 warna : ditambah 50% dari harga 1 warna ( round up untuk biaya lebihnya biar g koma )
+
+3. inputan di field jumlah warna ditambah pilihan warna khusus
+4. untuk tampilan isi di Jenis Kertas , itu hanya nama kertas dan gramasi saja
+5. cover mengikuti jg y
+6. tambahkan hitungan jumlah cover yang lebih 1
+
+7. warna khusus mengikuti full color
+
+------------------------------------------
+
+Revisi Tambahan Aplikasi Espk
+1. tidak bisa input backdate
+2. di lihat detail,  ditambahkan histori waktu pesanan dibuat
+3. tanggal order di abata & di wahana beda , dan nnti judul tabelnya mgkn tanggal order, di abata pesanan dibuat dan ditambahkan disamping kolong status klom pesanan disetujui
+di wahana, tgl order diganti jadi pesanan masuk = tanggal pesanan disetujui
