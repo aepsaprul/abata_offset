@@ -46,7 +46,7 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img src="http://localhost/abata_ho/storage/app/public/{{ Auth::user()->karyawan->foto }}" alt="..." class="img-circle profile_img">
+                            <img src="http://localhost/abata_hrd/public/image/{{ Auth::user()->karyawan->foto }}" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -115,7 +115,7 @@
                                     data-toggle="dropdown"
                                     aria-expanded="false">
                                         <img
-                                            src="http://localhost/abata_ho/storage/app/public/{{ Auth::user()->karyawan->foto }}"
+                                            src="http://localhost/abata_hrd/public/image/{{ Auth::user()->karyawan->foto }}"
                                             alt="">
                                                 {{ Auth::user()->name }}
                                 </a>
